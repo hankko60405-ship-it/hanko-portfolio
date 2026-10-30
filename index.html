@@ -67,6 +67,8 @@
   .wheel.grabbing .tile { cursor: grabbing; }
   .wheel-nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2; width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(242, 240, 234, .35); background: rgba(10, 10, 11, .55); color: #f2f0ea; font-size: 18px; cursor: pointer; transition: border-color .2s, background .2s; }
   .wheel-nav:hover, .wheel-nav:focus-visible { border-color: #f2f0ea; background: rgba(10, 10, 11, .8); outline: none; }
+  .wheel-nav { touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+  .wheel-nav.holding { border-color: #f2f0ea; background: rgba(242, 240, 234, .18); }
   .wheel-nav.prev { left: 14px; }
   .wheel-nav.next { right: 14px; }
   .wheel-name { color: #f2f0ea; font-family: var(--display); font-size: 15px; font-weight: 500; min-height: 1em; }
@@ -701,8 +703,30 @@ function startWheel() {
   const nudge = e => {
     const b = e.target.closest(".wheel-nav");
     if (!b) return;
+    if (held) { held = false; return; }
     vel = (b.classList.contains("next") ? -1 : 1) * STEP * 0.06;
   };
+  /* Holding an arrow spins the ring continuously, speeding up the longer it is held; release lets it coast to a stop. */
+  const HOLD_DELAY = 250, HOLD_RAMP = 700;
+  let hold = 0, holdT = 0, held = false, holdBtn = null;
+  const holdStart = e => {
+    const b = e.target.closest(".wheel-nav");
+    if (!b || e.button !== 0) return;
+    hold = b.classList.contains("next") ? -1 : 1;
+    holdT = performance.now(); held = false; holdBtn = b;
+    addEventListener("pointerup", holdEnd);
+    addEventListener("pointercancel", holdEnd);
+  };
+  const holdEnd = () => {
+    hold = 0;
+    if (holdBtn) holdBtn.classList.remove("holding");
+    holdBtn = null;
+    removeEventListener("pointerup", holdEnd);
+    removeEventListener("pointercancel", holdEnd);
+  };
+  const noMenu = e => { if (e.target.closest(".wheel-nav")) e.preventDefault(); };
+  stage.addEventListener("pointerdown", holdStart);
+  stage.addEventListener("contextmenu", noMenu);
   stage.addEventListener("wheel", swipe, { passive: false });
   stage.addEventListener("click", nudge);
   stage.addEventListener("pointermove", tilt);
@@ -764,6 +788,11 @@ function startWheel() {
     const dt = Math.min(50, now - last); last = now;
     const r = stage.getBoundingClientRect();
     if (r.bottom > 0 && r.top < innerHeight && !paused) {
+      if (hold && now - holdT > HOLD_DELAY) {
+        if (!held) { held = true; holdBtn.classList.add("holding"); }
+        const ramp = Math.min(1, (now - holdT - HOLD_DELAY) / HOLD_RAMP);
+        vel = hold * (0.012 + 0.038 * ramp * ramp);
+      }
       if (!dragging) {
         /* Hovering a tile holds the ring still so it can be clicked. */
         const auto = reduce || hover >= 0 ? 0 : AUTO * dt;
@@ -796,7 +825,10 @@ function startWheel() {
     cancelAnimationFrame(raf);
     downTile = null;
     up();
+    holdEnd();
     closePreview();
+    stage.removeEventListener("pointerdown", holdStart);
+    stage.removeEventListener("contextmenu", noMenu);
     stage.removeEventListener("wheel", swipe);
     stage.removeEventListener("click", nudge);
     stage.removeEventListener("pointermove", tilt);
