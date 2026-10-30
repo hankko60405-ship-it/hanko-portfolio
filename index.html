@@ -157,7 +157,7 @@
   .info { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; }
   .info .big { font-weight: 700; font-size: clamp(22px, 2.8vw, 32px); line-height: 1.45; margin: 0 0 22px; text-wrap: balance; }
   .info p { line-height: 1.85; margin: 0 0 12px; max-width: 36em; }
-  .sea { margin-top: 18px; width: 100%; aspect-ratio: 900 / 586; object-fit: cover; }
+  .sea { margin-top: 18px; width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
   .sea-cap { font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin-top: 6px; }
   .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
   .tags span { border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px; font-size: 13px; }
@@ -555,13 +555,13 @@ const CV = {
 const INFO = {
   zh: { title: "個人資訊", big: "發現被忽視的價值，用設計讓它被看見，落地到真實的場域。",
     paras: ["我是柯承翰（Hank），目前在 ONEWORK 美術部實習，也是國立臺北商業大學商業設計管理系學生，專長是品牌視覺、平面設計、策展與攝影。", "五專在致理科技大學應用英語系讀商業與語言，也在義大利當了一年交換學生。那時的我只是一個小小的記錄者，用相機記錄眼前的世界。2024 年轉進商業設計後，我開始把看見的東西轉譯出來：從市場攤販、廟宇文化到海廢再生，起點都是一個還沒被好好說出來的故事。"],
-    cap: "攝影｜柯承翰", skills: "專長", sk: ["品牌視覺","平面設計","田野調查","企劃提案","策展","攝影"], lang: "語言", langs: [["中文","母語"],["English","流利"],["Italiano","A1"]], contact: "聯絡" },
+    cap: "柯承翰，攝於高雄市立圖書館", skills: "專長", sk: ["品牌視覺","平面設計","田野調查","企劃提案","策展","攝影"], lang: "語言", langs: [["中文","母語"],["English","流利"],["Italiano","A1"]], contact: "聯絡" },
   en: { title: "Info", big: "Finding overlooked value, making it visible through design, and landing it in real places.",
     paras: ["I'm Cheng-Han Ko (Hank), an intern in ONEWORK's art department and a Commercial Design and Management student at National Taipei University of Business. My fields are brand identity, graphic design, curation and photography.", "I studied business and English at Chihlee University and spent a year as an exchange student in Italy. Back then I was just a small recorder of the world, capturing what was in front of me with a camera. Since moving into design in 2024, I translate what I see: from market stalls and temple culture to ocean waste, every project starts with a story no one has told properly yet."],
-    cap: "Photo by Cheng-Han Ko", skills: "Skills", sk: ["Brand identity","Graphic design","Field research","Proposals","Curation","Photography"], lang: "Languages", langs: [["中文","Native"],["English","Fluent"],["Italiano","A1"]], contact: "Contact" },
+    cap: "Cheng-Han Ko at Kaohsiung Public Library", skills: "Skills", sk: ["Brand identity","Graphic design","Field research","Proposals","Curation","Photography"], lang: "Languages", langs: [["中文","Native"],["English","Fluent"],["Italiano","A1"]], contact: "Contact" },
   it: { title: "Profilo", big: "Trovare il valore che nessuno guarda, renderlo visibile con il design e portarlo nei luoghi reali.",
     paras: ["Sono Cheng-Han Ko (Hank), stagista nel reparto artistico di ONEWORK e studente di Commercial Design and Management alla National Taipei University of Business. Mi occupo di identità visiva, grafica, curatela e fotografia.", "Ho studiato economia e inglese alla Chihlee University e ho trascorso un anno di scambio in Italia, vicino a Milano. Allora ero solo un piccolo osservatore, che registrava con la macchina fotografica il mondo davanti a sé. Dal 2024, passato al design, traduco ciò che vedo: dai banchi del mercato alla cultura dei templi, fino ai rifiuti del mare, ogni progetto parte da una storia che nessuno ha ancora raccontato bene."],
-    cap: "Foto di Cheng-Han Ko", skills: "Competenze", sk: ["Identità visiva","Grafica","Ricerca sul campo","Proposte","Curatela","Fotografia"], lang: "Lingue", langs: [["中文","Madrelingua"],["English","Fluente"],["Italiano","A1"]], contact: "Contatti" }
+    cap: "Cheng-Han Ko alla Biblioteca pubblica di Kaohsiung", skills: "Competenze", sk: ["Identità visiva","Grafica","Ricerca sul campo","Proposte","Curatela","Fotografia"], lang: "Lingue", langs: [["中文","Madrelingua"],["English","Fluente"],["Italiano","A1"]], contact: "Contatti" }
 };
 
 /* ---------- App ---------- */
@@ -858,7 +858,7 @@ function renderInfo() {
       <div>
         <p class="big">${esc(n.big)}</p>
         ${n.paras.map(x => `<p>${esc(x)}</p>`).join("")}
-        <img class="sea" src="img/00.jpg" alt="${esc(n.cap)}">
+        <img class="sea" src="img/me.jpg" alt="${esc(n.cap)}">
         <div class="sea-cap">${esc(n.cap)}</div>
       </div>
       <div class="cv" style="grid-template-columns:minmax(0,1fr)">
