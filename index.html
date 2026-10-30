@@ -445,19 +445,34 @@ const P = [
 
   { id: "apple", cat: "Identity",
     name: { zh: "青澀秋禾", en: "Green Autumn Harvest", it: "Raccolto d'autunno" },
-    imgs: [["04.jpg", { zh: "主視覺", en: "Key visual", it: "Visual principale" }, true], ["05.jpg", { zh: "票券與邀請函", en: "Tickets and invitations", it: "Biglietti e inviti" }, true]],
-    zh: { meta: "音樂會主視覺，2025", short: "致理科技大學第 57 屆期末音樂會主視覺，以青蘋果為靈感，用像素點陣表現清純、初熟的青春感，也象徵音樂的層次。", quote: "青蘋果的意象，清純、初熟、充滿生機的青春感受。",
-      facts: [["role","主視覺設計・攝影"],["type","平面設計・攝影"],["for","致理科技大學 第 57 屆期末音樂會"],["scale","100–200 人"],["award","2026 臺灣國際學生創意設計大賽 參賽"]],
-      sections: [["理念", ["以「青蘋果」為靈感，透過蘋果的轉化傳達青春氣質。主視覺運用像素點陣手法，複雜的像素結構也象徵音樂的無限可能。"]],
-                 ["執行", ["深綠色主調搭配金黃字體，在沉穩中保留青春感。邀請函採用透明材質，讓光線穿透形成特殊效果。"]]] },
-    en: { meta: "Concert visual identity, 2025", short: "Key visual for the 57th end-of-year concert at Chihlee University. A green apple rendered in pixels carries a fresh, just-ripening sense of youth and the layers of music.", quote: "The green apple: fresh, just ripening, full of life.",
-      facts: [["role","Key visual design, photography"],["type","Graphic design, photography"],["for","Chihlee University, 57th end-of-year concert"],["scale","100–200 guests"],["award","TISDC 2026 — entry"]],
-      sections: [["Concept", ["Inspired by the green apple, the identity transforms the fruit to express youth. A pixel dot-matrix builds the key visual, its complex structure standing for music's endless possibilities."]],
-                 ["Execution", ["Deep green with golden type keeps the tone calm but young. Invitations are printed on transparent stock so light passes through."]]] },
-    it: { meta: "Identità visiva per un concerto, 2025", short: "Visual del 57° concerto di fine anno alla Chihlee University. Una mela verde fatta di pixel racconta una giovinezza fresca, appena matura, e gli strati della musica.", quote: "La mela verde: fresca, appena matura, piena di vita.",
-      facts: [["role","Visual principale, fotografia"],["type","Grafica, fotografia"],["for","Chihlee University, 57° concerto di fine anno"],["scale","100–200 persone"],["award","TISDC 2026 — partecipazione"]],
-      sections: [["Concetto", ["Ispirata alla mela verde, l'identità trasforma il frutto per esprimere la giovinezza. Una matrice di pixel costruisce il visual, e la sua struttura complessa rappresenta le infinite possibilità della musica."]],
-                 ["Realizzazione", ["Verde scuro e caratteri dorati danno un tono calmo ma giovane. Gli inviti sono stampati su supporto trasparente, attraversato dalla luce."]]] } }
+    cover: ["ap-kv.jpg", "ap-logo.jpg", "05.jpg"],
+    imgs: [
+      ["ap-kv.jpg", { zh: "主視覺：像素點陣的青蘋果", en: "Key visual: a green apple in pixel dithering", it: "Visual principale: una mela verde in retinatura a pixel" }, true],
+      ["ap-logo.jpg", { zh: "標準字：姚體「青澀秋禾」＋五線譜", en: "Logotype: the title in Yao type plus a music staff", it: "Logotipo: il titolo in carattere Yao più il pentagramma" }, true],
+      ["04.jpg", { zh: "主視覺應用", en: "Key visual in use", it: "Il visual applicato" }],
+      ["05.jpg", { zh: "票券與邀請函", en: "Tickets and invitations", it: "Biglietti e inviti" }]
+    ],
+    zh: { meta: "音樂會主視覺，2025", short: "為致理科技大學管樂社第 57 屆期末音樂會設計的一系列視覺宣傳品，包含海報、DM 與邀請函，靈感來自青蘋果樂團的意象，透過蘋果的轉化傳達清純、初熟、充滿生機的青春感受。", quote: "青蘋果的意象，清純、初熟、充滿生機的青春感受。",
+      sections: [
+        ["理念", ["以「青蘋果」為靈感，把蘋果轉化成青春的象徵：清純、初熟、充滿生機。主視覺用像素點陣的手法，傳達數位時代的新鮮感；複雜的像素結構，也象徵音樂的無限可能與層次。"]],
+        ["標準字", ["「青澀秋禾」以姚體為基礎，結合五線譜的譜線與音符，讓文字本身讀起來就像一段旋律。輔助圖形則是點陣處理的青蘋果，重複排列成整套視覺的底紋。"]],
+        ["執行", ["深綠色主調搭配金黃字體，在沉穩中保留青春感。資訊排版刻意簡潔，在生動活潑的主視覺與清晰的演出資訊之間取得平衡。邀請函採用透明材質，讓光線穿透，形成特殊的層次效果。", "音樂會於 2025 年 11 月 27 日晚上舉行，作品也發表在 Behance：behance.net/gallery/239665787"]],
+        ["工具", ["Photoshop、Illustrator、Lightroom"]]
+      ] },
+    en: { meta: "Concert visual identity, 2025", short: "A series of promotional pieces for the Chihlee University Wind Band's 57th end-of-year concert — posters, flyers and invitations — inspired by the imagery of the Green Apple band, transforming the apple to convey a fresh, just-ripening, lively sense of youth.", quote: "The green apple: fresh, just ripening, full of life.",
+      sections: [
+        ["Concept", ["The green apple becomes a symbol of youth: pure, just ripening, full of life. The key visual uses pixel dithering for a sense of digital freshness, and its complex pixel structure stands for the endless possibilities and layers of music."]],
+        ["Logotype", ["The title is set in Yao type and merged with the lines and notes of a music staff, so the words themselves read like a melody. A dithered green apple, repeated as a pattern, is the supporting graphic."]],
+        ["Execution", ["Deep green with golden type keeps the tone calm but young. The information layout stays simple to balance the lively key visual with clear concert details. Invitations are printed on transparent stock, so light passes through in layers.", "The concert took place on the evening of 27 November 2025. The project is also on Behance: behance.net/gallery/239665787"]],
+        ["Tools", ["Photoshop, Illustrator, Lightroom"]]
+      ] },
+    it: { meta: "Identità visiva per un concerto, 2025", short: "Una serie di materiali promozionali per il 57° concerto di fine anno della banda della Chihlee University — manifesti, volantini e inviti — ispirata all'immaginario della band Green Apple, che trasforma la mela per raccontare una giovinezza fresca, appena matura e piena di vita.", quote: "La mela verde: fresca, appena matura, piena di vita.",
+      sections: [
+        ["Concetto", ["La mela verde diventa simbolo della giovinezza: pura, appena matura, piena di vita. Il visual usa la retinatura a pixel per dare un senso di freschezza digitale, e la sua struttura complessa rappresenta le infinite possibilità e gli strati della musica."]],
+        ["Logotipo", ["Il titolo è composto in carattere Yao e fuso con le linee e le note di un pentagramma, così le parole si leggono come una melodia. Una mela verde retinata, ripetuta come motivo, fa da elemento grafico di supporto."]],
+        ["Realizzazione", ["Verde scuro e caratteri dorati danno un tono calmo ma giovane. L'impaginazione delle informazioni è semplice, per bilanciare il visual vivace con dati chiari sul concerto. Gli inviti sono stampati su supporto trasparente, attraversato dalla luce.", "Il concerto si è tenuto la sera del 27 novembre 2025. Il progetto è anche su Behance: behance.net/gallery/239665787"]],
+        ["Strumenti", ["Photoshop, Illustrator, Lightroom"]]
+      ] } }
 ];
 
 /* ---------- Project credits: type, client/context, year, team (role: name) ---------- */
@@ -492,9 +507,9 @@ const FX = {
     en: { type: "Art book fair · photo book · type design", ctx: "Taipei Art Book Fair 2026 (10th edition) | @remembermekoko", year: "2026", team: [["Book editing, type visuals","Cheng-Han Ko"],["Team","KOWALI (Wawa, Lili, Koko)"]], award: "Love is Cream selected for @chibiandesme's mini library" },
     it: { type: "Fiera dell'editoria d'arte · libro fotografico · type design", ctx: "Taipei Art Book Fair 2026 (decima edizione) | @remembermekoko", year: "2026", team: [["Editing del libro, visual dei caratteri","Cheng-Han Ko"],["Team","KOWALI (Wawa, Lili, Koko)"]], award: "Love is Cream scelto per la mini library di @chibiandesme" } },
   apple: {
-    zh: { type: "音樂會主視覺", ctx: "致理科技大學 第 57 屆期末音樂會", year: "2025.09 – 2025.11", team: [["主視覺設計・攝影","柯承翰"]], award: "2026 臺灣國際學生創意設計大賽 參賽" },
-    en: { type: "Concert visual identity", ctx: "Chihlee University, 57th end-of-year concert", year: "2025.09 – 2025.11", team: [["Key visual design, photography","Cheng-Han Ko"]], award: "TISDC 2026 — entry" },
-    it: { type: "Identità visiva per un concerto", ctx: "Chihlee University, 57° concerto di fine anno", year: "2025.09 – 2025.11", team: [["Visual principale, fotografia","Cheng-Han Ko"]], award: "TISDC 2026 — partecipazione" } }
+    zh: { type: "音樂會主視覺・海報・DM・邀請函", ctx: "致理科技大學管樂社 第 57 屆期末音樂會", year: "2025.09 – 2025.11", team: [["主視覺設計・攝影","柯承翰"]], award: "2026 臺灣國際學生創意設計大賽 參賽" },
+    en: { type: "Concert identity · poster · flyer · invitation", ctx: "Chihlee University Wind Band, 57th end-of-year concert", year: "2025.09 – 2025.11", team: [["Key visual design, photography","Cheng-Han Ko"]], award: "TISDC 2026 — entry" },
+    it: { type: "Identità per un concerto · manifesto · volantino · invito", ctx: "Banda della Chihlee University, 57° concerto di fine anno", year: "2025.09 – 2025.11", team: [["Visual principale, fotografia","Cheng-Han Ko"]], award: "TISDC 2026 — partecipazione" } }
 };
 const FXL = {
   zh: { type: "類型", ctx: "客戶／脈絡", year: "年份", team: "團隊", award: "獎項" },
