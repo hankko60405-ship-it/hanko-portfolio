@@ -145,6 +145,7 @@
   .cv ul { margin: 0; padding: 0; }
   .cv li { list-style: none; display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 14px; font-size: 14px; line-height: 1.6; padding: 8px 0; border-bottom: 1px solid var(--hair); }
   .cv .y { font-family: var(--mono); font-size: 12px; color: var(--muted); padding-top: 2px; font-variant-numeric: tabular-nums; }
+  .cv-link { border-bottom: 1px solid var(--muted); }
   .cv .note { display: block; color: var(--muted); font-size: 13px; }
   /* Logos are transparent: full colour on the light theme, solid white on the dark theme. */
   .org { display: block; height: 26px; width: auto; max-width: 170px; object-fit: contain; filter: var(--logo-filter); margin-bottom: 8px; }
@@ -434,15 +435,15 @@ const P = [
   { id: "apple", cat: "Identity",
     name: { zh: "青澀秋禾", en: "Green Autumn Harvest", it: "Raccolto d'autunno" },
     imgs: [["04.jpg", { zh: "主視覺", en: "Key visual", it: "Visual principale" }, true], ["05.jpg", { zh: "票券與邀請函", en: "Tickets and invitations", it: "Biglietti e inviti" }, true]],
-    zh: { meta: "音樂會主視覺", short: "致理科技大學第 57 屆期末音樂會主視覺。以青蘋果為靈感，用像素點陣表現清純、初熟的青春感，也象徵音樂的層次。", quote: "青蘋果的意象，清純、初熟、充滿生機的青春感受。",
+    zh: { meta: "音樂會主視覺，2025", short: "致理科技大學第 57 屆期末音樂會主視覺。以青蘋果為靈感，用像素點陣表現清純、初熟的青春感，也象徵音樂的層次。", quote: "青蘋果的意象，清純、初熟、充滿生機的青春感受。",
       facts: [["role","主視覺設計・攝影"],["type","平面設計・攝影"],["for","致理科技大學 第 57 屆期末音樂會"],["scale","100–200 人"],["award","2026 臺灣國際學生創意設計大賽 參賽"]],
       sections: [["理念", ["以「青蘋果」為靈感，透過蘋果的轉化傳達青春氣質。主視覺運用像素點陣手法，複雜的像素結構也象徵音樂的無限可能。"]],
                  ["執行", ["深綠色主調搭配金黃字體，在沉穩中保留青春感。邀請函採用透明材質，讓光線穿透形成特殊效果。"]]] },
-    en: { meta: "Concert visual identity", short: "Key visual for the 57th end-of-year concert at Chihlee University. A green apple rendered in pixels carries a fresh, just-ripening sense of youth and the layers of music.", quote: "The green apple: fresh, just ripening, full of life.",
+    en: { meta: "Concert visual identity, 2025", short: "Key visual for the 57th end-of-year concert at Chihlee University. A green apple rendered in pixels carries a fresh, just-ripening sense of youth and the layers of music.", quote: "The green apple: fresh, just ripening, full of life.",
       facts: [["role","Key visual design, photography"],["type","Graphic design, photography"],["for","Chihlee University, 57th end-of-year concert"],["scale","100–200 guests"],["award","TISDC 2026 — entry"]],
       sections: [["Concept", ["Inspired by the green apple, the identity transforms the fruit to express youth. A pixel dot-matrix builds the key visual, its complex structure standing for music's endless possibilities."]],
                  ["Execution", ["Deep green with golden type keeps the tone calm but young. Invitations are printed on transparent stock so light passes through."]]] },
-    it: { meta: "Identità visiva per un concerto", short: "Visual del 57° concerto di fine anno alla Chihlee University. Una mela verde fatta di pixel racconta una giovinezza fresca, appena matura, e gli strati della musica.", quote: "La mela verde: fresca, appena matura, piena di vita.",
+    it: { meta: "Identità visiva per un concerto, 2025", short: "Visual del 57° concerto di fine anno alla Chihlee University. Una mela verde fatta di pixel racconta una giovinezza fresca, appena matura, e gli strati della musica.", quote: "La mela verde: fresca, appena matura, piena di vita.",
       facts: [["role","Visual principale, fotografia"],["type","Grafica, fotografia"],["for","Chihlee University, 57° concerto di fine anno"],["scale","100–200 persone"],["award","TISDC 2026 — partecipazione"]],
       sections: [["Concetto", ["Ispirata alla mela verde, l'identità trasforma il frutto per esprimere la giovinezza. Una matrice di pixel costruisce il visual, e la sua struttura complessa rappresenta le infinite possibilità della musica."]],
                  ["Realizzazione", ["Verde scuro e caratteri dorati danno un tono calmo ma giovane. Gli inviti sono stampati su supporto trasparente, attraversato dalla luce."]]] } }
@@ -456,9 +457,9 @@ const FX = {
     en: { type: "Field research · local revitalisation proposal", ctx: "Day Day Tian Studio | Taoyuan Youth Public Issues Programme 2025", year: "2025", team: [["Trainee / field research, planning, presentation","Cheng-Han Ko"],["PM","Lin Chia-Wen"],["Trainee","Huang Yu-Sheng"],["Founder","Kao Ching-Jung (Day Day Tian Studio)"],["Organiser","Taoyuan City Youth Affairs Bureau"]], award: "Finalist, outstanding proposal teams (30 Oct 2025)" },
     it: { type: "Ricerca sul campo · proposta di rigenerazione", ctx: "Day Day Tian Studio | Programma giovani e temi pubblici di Taoyuan 2025", year: "2025", team: [["Tirocinante / ricerca, progetto, presentazione","Cheng-Han Ko"],["PM","Lin Chia-Wen"],["Tirocinante","Huang Yu-Sheng"],["Fondatore","Kao Ching-Jung (Day Day Tian Studio)"],["Organizzatore","Ufficio per i giovani di Taoyuan"]], award: "Finalista tra i migliori progetti (30 ott 2025)" } },
   shennong: {
-    zh: { type: "文化導覽手冊", ctx: "日日田職物所 × 國立臺北商業大學｜大溪南興社區 神農永昌宮", year: "2025", team: [["視覺設計","柯承翰"],["合作","日日田職物所"]] },
-    en: { type: "Cultural guidebook", ctx: "Day Day Tian Studio × NTUB | Shennong Yongchang Temple, Nanxing, Daxi", year: "2025", team: [["Visual design","Cheng-Han Ko"],["Partner","Day Day Tian Studio"]] },
-    it: { type: "Guida culturale", ctx: "Day Day Tian Studio × NTUB | Tempio Shennong Yongchang, Nanxing, Daxi", year: "2025", team: [["Visual design","Cheng-Han Ko"],["Partner","Day Day Tian Studio"]] } },
+    zh: { type: "文化導覽手冊", ctx: "日日田職物所 × 國立臺北商業大學｜大溪南興社區 神農永昌宮", year: "2025.02 – 2025.04", team: [["視覺設計","柯承翰"],["合作","日日田職物所"]] },
+    en: { type: "Cultural guidebook", ctx: "Day Day Tian Studio × NTUB | Shennong Yongchang Temple, Nanxing, Daxi", year: "2025.02 – 2025.04", team: [["Visual design","Cheng-Han Ko"],["Partner","Day Day Tian Studio"]] },
+    it: { type: "Guida culturale", ctx: "Day Day Tian Studio × NTUB | Tempio Shennong Yongchang, Nanxing, Daxi", year: "2025.02 – 2025.04", team: [["Visual design","Cheng-Han Ko"],["Partner","Day Day Tian Studio"]] } },
   tangyuan: {
     zh: { type: "攤販品牌改造", ctx: "邱媽媽大湯圓｜114 年度 USR-Hub 計畫「籽食好客」・敘事展示設計課程", year: "2025", team: [["品牌視覺・名片・攝影紀錄","柯承翰"],["大旗設計","陳俊豪"],["設計","曾琮竣、張鈞舜"],["指導老師","林育如"],["客戶","邱媽媽大湯圓"]] },
     en: { type: "Market stall rebrand", ctx: "Mama Qiu's Big Tangyuan | USR-Hub programme 2025 · Narrative Exhibition Design course", year: "2025", team: [["Brand design, business cards, photography","Cheng-Han Ko"],["Flag design","Chen Chun-Hao"],["Design","Tseng Tsung-Chun, Chang Chun-Shun"],["Advisor","Lin Yu-Ju"],["Client","Mama Qiu's Big Tangyuan"]] },
@@ -480,9 +481,9 @@ const FX = {
     en: { type: "Art book fair · photo book · type design", ctx: "Taipei Art Book Fair 2026 (10th edition) | @remembermekoko", year: "2026", team: [["Book editing, type visuals","Cheng-Han Ko"],["Team","KOWALI (Wawa, Lili, Koko)"]], award: "Love is Cream selected for @chibiandesme's mini library" },
     it: { type: "Fiera dell'editoria d'arte · libro fotografico · type design", ctx: "Taipei Art Book Fair 2026 (decima edizione) | @remembermekoko", year: "2026", team: [["Editing del libro, visual dei caratteri","Cheng-Han Ko"],["Team","KOWALI (Wawa, Lili, Koko)"]], award: "Love is Cream scelto per la mini library di @chibiandesme" } },
   apple: {
-    zh: { type: "音樂會主視覺", ctx: "致理科技大學 第 57 屆期末音樂會", year: "", team: [["主視覺設計・攝影","柯承翰"]], award: "2026 臺灣國際學生創意設計大賽 參賽" },
-    en: { type: "Concert visual identity", ctx: "Chihlee University, 57th end-of-year concert", year: "", team: [["Key visual design, photography","Cheng-Han Ko"]], award: "TISDC 2026 — entry" },
-    it: { type: "Identità visiva per un concerto", ctx: "Chihlee University, 57° concerto di fine anno", year: "", team: [["Visual principale, fotografia","Cheng-Han Ko"]], award: "TISDC 2026 — partecipazione" } }
+    zh: { type: "音樂會主視覺", ctx: "致理科技大學 第 57 屆期末音樂會", year: "2025.09 – 2025.11", team: [["主視覺設計・攝影","柯承翰"]], award: "2026 臺灣國際學生創意設計大賽 參賽" },
+    en: { type: "Concert visual identity", ctx: "Chihlee University, 57th end-of-year concert", year: "2025.09 – 2025.11", team: [["Key visual design, photography","Cheng-Han Ko"]], award: "TISDC 2026 — entry" },
+    it: { type: "Identità visiva per un concerto", ctx: "Chihlee University, 57° concerto di fine anno", year: "2025.09 – 2025.11", team: [["Visual principale, fotografia","Cheng-Han Ko"]], award: "TISDC 2026 — partecipazione" } }
 };
 const FXL = {
   zh: { type: "類型", ctx: "客戶／脈絡", year: "年份", team: "團隊", award: "獎項" },
@@ -506,21 +507,21 @@ const CV = {
     ["學歷", [["2024–","國立臺北商業大學 商業設計管理系","","logo-ntub.png"],["2019–24","致理科技大學 應用英語系 副學士"],["2018–19","義大利米蘭 Liceo S. Quasimodo 交換學生"]]],
     ["工作與實務", [["2026.07–","工一科技 ONEWORK 美術部","台北｜重新規劃公司官網架構（解決方案、實績案例、關於、徵才），設計首頁、About 與 Project 頁介面和視覺 banner","logo-onework.svg"],["2025–26","115 級畢業籌備會 二技總召","與四技總召共同統籌 16 個專題、59 位同學的校內展與新一代設計展；桃園市青年局補助申請負責人","logo-cdm.png"],["2025","日日田職物所 地方創生團隊 見習生","桃園市青年見學蹲點計畫，120 小時，表現優異"],["2026","桃園全民運動會 攝影紀錄"],["2019–24","致理科技大學 英語外師助教"],["2019–24","致理科技大學 校內外活動攝影"]]],
     ["獎項與競賽", [["2026","臺北藝術書展 草率季 參展","KOWALI 團隊（@remembermekoko），攝影書與攤位《KOKO LAND》"],["2026","放視大賞 視覺設計組 複選入圍","《ALIVE : IN.BREATH 呼吸存在》"],["2026","臺灣國際學生創意設計大賽 參賽","《瓶中信》《青澀秋禾》"],["2026","青春設計節 視覺傳達設計類 參賽"],["2023","青輔會 AI 工作坊企業作品競賽 最佳美術設計獎"],["2022","全國心智圖應用競賽 佳作"],["2022","台灣私房景點英文簡報競賽 佳作"]]],
-    ["培訓與證照", [["2026","教育部藝術與設計菁英培訓 視覺傳達設計工作坊","ArtCenter、武藏野美術大學、Pratt Institute 師資"],["—","電腦軟體應用 丙級技術士"],["—","TQC-OA 中文輸入 進階級"],["2019","義大利文 A1"]]],
+    ["培訓與證照", [["2026","Adobe Certified Professional：Graphic Design & Illustration Using Adobe Illustrator","2026.04.12 取得・可於 verify.certiport.com 以 yJk7-uTaY 驗證","","img/cert-illustrator.jpg"],["2026","教育部藝術與設計菁英培訓 視覺傳達設計工作坊","ArtCenter、武藏野美術大學、Pratt Institute 師資"],["—","電腦軟體應用 丙級技術士"],["—","TQC-OA 中文輸入 進階級"],["—","商業管理基礎知能 Business Management Certification – Basic"],["2019","義大利文 A1"]]],
     ["社團", [["2024–","北商 野餐社 社長"],["2024","北商 管樂社 副美宣"],["2019–24","致理科技大學 管樂社 社長、事務長、美宣"]]]
   ]},
   en: { title: "Experience", sections: [
     ["Education", [["2024–","National Taipei University of Business — Commercial Design and Management","","logo-ntub.png"],["2019–24","Chihlee University of Technology — Applied English (Associate degree)"],["2018–19","Exchange student, Liceo S. Quasimodo, Milan, Italy"]]],
     ["Work", [["Jul 2026–","Art Department, ONEWORK","Taipei — restructured the company website (solutions, projects, about, careers) and designed the home, about and project pages and banners","logo-onework.svg"],["2025–26","Co-chair (two-year programme), Class of 2026 Graduation Exhibition Committee","Co-led the campus show and YODEX for 16 projects and 59 students; lead applicant for a Taoyuan Youth Affairs Bureau grant","logo-cdm.png"],["2025","Trainee, Day Day Tian Studio (local revitalisation team)","Taoyuan Youth Field Programme, 120 hours, rated outstanding"],["2026","Photographer, Taoyuan National Sports Games"],["2019–24","Teaching assistant to native English teachers, Chihlee"],["2019–24","Event photographer, Chihlee"]]],
     ["Awards", [["2026","Taipei Art Book Fair — exhibitor","Team KOWALI (@remembermekoko), photo book and booth KOKO LAND"],["2026","Vision Get Wild — Visual Design, shortlisted","ALIVE : IN.BREATH"],["2026","Taiwan International Student Design Competition — entry","Message in a Bottle; Green Autumn Harvest"],["2026","Youth Innovative Design Festival — entry"],["2023","Youth Development AI Workshop — Best Art Direction"],["2022","National Mind Map Competition — Honourable mention"],["2022","English presentation contest on Taiwan's hidden spots — Honourable mention"]]],
-    ["Training", [["2026","MOE Arts & Design Elite Programme — Visual Communication Workshop","Tutors from ArtCenter, Musashino Art University, Pratt Institute"],["—","Computer Software Application, Level C technician"],["—","TQC-OA Chinese input, advanced"],["2019","Italian A1"]]],
+    ["Training", [["2026","Adobe Certified Professional: Graphic Design & Illustration Using Adobe Illustrator","Earned 12 Apr 2026 · verify at verify.certiport.com with code yJk7-uTaY","","img/cert-illustrator.jpg"],["2026","MOE Arts & Design Elite Programme — Visual Communication Workshop","Tutors from ArtCenter, Musashino Art University, Pratt Institute"],["—","Computer Software Application, Level C technician"],["—","TQC-OA Chinese input, advanced"],["—","Business Management Certification – Basic"],["2019","Italian A1"]]],
     ["Clubs", [["2024–","President, Picnic Club, NTUB"],["2024","Deputy art director, Wind Band, NTUB"],["2019–24","President, Wind Band, Chihlee"]]]
   ]},
   it: { title: "Esperienze", sections: [
     ["Formazione", [["2024–","National Taipei University of Business — Commercial Design and Management","","logo-ntub.png"],["2019–24","Chihlee University of Technology — Inglese applicato (diploma)"],["2018–19","Anno di scambio, Liceo S. Quasimodo, Magenta (Milano)"]]],
     ["Lavoro", [["Lug 2026–","Reparto artistico, ONEWORK","Taipei — riorganizzazione del sito aziendale (soluzioni, progetti, chi siamo, lavora con noi), design di home, about, pagine progetto e banner","logo-onework.svg"],["2025–26","Co-coordinatore (corso biennale), comitato della mostra di laurea 2026","Mostra nel campus e YODEX: 16 progetti, 59 studenti; referente della richiesta di contributo all'Ufficio giovani di Taoyuan","logo-cdm.png"],["2025","Tirocinante, Day Day Tian Studio (rigenerazione locale)","Programma giovani di Taoyuan, 120 ore, valutazione eccellente"],["2026","Fotografo, Giochi nazionali dello sport di Taoyuan"],["2019–24","Assistente dei docenti madrelingua inglese, Chihlee"],["2019–24","Fotografo di eventi, Chihlee"]]],
     ["Premi", [["2026","Taipei Art Book Fair — espositore","Team KOWALI (@remembermekoko), libro fotografico e stand KOKO LAND"],["2026","Vision Get Wild — Visual Design, selezionato","ALIVE : IN.BREATH"],["2026","Taiwan International Student Design Competition — partecipazione","Messaggio in bottiglia; Raccolto d'autunno"],["2026","Youth Innovative Design Festival — partecipazione"],["2023","Workshop AI per giovani — Miglior direzione artistica"],["2022","Concorso nazionale di mappe mentali — Menzione"],["2022","Concorso di presentazioni in inglese — Menzione"]]],
-    ["Corsi e certificati", [["2026","Programma d'eccellenza del Ministero dell'Istruzione — Workshop di comunicazione visiva","Docenti di ArtCenter, Musashino Art University, Pratt Institute"],["—","Tecnico di applicazioni software, livello C"],["—","TQC-OA, digitazione cinese avanzata"],["2019","Italiano A1"]]],
+    ["Corsi e certificati", [["2026","Adobe Certified Professional: Graphic Design & Illustration Using Adobe Illustrator","Conseguito il 12 apr 2026 · verificabile su verify.certiport.com con il codice yJk7-uTaY","","img/cert-illustrator.jpg"],["2026","Programma d'eccellenza del Ministero dell'Istruzione — Workshop di comunicazione visiva","Docenti di ArtCenter, Musashino Art University, Pratt Institute"],["—","Tecnico di applicazioni software, livello C"],["—","TQC-OA, digitazione cinese avanzata"],["—","Business Management Certification – Basic"],["2019","Italiano A1"]]],
     ["Associazioni", [["2024–","Presidente, Picnic Club, NTUB"],["2024","Vice responsabile grafica, Banda musicale, NTUB"],["2019–24","Presidente, Banda musicale, Chihlee"]]]
   ]}
 };
@@ -818,7 +819,7 @@ function renderExperience() {
     <h1 class="page-h">${c.title}</h1>
     <div class="cv">
       ${c.sections.map((s, i) => `<section class="${i === 0 ? "full" : ""}"><h3>${esc(s[0])}</h3><ul>
-        ${s[1].map(r => `<li><span class="y">${esc(r[0])}</span><span>${r[3] ? `<img class="org" src="img/${r[3]}" alt="">` : ""}${esc(r[1])}${r[2] ? `<span class="note">${esc(r[2])}</span>` : ""}</span></li>`).join("")}
+        ${s[1].map(r => `<li><span class="y">${esc(r[0])}</span><span>${r[3] ? `<img class="org" src="img/${r[3]}" alt="">` : ""}${r[4] ? `<a class="cv-link" href="${r[4]}" target="_blank" rel="noopener">${esc(r[1])} ↗</a>` : esc(r[1])}${r[2] ? `<span class="note">${esc(r[2])}</span>` : ""}</span></li>`).join("")}
       </ul></section>`).join("")}
     </div>`;
 }
