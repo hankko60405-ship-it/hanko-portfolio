@@ -1,0 +1,883 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="柯承翰 HanKO｜品牌識別、地方創生、展覽與田野調查的設計作品集。Portfolio of Cheng-Han Ko: brand identity, local revitalisation, exhibitions and field research.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="HanKO 柯承翰 Portfolio">
+<meta property="og:description" content="柯承翰 HanKO｜品牌識別、地方創生、展覽與田野調查的設計作品集。Portfolio of Cheng-Han Ko: brand identity, local revitalisation, exhibitions and field research.">
+<meta property="og:url" content="https://hankko60405-ship-it.github.io/hanko-portfolio/">
+<meta property="og:image" content="https://hankko60405-ship-it.github.io/hanko-portfolio/img/kk-group.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<title>HanKO 作品集</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=JetBrains+Mono:wght@400&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<style>
+  /* Layout: list-style portfolio after haoweitu.info. Logo left, three pages centre, language switch right. Projects are full-width rows (text left, images right); inner pages are hash views with a fact column, long text and an image stack. */
+  :root {
+    --bg: #fbfaf7;
+    --fg: #111110;
+    --muted: #77736b;
+    --line: #111110;
+    --hair: #e2ded5;
+    --tile: #efece5;
+    --logo-filter: none;
+    --display: "Bricolage Grotesque", "Noto Sans TC", "PingFang TC", sans-serif;
+    --text: "Bricolage Grotesque", "Noto Sans TC", "PingFang TC", sans-serif;
+    --mono: "JetBrains Mono", "SF Mono", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #121211; --fg: #f2f0ea; --muted: #9a958b; --line: #f2f0ea; --hair: #2e2d2a; --tile: #1d1c1a; --logo-filter: brightness(0) invert(1); color-scheme: dark; }
+  }
+  :root[data-theme="dark"] { --bg: #121211; --fg: #f2f0ea; --muted: #9a958b; --line: #f2f0ea; --hair: #2e2d2a; --tile: #1d1c1a; --logo-filter: brightness(0) invert(1); color-scheme: dark; }
+
+  * { box-sizing: border-box; }
+  html, body { background: var(--bg); color: var(--fg); }
+  body {
+    margin: 0; font-family: var(--text); font-size: 15px; line-height: 1.6;
+    padding-left: max(18px, env(safe-area-inset-left, 0px));
+    padding-right: max(18px, env(safe-area-inset-right, 0px));
+    padding-block: 0 56px;
+  }
+  :lang(zh-Hant) body, body:lang(zh-Hant) { line-height: 1.75; }
+  a { color: inherit; text-decoration: none; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+  img { display: block; max-width: 100%; height: auto; }
+  .wrap { max-width: 1240px; margin: 0 auto; }
+
+  /* Header */
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); background: var(--bg); z-index: 10; }
+  .head { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; padding-block: 16px; }
+  .logo { font-family: var(--display); font-weight: 800; font-size: 21px; letter-spacing: -.04em; font-variation-settings: "opsz" 48; justify-self: start; }
+  .nav { display: flex; gap: 24px; font-size: 15px; }
+  .nav a[aria-current="page"] { color: var(--muted); }
+  .lang { justify-self: end; display: flex; gap: 2px; font-family: var(--mono); font-size: 12px; }
+  .lang button { font: inherit; background: none; border: 0; padding: 3px 5px; color: var(--muted); cursor: pointer; }
+  .lang button + button::before { content: "/"; margin-right: 7px; color: var(--hair); }
+  .lang button[aria-pressed="true"] { color: var(--fg); }
+
+  /* Banner: 3D tilt wheel. Tiles ride a ring that spins on its own, tilts with the pointer, and spreads apart on scroll. */
+  .wheel { position: relative; height: clamp(340px, 64vh, 640px); margin-top: 6px; background: #0a0a0b; border-radius: 6px; overflow: hidden; perspective: 900px; perspective-origin: 50% 45%; touch-action: pan-y; }
+  .ring { position: absolute; left: 50%; top: 47%; transform-style: preserve-3d; }
+  .wheel { cursor: grab; user-select: none; -webkit-user-select: none; }
+  .wheel.grabbing { cursor: grabbing; }
+  .tile { position: absolute; left: 0; top: 0; display: block; padding: 0; border: 0; background: none; cursor: pointer; width: calc(var(--w) * var(--k, 1) * 1px); will-change: transform, opacity; }
+  .wheel.grabbing .tile { cursor: grabbing; }
+  .wheel-nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2; width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(242, 240, 234, .35); background: rgba(10, 10, 11, .55); color: #f2f0ea; font-size: 18px; cursor: pointer; transition: border-color .2s, background .2s; }
+  .wheel-nav:hover, .wheel-nav:focus-visible { border-color: #f2f0ea; background: rgba(10, 10, 11, .8); outline: none; }
+  .wheel-nav.prev { left: 14px; }
+  .wheel-nav.next { right: 14px; }
+  .wheel-name { color: #f2f0ea; font-family: var(--display); font-size: 15px; font-weight: 500; min-height: 1em; }
+
+  /* Preview overlay */
+  .pv { position: fixed; inset: 0; z-index: 50; background: rgba(8, 8, 9, .94); display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px;
+        padding: max(56px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(24px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+  .pv[hidden] { display: none; }
+  .pv figure { margin: 0; display: grid; gap: 14px; justify-items: center; min-width: 0; }
+  .pv img { max-width: 100%; max-height: 72vh; object-fit: contain; box-shadow: 0 20px 60px rgba(0, 0, 0, .5); }
+  .pv figcaption { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; justify-content: center; color: #f2f0ea; text-align: center; }
+  .pv-name { font-family: var(--display); font-size: 20px; font-weight: 600; }
+  .pv-meta { font-family: var(--mono); font-size: 12px; color: #a9a49a; }
+  .pv-go { font-family: var(--mono); font-size: 13px; color: #f2f0ea; border-bottom: 1px solid currentColor; }
+  .pv button { background: none; border: 1px solid #4a4843; color: #f2f0ea; width: 44px; height: 44px; border-radius: 50%; font-size: 18px; cursor: pointer; }
+  .pv button:hover, .pv button:focus-visible { border-color: #f2f0ea; outline: none; }
+  .pv .pv-close { position: absolute; top: max(14px, env(safe-area-inset-top, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); }
+  @media (max-width: 600px) { .pv { grid-template-columns: minmax(0, 1fr); } .pv-prev, .pv-next { display: none; } }
+  .tile img { display: block; width: 100%; aspect-ratio: var(--ar); object-fit: cover; box-shadow: 0 12px 30px rgba(0, 0, 0, .45); transition: transform .3s ease; }
+  .tile:hover img, .tile:focus-visible img { transform: scale(1.06); }
+  .tile:focus-visible { outline: 2px solid #f2f0ea; outline-offset: 3px; }
+  .wheel-cap { position: absolute; left: 18px; right: 18px; bottom: 14px; display: flex; justify-content: space-between; gap: 12px; font-family: var(--mono); font-size: 12px; color: #a9a49a; pointer-events: none; }
+  .wheel-cap b { color: #f2f0ea; font-weight: 400; }
+
+  /* Portfolio index */
+  .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 380px); gap: 24px; align-items: end; padding-block: 44px 34px; }
+  .hero h1 { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(46px, 8vw, 96px); line-height: .92; letter-spacing: -.055em; font-variation-settings: "opsz" 96; text-wrap: balance; }
+  .hero p { margin: 0; font-size: 15px; line-height: 1.5; text-align: right; }
+  .filters { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: baseline; padding-bottom: 12px; border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: 12.5px; }
+  .filters button { font: inherit; color: var(--muted); background: none; border: 0; padding: 0; cursor: pointer; }
+  .filters button[aria-pressed="true"] { color: var(--fg); }
+  .filters button[aria-pressed="true"]::before { content: "→ "; }
+  .filters .count { margin-left: auto; color: var(--muted); }
+
+  .row { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 40px; padding-block: 18px 22px; border-bottom: 1px solid var(--line); }
+  .row h2 { margin: 0; font-family: var(--display); font-weight: 500; font-size: 22px; letter-spacing: -.02em; line-height: 1.25; }
+  .row h2 small { display: block; font-size: 14px; font-weight: 400; color: var(--muted); letter-spacing: 0; margin-top: 2px; }
+  .row .meta { font-family: var(--mono); font-size: 12.5px; color: var(--muted); margin: 6px 0 12px; }
+  .row p { margin: 0; font-size: 14px; line-height: 1.7; max-width: 34em; }
+  .row .more { display: inline-block; margin-top: 12px; font-family: var(--mono); font-size: 12px; border-bottom: 1px solid currentColor; }
+  .thumbs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; align-content: start; }
+  .thumbs.one img { grid-column: span 2; }
+  .thumbs.two img { grid-column: span 1; }
+  .thumbs img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; background: var(--tile); transition: transform .4s ease; }
+  .row:hover .thumbs img:first-child { transform: translateY(-3px); }
+  .notile { aspect-ratio: 3 / 1; background: var(--tile); display: grid; place-items: center; font-family: var(--mono); font-size: 12px; color: var(--muted); text-align: center; padding: 12px; }
+
+  /* Project page */
+  .back { display: inline-block; margin-top: 28px; font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
+  .p-title { margin: 22px 0 6px; font-family: var(--display); font-weight: 700; font-size: clamp(40px, 7vw, 84px); line-height: .98; letter-spacing: -.05em; font-variation-settings: "opsz" 96; text-wrap: balance; }
+  .p-sub { font-weight: 500; font-size: clamp(18px, 2.4vw, 26px); color: var(--muted); margin: 0 0 26px; }
+  .p-grid { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 40px; border-top: 1px solid var(--line); padding-top: 18px; }
+  .facts { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px 16px; margin: 0; font-size: 13.5px; align-content: start; }
+  .facts dt { font-family: var(--mono); font-size: 11.5px; color: var(--muted); padding-top: 2px; }
+  .facts dd { margin: 0; }
+  .facts .team { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+  .facts .team li::before { content: "・"; color: var(--muted); }
+  .facts .team li.me { font-weight: 600; }
+  .quote { font-weight: 700; font-size: clamp(19px, 2.2vw, 24px); line-height: 1.5; margin: 0 0 22px; text-wrap: balance; }
+  .body h3 { font-family: var(--mono); font-weight: 400; font-size: 12px; color: var(--muted); margin: 24px 0 6px; letter-spacing: .04em; }
+  .body p { font-size: 15px; line-height: 1.85; margin: 0 0 12px; max-width: 38em; }
+  .gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 40px; }
+  .gallery figure { margin: 0; }
+  .gallery figure.wide { grid-column: 1 / -1; }
+  .gallery img { width: 100%; background: var(--tile); }
+  .gallery figcaption { font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin-top: 6px; }
+  .next { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; margin-top: 48px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .next span { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .next a { font-family: var(--display); font-weight: 600; font-size: clamp(22px, 3vw, 34px); letter-spacing: -.03em; text-align: right; }
+
+  /* Experience + Info */
+  .page-h { margin: 44px 0 30px; font-family: var(--display); font-weight: 700; font-size: clamp(46px, 8vw, 96px); line-height: .92; letter-spacing: -.055em; font-variation-settings: "opsz" 96; }
+  .cv { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 40px; }
+  .cv section.full { grid-column: 1 / -1; }
+  .cv h3 { font-family: var(--mono); font-weight: 400; font-size: 12px; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 6px; margin: 0 0 4px; }
+  .cv ul { margin: 0; padding: 0; }
+  .cv li { list-style: none; display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 14px; font-size: 14px; line-height: 1.6; padding: 8px 0; border-bottom: 1px solid var(--hair); }
+  .cv .y { font-family: var(--mono); font-size: 12px; color: var(--muted); padding-top: 2px; font-variant-numeric: tabular-nums; }
+  .cv .note { display: block; color: var(--muted); font-size: 13px; }
+  /* Logos are transparent: full colour on the light theme, solid white on the dark theme. */
+  .org { display: block; height: 26px; width: auto; max-width: 170px; object-fit: contain; filter: var(--logo-filter); margin-bottom: 8px; }
+  .aff { display: flex; flex-wrap: wrap; gap: 18px 32px; align-items: center; padding-top: 14px; }
+  .aff img { height: 44px; width: auto; max-width: 220px; object-fit: contain; filter: var(--logo-filter); }
+  .aff img.sq { height: 64px; }
+  .aff span { display: inline-flex; align-items: center; color: #111; font-weight: 700; font-size: 15px; letter-spacing: .08em; }
+
+  .info { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; }
+  .info .big { font-weight: 700; font-size: clamp(22px, 2.8vw, 32px); line-height: 1.45; margin: 0 0 22px; text-wrap: balance; }
+  .info p { line-height: 1.85; margin: 0 0 12px; max-width: 36em; }
+  .sea { margin-top: 18px; width: 100%; aspect-ratio: 900 / 586; object-fit: cover; }
+  .sea-cap { font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin-top: 6px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .tags span { border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px; font-size: 13px; }
+
+  footer { margin-top: 56px; padding-top: 14px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+
+  @media (max-width: 800px) {
+    .hero, .row, .p-grid, .info, .cv { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+    .hero p { text-align: left; }
+    .wheel { height: clamp(300px, 50vh, 460px); }
+    .wheel-cap span:last-child { display: none; }
+    .head { grid-template-columns: auto 1fr; row-gap: 8px; }
+    .lang { grid-column: 2; grid-row: 1; }
+    .nav { grid-column: 1 / -1; gap: 18px; }
+    .thumbs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .thumbs.one img { grid-column: 1 / -1; }
+    .thumbs img:nth-child(3) { display: none; }
+    .gallery { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (prefers-reduced-motion: reduce) { .thumbs img { transition: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="head">
+    <a class="logo" href="#" aria-label="HanKO">HanKO</a>
+    <nav class="nav" aria-label="Main">
+      <a href="#" data-nav="work"></a>
+      <a href="#experience" data-nav="experience"></a>
+      <a href="#info" data-nav="info"></a>
+    </nav>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="zh">中文</button>
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="it">IT</button>
+    </div>
+  </header>
+  <main id="view"></main>
+  <div class="pv" id="pv" role="dialog" aria-modal="true" aria-label="Preview" hidden>
+    <button type="button" class="pv-close">✕</button>
+    <button type="button" class="pv-prev">←</button>
+    <figure><img src="" alt=""><figcaption><span class="pv-name"></span><span class="pv-meta"></span><a class="pv-go" href="#"></a></figcaption></figure>
+    <button type="button" class="pv-next">→</button>
+  </div>
+  <footer>
+    <span>© 2026 HanKO 柯承翰</span>
+    <span>hankko60405@gmail.com · IG @ko_hankko</span>
+  </footer>
+</div>
+
+<script>
+/* ---------- UI strings ---------- */
+const UI = {
+  zh: { work: "Portfolio", exp: "經歷", info: "個人資訊", h1: "Selected work", lead: "品牌識別、地方創生、展覽與田野調查。<br>2024 至今。", projects: "個專案", view: "看專案", back: "← 全部作品", next: "下一個專案", soon: "照片待補",
+    cats: { All: "全部", Identity: "品牌識別", Research: "研究", Exhibition: "展覽", Publication: "出版", Object: "物件" },
+    f: { year: "年份", type: "類型", role: "角色", with: "合作", program: "計畫", place: "地點", for: "對象", course: "課程", status: "狀態", team: "團隊", award: "獎項", also: "另見", sdgs: "SDGs", scale: "規模", advisor: "指導老師" } },
+  en: { work: "Portfolio", exp: "Experience", info: "Info", h1: "Selected work", lead: "Brand identity, local revitalisation,<br>exhibitions and field research. 2024–now.", projects: "projects", view: "View project", back: "← All work", next: "Next project", soon: "Photos coming soon",
+    cats: { All: "All", Identity: "Identity", Research: "Research", Exhibition: "Exhibition", Publication: "Publication", Object: "Object" },
+    f: { year: "Year", type: "Type", role: "Role", with: "With", program: "Programme", place: "Place", for: "For", course: "Course", status: "Status", team: "Team", award: "Award", also: "Also", sdgs: "SDGs", scale: "Scale", advisor: "Advisors" } },
+  it: { work: "Portfolio", exp: "Esperienze", info: "Profilo", h1: "Lavori scelti", lead: "Identità visiva, rigenerazione locale,<br>mostre e ricerca sul campo. Dal 2024.", projects: "progetti", view: "Vedi progetto", back: "← Tutti i lavori", next: "Progetto successivo", soon: "Foto in arrivo",
+    cats: { All: "Tutti", Identity: "Identità", Research: "Ricerca", Exhibition: "Mostre", Publication: "Editoria", Object: "Oggetti" },
+    f: { year: "Anno", type: "Tipo", role: "Ruolo", with: "Con", program: "Programma", place: "Luogo", for: "Per", course: "Corso", status: "Stato", team: "Team", award: "Premio", also: "Anche", sdgs: "SDGs", scale: "Dimensioni", advisor: "Docenti" } }
+};
+
+/* ---------- Projects ---------- */
+const P = [
+  { id: "daxi", cat: "Research",
+    name: { zh: "轉城・漫大溪", en: "Turning the Town, Slow Daxi", it: "Daxi, la città lenta" },
+    cover: ["dx-p1.jpg", "dx-p13.jpg", "dx-p14.jpg"],
+    imgs: [
+      ["dx-p1.jpg", { zh: "舊城創新再造：以大溪老街商圈為例", en: "Old-town regeneration: the Daxi Old Street district", it: "Rigenerazione del centro storico: la via vecchia di Daxi" }, true],
+      ["dx-p3.jpg", { zh: "發現與觀察", en: "Discovery and observation", it: "Scoperte e osservazioni" }],
+      ["dx-p4.jpg", { zh: "基地位置：中山路一帶與新增徒步區", en: "Site: Zhongshan Road and the new pedestrian zone", it: "Area: Zhongshan Road e la nuova zona pedonale" }],
+      ["dx-p6.jpg", { zh: "計畫目標 1–3", en: "Objectives 1–3", it: "Obiettivi 1–3" }],
+      ["dx-p7.jpg", { zh: "計畫目標 4–5", en: "Objectives 4–5", it: "Obiettivi 4–5" }],
+      ["dx-p8.jpg", { zh: "SWOT 分析", en: "SWOT analysis", it: "Analisi SWOT" }],
+      ["dx-p13.jpg", { zh: "桃園客運大溪站二樓老屋活化", en: "Reusing the upper floor of Taoyuan Bus Daxi Station", it: "Riuso del piano superiore della stazione di Daxi" }],
+      ["dx-p14.jpg", { zh: "街道改善：中山路徒步區", en: "Street improvement: Zhongshan Road pedestrian zone", it: "Strada: zona pedonale di Zhongshan Road" }],
+      ["dx-p16.jpg", { zh: "四階段執行策略", en: "Four-phase strategy", it: "Strategia in quattro fasi" }],
+      ["dx-p17.jpg", { zh: "我們能做到：空間活化・地方創生・跨域延伸", en: "What we can do: reuse, revitalise, connect", it: "Cosa possiamo fare: riuso, rigenerazione, connessioni" }],
+      ["dx-p18.jpg", { zh: "願景", en: "Vision", it: "Visione" }, true],
+      ["10.jpg", { zh: "桃青提案所發表現場", en: "Presentation at TaoYouth", it: "Presentazione a TaoYouth" }, true]
+    ],
+    zh: { meta: "田野調查・地方創生提案，2025", short: "「舊城創新再造：以大溪老街商圈為例」。田調找出塞車印象、停車擠壓步行空間、轉運站二樓閒置三個問題，以城際轉運站啟用為契機，提出交通、老屋、徒步區、導覽四個空間策略與四階段執行計畫，入選青年局績優提案團隊決選。", quote: "不是蓋新的，而是把已經在那裡的歷史、空間、職人，重新串連起來。",
+      sections: [
+        ["發現與觀察", ["大溪老街長期面臨假日塞車、行人空間不足、老屋閒置等問題。實地踏查後，我們歸納出三個核心：旅客對塞車的心理預期降低了造訪意願；街道設施雖已活化，但路邊停車壓縮了老街的步行空間；桃園客運大溪站的歷史建築尚未完全活化，二樓長期閒置。"]],
+        ["轉變契機", ["大溪城際轉運站即將啟用，老街車流有機會減少，正是整頓老街與老屋、讓文化活動進來的時機。基地設定在大溪老街中山路一帶，在現有老街徒步區之外，規劃新增中山路徒步區。"]],
+        ["計畫目標", ["一、提升街區識別與文化深度：用文化設計挖掘與包裝老街亮點，讓老街從觀光消費場域，變成可以探索、可以感受的文化空間。", "二、促進在地參與與職人共創：邀請街區職人參與設計與活動規劃，把「職人日常」變成文化體驗。", "三、改善觀光動線與交通印象：搭配轉運站啟動，規劃免費或優惠接駁，改善大溪「容易塞車」的印象。", "四、建立徒步文化動線：在中山路試辦假日市集與夜間徒步街區，創造和主街不同的漫遊路線。", "五、活化老屋與創造青年參與場域：以「大溪限定選物」為主題，把空間變成地方創作的展售與體驗平台，串聯更多青年投入。"]],
+        ["分析", ["SWOT：優勢是文化底蘊豐富、政策支持度高；劣勢是交通與人流管理困難、傳統店家改造不易；機會在青年創業、交通樞紐轉型與觀光品牌重塑；威脅則是地方保守意見、外部競爭，以及資金與營運壓力。", "我們也整理六種利害關係人的需求：老街店家想拉長旅客停留時間與消費品質；居民希望減少假日擁塞與噪音；職人需要被看見的舞台；旅客期待有深度的文化路線；青年想要參與與實作的空間；市府則期待創意行動能真正落地。"]],
+        ["空間架構", ["交通節點銜接：以轉運站串連接駁系統，讓旅客不必開車進老街。", "閒置空間活化：桃園客運大溪站二樓引入大溪主題選物店，包含大溪風格選品、木創商品、祭典文化與客運主題。", "街道改善：中山路徒步區增加步行空間與停留時間，導入文化設計讓老店成為街區特色，並配合世界無車日推行。", "導覽系統：串連木博館、公園導覽與徒步區動線，延伸河東老城區的體驗。"]],
+        ["執行策略", ["階段一：計畫啟動、街區盤點、老店訪談、空間媒合、視覺初稿。", "階段二：空間準備、體驗設計、導覽與接駁路線規劃、招募協力人員。", "階段三：徒步區市集試辦、選物店開放、導覽與接駁實施。", "階段四：成果統整、參與者回饋調查、成果發表與再設計提案。", "預定配合轉運站啟動，自 2026 年 1 月 1 日起實施，並依實際狀況彈性調整。"]],
+        ["未來發想", ["由桃園客運、日日田與市府資源三方合作，我們希望做到三件事：空間活化，用活化取代新建，創造多元的文化價值；地方創生，連結青年能量與在地資源，促進社區共好；跨域延伸，發展藝文與交通產業的合作模式。", "我們想像的大溪，是在濃厚的文化氛圍中漫步，感受街區每個角落的對話，悄悄帶走屬於大溪的記憶；讓低碳永續與文化傳承並重，成為台灣文化再生的典範。"]],
+        ["成果", ["2025 年 10 月 30 日，在桃園市政府青年事務局「桃青提案所－績優提案團隊決選評比暨成果交流發表會」公開發表。"]]
+      ] },
+    en: { meta: "Field research & local revitalisation proposal, 2025", short: "'Old-town regeneration: the Daxi Old Street district.' Fieldwork found three problems — the expectation of traffic jams, parking squeezing out pedestrians, and an empty upper floor at the bus station. Using the opening of the intercity bus station as the trigger, we proposed four spatial strategies — transport, old buildings, a pedestrian street and wayfinding — with a four-phase plan, and were a finalist among the Youth Affairs Bureau's outstanding proposals.", quote: "Not building something new, but reconnecting the history, spaces and craftspeople already there.",
+      sections: [
+        ["Discovery", ["Daxi Old Street struggles with weekend traffic, too little room for pedestrians and empty old houses. On site we narrowed it to three issues: visitors expect jams and stay away; the street has been improved, but roadside parking still takes over the walking space; and the historic Taoyuan Bus Daxi Station is only partly in use, its upper floor long empty."]],
+        ["The opportunity", ["Daxi's new intercity bus station is about to open, which could cut traffic in the old town — the right moment to tidy up the street and its old buildings and bring culture in. The site is the Zhongshan Road area, where we planned a new pedestrian zone alongside the existing one."]],
+        ["Objectives", ["1. Strengthen the district's identity and cultural depth: use cultural design to uncover the street's highlights and turn it from a place of tourist shopping into one to explore and feel.", "2. Involve locals and co-create with craftspeople: invite them into design and event planning, and turn their everyday work into cultural experiences.", "3. Improve visitor routes and the traffic image: add a free or discounted shuttle from the new station to change Daxi's reputation for jams.", "4. Create a walking route: trial weekend markets and a night-time pedestrian street on Zhongshan Road, a different way to wander than the main street.", "5. Reuse old buildings and give young people a place: a 'Daxi-only' select shop that becomes a platform to sell and experience local work."]],
+        ["Analysis", ["SWOT: strengths in cultural heritage and policy support; weaknesses in traffic management and how hard it is to change traditional shops; opportunities in young entrepreneurs, the transport hub and rebranding tourism; threats from local resistance, competition, and funding pressure.", "We mapped six stakeholders: shop owners want longer, better visits; residents want less crowding and noise; craftspeople want a stage; visitors want routes with depth; young people want places to take part; and the city wants creative action that actually lands."]],
+        ["Spatial framework", ["Transport links: connect a shuttle system to the bus station so visitors don't need to drive into the old town.", "Reusing empty space: a Daxi-themed select shop upstairs at Taoyuan Bus Daxi Station — local goods, woodcraft, festival culture and bus history.", "Street improvement: a pedestrian zone on Zhongshan Road with more walking space and longer stays, cultural design that makes old shops stand out, launched on World Car-Free Day.", "Wayfinding: link the wood art museum, park tours and the pedestrian route to extend the experience of the old town east of the river."]],
+        ["Strategy", ["Phase 1: launch, street survey, interviews with old shops, space matching, first visuals.", "Phase 2: space preparation, experience design, tour and shuttle routes, recruiting partners.", "Phase 3: trial pedestrian market, select shop opening, tours and shuttle running.", "Phase 4: review, participant feedback, public presentation and a revised proposal.", "Planned to start with the bus station on 1 January 2026, adjusted as needed."]],
+        ["Looking ahead", ["With Taoyuan Bus, Day Day Tian Studio and city resources working together, we want three things: reuse instead of new building, creating many kinds of cultural value; local revitalisation that connects young people with local resources; and new partnerships between the arts and transport.", "We imagine a Daxi where you stroll through a rich cultural atmosphere, hear every corner of the street talking, and quietly take a memory of the town home — low-carbon and rooted in heritage, a model for cultural renewal in Taiwan."]],
+        ["Outcome", ["Presented on 30 October 2025 at the Taoyuan City Youth Affairs Bureau's finals for outstanding proposal teams."]]
+      ] },
+    it: { meta: "Ricerca sul campo e proposta di rigenerazione, 2025", short: "'Rigenerare il centro storico: la via vecchia di Daxi.' La ricerca ha individuato tre problemi — la paura del traffico, il parcheggio che toglie spazio ai pedoni, il piano superiore vuoto della stazione. Partendo dall'apertura della nuova stazione degli autobus, abbiamo proposto quattro strategie — trasporti, edifici storici, strada pedonale e orientamento — con un piano in quattro fasi, arrivando in finale tra le migliori proposte dell'Ufficio giovani.", quote: "Non costruire qualcosa di nuovo, ma ricollegare la storia, gli spazi e gli artigiani che sono già lì.",
+      sections: [
+        ["Scoperte", ["La via storica di Daxi soffre di traffico nel fine settimana, poco spazio per i pedoni e case vecchie vuote. Sul posto abbiamo individuato tre nodi: i visitatori si aspettano code e rinunciano; la strada è stata migliorata, ma il parcheggio a bordo strada occupa ancora lo spazio pedonale; la storica stazione degli autobus di Daxi è usata solo in parte, con il piano superiore vuoto da anni."]],
+        ["L'occasione", ["La nuova stazione interurbana di Daxi sta per aprire e può ridurre il traffico nel centro storico: il momento giusto per sistemare la via e gli edifici e far entrare la cultura. L'area è quella di Zhongshan Road, dove abbiamo previsto una nuova zona pedonale accanto a quella esistente."]],
+        ["Obiettivi", ["1. Rafforzare identità e profondità culturale: con il design culturale far emergere i punti forti della via, da luogo di shopping turistico a spazio da esplorare.", "2. Coinvolgere residenti e artigiani: invitarli a progettare eventi e trasformare il loro lavoro quotidiano in esperienza culturale.", "3. Migliorare percorsi e immagine del traffico: navetta gratuita o scontata dalla nuova stazione per cambiare la fama di Daxi.", "4. Creare un percorso a piedi: mercati nel fine settimana e strada pedonale serale su Zhongshan Road, un modo diverso di passeggiare.", "5. Riusare edifici storici e dare spazio ai giovani: un negozio 'solo Daxi' come piattaforma per vendere e far provare il lavoro locale."]],
+        ["Analisi", ["SWOT: punti di forza nel patrimonio e nel sostegno politico; debolezze nella gestione del traffico e nella difficoltà di cambiare i negozi tradizionali; opportunità nei giovani imprenditori, nel nodo dei trasporti e nel rilancio turistico; minacce dalle resistenze locali, dalla concorrenza e dalla pressione economica.", "Abbiamo mappato sei portatori d'interesse: commercianti, residenti, artigiani, visitatori, giovani e il comune, ciascuno con bisogni diversi, dalla qualità delle visite alla possibilità di partecipare."]],
+        ["Struttura spaziale", ["Collegamenti: un sistema di navette dalla stazione, così non serve entrare in auto nel centro storico.", "Riuso: un negozio a tema Daxi al piano superiore della stazione di Taoyuan Bus — prodotti locali, legno, feste tradizionali e storia degli autobus.", "Strada: zona pedonale su Zhongshan Road con più spazio per camminare, design culturale per valorizzare i negozi storici, avviata nella Giornata mondiale senz'auto.", "Orientamento: collegare il museo del legno, le visite al parco e il percorso pedonale per estendere l'esperienza del centro storico."]],
+        ["Strategia", ["Fase 1: avvio, ricognizione, interviste ai negozi storici, abbinamento degli spazi, prime grafiche.", "Fase 2: preparazione degli spazi, design dell'esperienza, percorsi di visita e navetta, ricerca di collaboratori.", "Fase 3: mercato pedonale di prova, apertura del negozio, visite e navetta attive.", "Fase 4: bilancio, questionari ai partecipanti, presentazione pubblica e proposta rivista.", "Avvio previsto con la stazione, dal 1° gennaio 2026, con margini di adattamento."]],
+        ["Sguardo al futuro", ["Con Taoyuan Bus, Day Day Tian Studio e le risorse del comune vogliamo tre cose: riusare invece di costruire, creando valore culturale; una rigenerazione che unisca i giovani alle risorse locali; nuove collaborazioni tra arte e trasporti.", "Immaginiamo una Daxi in cui si passeggia in un'atmosfera ricca di cultura, si ascolta ogni angolo della strada e si porta a casa un ricordo della città: a basse emissioni e radicata nel patrimonio, un modello di rinascita culturale per Taiwan."]],
+        ["Risultato", ["Presentato il 30 ottobre 2025 alla finale delle migliori proposte dell'Ufficio per i giovani di Taoyuan."]]
+      ] } },
+
+  { id: "shennong", cat: "Publication",
+    name: { zh: "野神降臨品", en: "Descent of the Wild God", it: "La discesa del dio selvatico" },
+    imgs: [["09.jpg", { zh: "封面與內頁展開", en: "Cover and spreads", it: "Copertina e pagine interne" }, true]],
+    zh: { meta: "手冊設計，2025", short: "大溪南興社區神農永昌宮的文化導覽手冊。用插圖角色、圖示系統、地圖與互動任務，把神農信仰與安金工藝轉譯成親子讀得懂的內容。", quote: "把廟宇裡幾百年的故事，變成小朋友願意翻開來看的東西。",
+      facts: [["year","2025"],["type","手冊設計・插圖系統・版面"],["role","視覺設計"],["with","日日田職物所 × 國立臺北商業大學"],["for","親子、來訪民眾"],["place","桃園大溪南興社區 神農永昌宮"]],
+      sections: [["理念", ["永昌宮擁有豐富的神農文化與安金工藝，卻缺少一般民眾讀得懂的導覽媒介。這本手冊以活潑插圖與易讀版面重新包裝信仰與工藝知識，適合親子一起閱讀。"]],
+                 ["設計", ["以橘色為主色調，透過趣味角色帶讀者認識神農大帝的故事與安金工藝；結合地圖、圖示系統、廟宇照片與互動任務，兼顧視覺與資訊深度。"]]] },
+    en: { meta: "Publication design, 2025", short: "A guidebook to the Shennong Yongchang Temple in Nanxing, Daxi. Illustrated characters, an icon system, maps and small missions turn temple faith and gold-leaf craft into something families can read together.", quote: "Turning centuries of temple stories into something a child wants to open.",
+      facts: [["year","2025"],["type","Booklet, illustration system, layout"],["role","Visual design"],["with","Day Day Tian Studio × NTUB"],["for","Families and visitors"],["place","Shennong Yongchang Temple, Nanxing, Daxi"]],
+      sections: [["Concept", ["The temple holds a rich Shennong tradition and gold-leaf craft, but nothing a casual visitor can easily read. The booklet repackages that knowledge with lively drawings and a clear layout for parents and children."]],
+                 ["Design", ["Orange leads the palette. Playful characters introduce the legend of the Divine Farmer and the craft of gold leaf, supported by maps, icons, temple photographs and hands-on tasks."]]] },
+    it: { meta: "Progetto editoriale, 2025", short: "Una guida al tempio Shennong Yongchang nel quartiere di Nanxing, a Daxi. Personaggi illustrati, un sistema di icone, mappe e piccole missioni rendono la fede e l'arte della foglia d'oro leggibili per le famiglie.", quote: "Trasformare secoli di storie del tempio in qualcosa che un bambino ha voglia di aprire.",
+      facts: [["year","2025"],["type","Opuscolo, illustrazioni, impaginazione"],["role","Visual design"],["with","Day Day Tian Studio × NTUB"],["for","Famiglie e visitatori"],["place","Tempio Shennong Yongchang, Nanxing, Daxi"]],
+      sections: [["Concetto", ["Il tempio custodisce una ricca tradizione legata a Shennong e all'arte della foglia d'oro, ma mancava una guida per il pubblico. L'opuscolo la racconta con disegni vivaci e un'impaginazione chiara."]],
+                 ["Design", ["L'arancione guida la palette. Personaggi giocosi presentano la leggenda del Divino Agricoltore e la lavorazione della foglia d'oro, con mappe, icone, fotografie del tempio e attività da fare."]]] } },
+
+  { id: "tangyuan", cat: "Identity",
+    name: { zh: "龍潭市場 大湯圓", en: "Big Tangyuan", it: "Big Tangyuan" },
+    cover: ["ty-flag.jpg", "ty-0093.jpg", "ty-0081.jpg"],
+    imgs: [
+      ["ty-9899.jpg", { zh: "改造前：原本的紅色手寫招牌", en: "Before: the old red hand-painted sign", it: "Prima: la vecchia insegna rossa dipinta a mano" }],
+      ["ty-0448.jpg", { zh: "改造前：手寫品項板，新客很難看懂", en: "Before: a handwritten menu newcomers struggled to read", it: "Prima: un menù scritto a mano, difficile per i nuovi clienti" }],
+      ["ty-flag.jpg", { zh: "大旗：穿客家花布的湯圓吉祥物、手寫字與中式邊框", en: "Flag: a tangyuan mascot in Hakka floral cloth, hand lettering and a Chinese frame", it: "Bandiera: la mascotte in stoffa floreale hakka, lettering a mano e cornice cinese" }, true],
+      ["ty-card.jpg", { zh: "攤車與名片主視覺", en: "Cart and business-card visual", it: "Visual per carretto e biglietti da visita" }],
+      ["ty-0093.jpg", { zh: "改造後的攤車", en: "The redesigned cart", it: "Il carretto rinnovato" }],
+      ["ty-0072.jpg", { zh: "攤車上重新整理的產品分類", en: "Products regrouped on the cart", it: "I prodotti riorganizzati sul carretto" }],
+      ["ty-0081.jpg", { zh: "大旗在市場裡", en: "The flag above the market", it: "La bandiera sopra il mercato" }],
+      ["ty-0370.jpg", { zh: "假日的龍潭市場", en: "Longtan Market on a weekend", it: "Il mercato di Longtan nel fine settimana" }],
+      ["ty-0490.jpg", { zh: "邱媽媽", en: "Mama Qiu at work", it: "Mamma Qiu al lavoro" }],
+      ["ty-0173.jpg", { zh: "團隊與店家在新攤位前合影", en: "The team and the owners at the new stall", it: "Il team e i titolari davanti al nuovo banco" }, true]
+    ],
+    zh: { meta: "攤販品牌改造，2025", short: "龍潭市場經營 30 年的客家手工湯圓攤，品項超過十種，大家卻只認得「大湯圓」。我們四人團隊重新整理品牌識別、產品分類與攤位視覺，大旗、攤車與名片都已在市場使用。", quote: "希望這 30 年的好味道，能被更多人看見、傳承下去。",
+      facts: [["year","2025.09 – 2025.11"],["role","品牌視覺設計・名片・攝影紀錄"],["team","曾琮竣、張鈞舜、陳俊豪"],["advisor","林育如"],["course","敘事展示設計"],["program","114 年度大學社會責任實踐 USR-Hub 計畫「籽食好客：在地客庄生活與飲食文化的傳承與創新」"],["for","邱媽媽大湯圓"],["type","品牌識別・大旗・攤車・名片・貼紙"],["place","桃園龍潭市場"],["status","已落地使用"]],
+      sections: [["背景", ["邱媽媽在龍潭市場經營客家手工湯圓已經 30 年，以傳統工法建立口碑。除了大、小湯圓，還有發糕、客家肉粽、鹹甜年糕、客家麻糬、紅龜粿與艾草粿。客人多是在地居民與回流熟客，假日擺攤，冬至、元宵與過年是一年中最忙的時候。"]],
+                 ["問題", ["品項有 6 到 10 種以上，但大家的印象只有「大湯圓」。現場幾乎沒有宣傳文案，只在臉書看得到資訊，也沒有系統化的品牌識別，新客看不出賣什麼，也記不住。"]],
+                 ["設計", ["我們建立了完整的識別系統：穿客家花布的湯圓吉祥物、手寫字與中式邊框，主色取自湯圓溫暖的黃，散落的圓點呼應湯圓漂浮在碗中。接著重新整理產品分類，直接印在攤車上，讓新客一眼看懂；再延伸到大旗、名片與攤位展板。"]],
+                 ["店家反饋", ["成品交給邱媽媽時，她說：「我很喜歡，可以留下給我嗎？」"]]] },
+    en: { meta: "Market stall rebrand, 2025", short: "A Hakka tangyuan stall that has run in Longtan Market for 30 years, selling more than ten foods while people only knew it for 'big tangyuan'. Our team of four rebuilt its identity, product groups and stall graphics; the flag, cart and business cards are all in use at the market.", quote: "We hope 30 years of good flavour can be seen by more people and passed on.",
+      facts: [["year","Sep – Nov 2025"],["role","Brand design, business cards, photography"],["team","Tseng Tsung-Chun, Chang Chun-Shun, Chen Chun-Hao"],["advisor","Lin Yu-Ju"],["course","Narrative Exhibition Design"],["program","MOE University Social Responsibility (USR-Hub) programme 2025: Hakka food culture, passed on and renewed"],["for","Mama Qiu's tangyuan stall"],["type","Identity, flag, cart, business cards, stickers"],["place","Longtan Market, Taoyuan"],["status","In use"]],
+      sections: [["Background", ["Mama Qiu has made Hakka tangyuan by hand in Longtan Market for 30 years. Besides big and small tangyuan she sells fa gao, Hakka zongzi, sweet and savoury rice cakes, mochi, red tortoise cakes and mugwort cakes. Her customers are mostly locals and regulars; she trades at weekends, and the winter solstice, Lantern Festival and Lunar New Year are her busiest days."]],
+                 ["Problem", ["She makes six to ten or more products, yet people only knew her for big tangyuan. There was almost no signage or copy at the stall — information lived only on Facebook — and no consistent identity, so new customers couldn't tell what she sold or remember her."]],
+                 ["Design", ["We built a full identity: a tangyuan mascot wearing Hakka floral cloth, hand lettering and a Chinese frame, with a warm tangyuan yellow and scattered dots like rice balls floating in a bowl. We regrouped the products and printed them on the cart so newcomers understand at a glance, then carried the system onto the flag, business cards and stall boards."]],
+                 ["Feedback", ["When we handed over the work, Mama Qiu asked: \"I love it — can I keep it?\""]]] },
+    it: { meta: "Rebranding di un banco del mercato, 2025", short: "Un banco di tangyuan hakka fatti a mano, al mercato di Longtan da 30 anni: più di dieci prodotti, ma tutti lo conoscevano solo per i 'tangyuan grandi'. In quattro abbiamo ridisegnato identità, categorie dei prodotti e grafica del banco; bandiera, carretto e biglietti da visita sono già in uso.", quote: "Vorremmo che questi 30 anni di buon sapore fossero visti da più persone e tramandati.",
+      facts: [["year","Set – Nov 2025"],["role","Brand design, biglietti da visita, fotografia"],["team","Tseng Tsung-Chun, Chang Chun-Shun, Chen Chun-Hao"],["advisor","Lin Yu-Ju"],["course","Narrative Exhibition Design"],["program","Programma di responsabilità sociale universitaria (USR-Hub) 2025: la cultura gastronomica hakka tra tradizione e innovazione"],["for","Il banco di Mamma Qiu"],["type","Identità, bandiera, carretto, biglietti, adesivi"],["place","Mercato di Longtan, Taoyuan"],["status","In uso"]],
+      sections: [["Contesto", ["Da 30 anni Mamma Qiu prepara a mano i tangyuan hakka al mercato di Longtan. Oltre ai tangyuan grandi e piccoli vende fa gao, zongzi hakka, torte di riso dolci e salate, mochi, dolci della tartaruga rossa e dolci all'artemisia. I clienti sono soprattutto abitanti e habitué; lavora nel fine settimana, e il solstizio d'inverno, la Festa delle Lanterne e il Capodanno lunare sono i giorni più intensi."]],
+                 ["Problema", ["I prodotti sono da sei a più di dieci, ma tutti la conoscevano solo per i tangyuan grandi. Al banco non c'erano quasi testi né insegne — le informazioni erano solo su Facebook — e mancava un'identità coerente: i nuovi clienti non capivano cosa vendesse né se la ricordavano."]],
+                 ["Design", ["Abbiamo creato un'identità completa: una mascotte-tangyuan vestita di stoffa floreale hakka, lettering a mano e una cornice cinese, con il giallo caldo dei tangyuan e puntini sparsi come palline nella ciotola. Abbiamo riorganizzato i prodotti e li abbiamo stampati sul carretto, poi esteso il sistema a bandiera, biglietti da visita e pannelli del banco."]],
+                 ["Il commento", ["Quando le abbiamo consegnato il lavoro, Mamma Qiu ha chiesto: «Mi piace tantissimo, posso tenerlo?»"]]] } },
+
+  { id: "alive", cat: "Exhibition",
+    name: { zh: "呼吸存在", en: "ALIVE : IN.BREATH", it: "ALIVE : IN.BREATH" },
+    imgs: [["01.jpg", { zh: "主視覺海報", en: "Key poster", it: "Manifesto principale" }, true], ["02.jpg", { zh: "周邊與識別證", en: "Merchandise and passes", it: "Gadget e pass" }], ["03.jpg", { zh: "展場", en: "Exhibition booth", it: "Lo stand" }]],
+    zh: { meta: "畢業展識別，2026", short: "北商商設系 115 級畢業展。以呼吸比喻設計應如空氣般存在於生活中，用氣泡作為核心視覺，延伸到展場、周邊與社群。入圍 2026 放視大賞視覺設計組複選。", quote: "設計不該是刻意為之的裝飾，而是如空氣般，存在於生活的每一處。",
+      facts: [["year","2025.07 – 2026.06"],["role","畢籌會二技總召；主視覺呈現・周邊製作・社群經營・攝影紀錄・會議記錄"],["team","張雯珺（展場規劃・展覽統籌）、林況穎（主視覺設計・周邊規劃）、潘品熙（文書・3D 與平面圖）"],["advisor","蔡誠一、朱以恬、伍小玲"],["type","展覽識別・周邊・社群"],["scale","16 個專題、59 位參展同學"],["award","2026 放視大賞 視覺設計組 複選入圍"],["also","新一代設計展（YODEX）、2026 青春設計節"]],
+      sections: [["理念", ["呼吸是與生俱來的本能，無需學習，卻貫穿生命始終。吸氣是理解世界的過程，呼氣則是對世界的回應。", "展覽分為社會、自然環保與人文三大面向，呈現從學習（吸氣）到創造（呼氣）的轉化：吸收、沉澱、詮釋、回應。"]],
+                 ["執行", ["以藍、白、黑為主色，氣泡為核心視覺元素。設計品涵蓋展覽海報、DM、邀請函、香氛片、金屬徽章、貼紙與工作證，並透過 Instagram 與 Threads 經營社群。"]],
+                 ["總召", ["我擔任 115 級畢業籌備會二技總召。本屆採「四技、二技分開管理、共同協作」：每次審查或大型活動前，我和四技總召簡佑臻、兩位副召一起決定各組的工作項目、做法與人力，再公告給形象、場佈、活動、公關、財務、媒體各組組長執行，統整全系 16 個專題、59 位同學。",
+                 "總召組負責四次專題審查：安排時程、撰寫審查規範（動線、順序、時間與扣分標準）、製作簽到表與評分表、確認評審出席，審查後統計成績與加扣分。我同時是形象組成員，參與主視覺與展場，讓兩班之間的資訊流通更順暢。展覽結束後，總召組把整年的做法整理成交接文件，留給下一屆。", "展期包含 2026 年 5 月 6 日至 10 日的桃園校區校內展（開幕式、剪綵與專題審查），以及 5 月 22 日至 25 日在南港展覽館的新一代設計展 E-11 展區。我也以畢籌會負責人身分撰寫並提出桃園市政府青年事務局的補助申請，搭配展覽規劃三場「設計創業職涯論壇」；青年事務局也列名為展覽的指導單位。"]]] },
+    en: { meta: "Graduation exhibition identity, 2026", short: "The NTUB Commercial Design class of 2026 graduation show. Breathing stands for design that lives in everyday life like air; bubbles carry the identity across the booth, merchandise and social media. Shortlisted at Vision Get Wild 2026.", quote: "Design shouldn't be deliberate decoration, but like air — present in every part of life.",
+      facts: [["year","Jul 2025 – Jun 2026"],["role","Co-chair of the graduation committee (two-year programme); key visual application, merchandise, social media, photography, meeting notes"],["team","Chang Wen-Chun (exhibition planning, coordination), Lin Kuang-Ying (key visual, merchandise planning), Pan Pin-Hsi (documents, 3D and floor plans)"],["advisor","Tsai Cheng-Yi, Chu Yi-Tien, Wu Hsiao-Ling"],["type","Exhibition identity, merchandise, social media"],["scale","16 projects, 59 exhibiting students"],["award","Vision Get Wild 2026, Visual Design — shortlisted"],["also","Young Designers' Exhibition (YODEX); Youth Innovative Design Festival 2026"]],
+      sections: [["Concept", ["Breathing is instinct: we never learn it, yet it runs through all of life. Breathing in is understanding the world; breathing out is answering it.", "The show is organised around society, nature and humanity, tracing the shift from learning (breathing in) to making (breathing out): absorb, settle, interpret, respond."]],
+                 ["Execution", ["Blue, white and black, with bubbles as the core element. The system covers posters, flyers, invitations, scent cards, metal pins, stickers and staff passes, plus Instagram and Threads."]],
+                 ["Chair", ["I chaired the two-year programme in the class of 2026 graduation committee. The four-year and two-year classes were run separately but worked together: before every review or major event, four-year chair Chien Yu-Chen, the two vice-chairs and I agreed each team's tasks, methods and staffing, then briefed the leads of the identity, set-up, events, PR, finance and media teams — 16 projects and 59 students in all.",
+                 "Our core team ran all four project reviews: scheduling, writing the review rules (route, order, timing and penalties), preparing sign-in and score sheets, confirming jurors, and tallying scores afterwards. I was also on the identity team, working on the key visual and exhibition space, which kept information flowing between the two classes. After the show our team wrote up the year's methods as a handover document for the next committee.", "The show ran on the Taoyuan campus from 6 to 10 May 2026, with an opening ceremony and project reviews, then at the Young Designers' Exhibition in Taipei Nangang, booth E-11, from 22 to 25 May. As the committee's representative I also wrote and submitted a grant application to the Taoyuan City Youth Affairs Bureau, pairing the show with three Design Entrepreneurship and Career Forum sessions. The bureau is listed as a supporting organisation of the show."]]] },
+    it: { meta: "Identità della mostra di laurea, 2026", short: "La mostra di laurea del corso di Commercial Design dell'NTUB, 2026. Il respiro rappresenta un design che vive nella quotidianità come l'aria; le bolle portano l'identità dallo stand ai gadget e ai social. Selezionata al Vision Get Wild 2026.", quote: "Il design non dovrebbe essere decorazione voluta, ma come l'aria: presente in ogni parte della vita.",
+      facts: [["year","Lug 2025 – Giu 2026"],["role","Co-coordinatore del comitato (corso biennale); applicazioni del visual, gadget, social, fotografia, verbali"],["team","Chang Wen-Chun (allestimento, coordinamento), Lin Kuang-Ying (visual principale, gadget), Pan Pin-Hsi (documenti, piante e 3D)"],["advisor","Tsai Cheng-Yi, Chu Yi-Tien, Wu Hsiao-Ling"],["type","Identità della mostra, gadget, social"],["scale","16 progetti, 59 studenti"],["award","Vision Get Wild 2026, Visual Design — selezionato"],["also","Young Designers' Exhibition (YODEX); Youth Innovative Design Festival 2026"]],
+      sections: [["Concetto", ["Respirare è istinto: non lo impariamo, eppure accompagna tutta la vita. Inspirare è capire il mondo; espirare è rispondergli.", "La mostra è divisa in tre ambiti, società, natura e umanità, e racconta il passaggio dall'imparare (inspirare) al creare (espirare): assorbire, sedimentare, interpretare, rispondere."]],
+                 ["Realizzazione", ["Blu, bianco e nero, con le bolle come elemento centrale. Il sistema comprende manifesti, volantini, inviti, cartoncini profumati, spille, adesivi e pass, oltre a Instagram e Threads."]],
+                 ["Coordinamento", ["Sono stato coordinatore del corso biennale nel comitato della mostra di laurea 2026. I corsi quadriennale e biennale erano gestiti separatamente ma collaboravano: prima di ogni revisione o evento importante, con Chien Yu-Chen, che coordinava il corso quadriennale, e i due vicecoordinatori decidevamo compiti, metodi e personale di ogni gruppo, poi informavamo i responsabili di identità, allestimento, eventi, PR, finanze e media: 16 progetti e 59 studenti.",
+                 "Il nostro gruppo gestiva le quattro revisioni dei progetti: calendario, regole (percorso, ordine, tempi e penalità), fogli firme e di valutazione, conferma dei giurati e, dopo, il calcolo dei punteggi. Facevo anche parte del gruppo identità, lavorando su visual e allestimento, così le informazioni circolavano bene tra le due classi. Dopo la mostra il nostro gruppo ha raccolto i metodi dell'anno in un documento di passaggio di consegne per il comitato successivo.", "La mostra si è tenuta nel campus di Taoyuan dal 6 al 10 maggio 2026, con inaugurazione e revisioni dei progetti, e poi allo Young Designers' Exhibition di Taipei Nangang, stand E-11, dal 22 al 25 maggio. Come referente del comitato ho anche scritto e presentato una richiesta di contributo all'Ufficio per i giovani di Taoyuan, affiancando alla mostra tre incontri su design, impresa e carriera. L'Ufficio compare tra gli enti promotori della mostra."]]] } },
+
+  { id: "bottle", cat: "Object",
+    name: { zh: "瓶中信", en: "Message in a Bottle", it: "Messaggio in bottiglia" },
+    imgs: [["11.jpg", { zh: "識別", en: "Identity", it: "Identità" }, true], ["12.jpg", { zh: "書殼與包裝", en: "Covers and packaging", it: "Copertine e packaging" }], ["13.jpg", { zh: "磨光與纏繞", en: "Polished and entwined", it: "Levigato e intrecciato" }]],
+    zh: { meta: "永續產品設計，2026", short: "從一次淨灘出發，把廢棄寶特瓶的再生纖維（R-PET）做成書殼，推出磨光與纏繞兩款。參加 2026 臺灣國際學生創意設計大賽。", quote: "書，本身就是一種瓶中信。我們讓海廢成為它的殼，讓故事繼續前進。",
+      facts: [["year","2026"],["type","永續設計・視覺設計"],["role","視覺設計・概念共創"],["with","陳羿豪（產品開發）"],["sdgs","SDG 12、SDG 14"],["award","2026 臺灣國際學生創意設計大賽 參賽"]],
+      sections: [["痛點", ["台灣淨灘統計中，寶特瓶長年占比超過 23%。一次淨灘讓我們開始思考：廢棄的寶特瓶除了回收，還能成為什麼？"]],
+                 ["設計", ["把 R-PET 轉化為書殼材料，推出磨光與纏繞兩款，呼應海廢材料本身的物理特性。視覺以海洋藍白為主，清透輕盈。"]]] },
+    en: { meta: "Sustainable product, 2026", short: "Born on a beach clean-up: recycled PET fibre from discarded bottles becomes a book cover, in polished and entwined versions. Entered in the Taiwan International Student Design Competition 2026.", quote: "A book is itself a message in a bottle. We let ocean waste become its shell, so the story keeps going.",
+      facts: [["year","2026"],["type","Sustainable design, visual design"],["role","Visual design, co-concept"],["with","Chen Yi-Hao (product development)"],["sdgs","SDG 12, SDG 14"],["award","TISDC 2026 — entry"]],
+      sections: [["Problem", ["PET bottles have made up more than 23% of Taiwan's beach litter for years. One clean-up made us ask: beyond recycling, what else could a bottle become?"]],
+                 ["Design", ["R-PET is turned into cover material in two finishes, polished and entwined, echoing the physical nature of ocean waste. The visuals stay clear and light in sea blue and white."]]] },
+    it: { meta: "Prodotto sostenibile, 2026", short: "Nato da una pulizia della spiaggia: la fibra di PET riciclato delle bottiglie diventa una copertina per libri, in versione levigata e intrecciata. In concorso al Taiwan International Student Design Competition 2026.", quote: "Un libro è già un messaggio in bottiglia. Lasciamo che i rifiuti del mare diventino il suo guscio, perché la storia continui.",
+      facts: [["year","2026"],["type","Design sostenibile, visual design"],["role","Visual design, co-ideazione"],["with","Chen Yi-Hao (sviluppo prodotto)"],["sdgs","SDG 12, SDG 14"],["award","TISDC 2026 — partecipazione"]],
+      sections: [["Problema", ["Da anni le bottiglie di PET superano il 23% dei rifiuti raccolti sulle spiagge di Taiwan. Una giornata di pulizia ci ha fatto chiedere: oltre al riciclo, cosa può diventare una bottiglia?"]],
+                 ["Design", ["L'R-PET diventa materiale per copertine in due finiture, levigata e intrecciata, che richiamano la natura fisica dei rifiuti marini. La grafica resta leggera e trasparente, in blu mare e bianco."]]] } },
+
+  { id: "afterglow", cat: "Research",
+    name: { zh: "Afterglow 餘暉", en: "Afterglow", it: "Afterglow" },
+    cover: ["ag-p12.jpg", "ag-p13.jpg", "ag-p9.jpg"],
+    imgs: [
+      ["ag-p12.jpg", { zh: "挑選出的結果：橘色光軌", en: "Curated outcome: orange trails", it: "Risultato scelto: scie arancioni" }, true],
+      ["ag-p2.jpg", { zh: "願景：用快門速度製造光影的延遲", en: "Vision: lag in light through shutter speed", it: "Visione: ritardo della luce con il tempo di posa" }],
+      ["ag-p4.jpg", { zh: "指令：一次只改一個變數", en: "Instructions: change one variable at a time", it: "Istruzioni: una variabile alla volta" }],
+      ["ag-p6.jpg", { zh: "迭代：光圈", en: "Iteration: aperture", it: "Iterazione: diaframma" }],
+      ["ag-p9.jpg", { zh: "迭代：燈光顏色", en: "Iteration: light colour", it: "Iterazione: colore della luce" }],
+      ["ag-p10.jpg", { zh: "全部結果", en: "All outcomes", it: "Tutti i risultati" }, true],
+      ["ag-p13.jpg", { zh: "挑選出的結果：黃綠光軌", en: "Curated outcome: yellow-green trails", it: "Risultato scelto: scie giallo-verdi" }, true]
+    ],
+    zh: { meta: "實驗攝影，2026", short: "菁英培訓工作坊「The Machine Decides」作品。我設計一台由繩子、燈與相機組成的「機器」，用長曝光讓光留下延遲的軌跡，一次只改一個變數，再從大量結果中挑出最有意義的畫面。", quote: "用快門速度，製造光影的延遲。",
+      sections: [["題目", ["工作坊要求先設定願景，再交給一台「非人」的機器去製作。設計者只能寫指令、建立條件、觀察與迭代，最後要回答：我是放棄了原本的想像，還是不斷迭代，把機器拉回我想要的樣子？"]],
+                 ["願景", ["Afterglow：讓光在畫面裡拖出殘影，像光離開之後還留下的溫度。"]],
+                 ["機器與指令", ["繩子末端綁上燈，讓它旋轉或擺動，相機用長曝光記錄軌跡。規則是一次只改一個變數：繩子的長短與材質（麂皮、童軍繩、棉繩）、光圈（f/4 到 f/22）、快門（1/10 秒到 30 秒）、焦距（24 到 105mm），以及燈的顏色。"]],
+                 ["迭代與結果", ["我把每一次拍攝的參數都記錄在表格裡，從上百張結果中比較差異。我最喜歡的組合是 ISO 200、f/20、15 秒、60mm，配上橘色燈光與棉繩，光軌最飽滿，也最有層次。"]],
+                 ["比較與反思", ["最後把原始願景和挑選出的結果並排比較。我發現自己不是在等機器剛好做出想要的畫面，而是透過控制變數，一步步理解機器能做到什麼，再從意外裡挑選。"]]] },
+    en: { meta: "Experimental photography, 2026", short: "Made in the elite programme workshop 'The Machine Decides'. I built a 'machine' of rope, lights and a camera, used long exposures to let light leave a lagging trace, changed one variable at a time, and curated the most meaningful frames from a large set of outcomes.", quote: "Creating lag in light and shadow through shutter speed.",
+      sections: [["Brief", ["The workshop asks you to set a vision first, then hand the making to a non-human machine. The designer may only write instructions, set conditions, observe and iterate — and must finally ask: did I surrender my vision, or iterate until the machine came back to it?"]],
+                 ["Vision", ["Afterglow: light dragging an afterimage across the frame, like warmth that stays after the light has gone."]],
+                 ["Machine & instructions", ["A light tied to the end of a rope swings or spins while the camera records its path in a long exposure. The rule: change one variable at a time — rope length and material (suede, scout rope, cotton), aperture (f/4 to f/22), shutter (1/10 s to 30 s), focal length (24 to 105 mm) and light colour."]],
+                 ["Iterate & outcomes", ["I logged the settings of every shot in a table and compared over a hundred results. My favourite combination was ISO 200, f/20, 15 s, 60 mm with an orange light on cotton rope, which gave the fullest, most layered trails."]],
+                 ["Compare & reflect", ["Finally I set the original vision beside the chosen outcomes. I wasn't waiting for the machine to happen upon my image; by controlling variables I learned what it could do, and then chose from its surprises."]]] },
+    it: { meta: "Fotografia sperimentale, 2026", short: "Realizzato nel workshop 'The Machine Decides' del programma d'eccellenza. Ho costruito una 'macchina' fatta di corda, luci e fotocamera, ho usato lunghe esposizioni per lasciare alla luce una scia in ritardo, cambiando una variabile alla volta, e ho scelto i fotogrammi più significativi tra molti risultati.", quote: "Creare un ritardo di luce e ombra con il tempo di posa.",
+      sections: [["Il tema", ["Il workshop chiede di fissare prima una visione e poi affidare la realizzazione a una macchina non umana. Il designer può solo scrivere istruzioni, creare condizioni, osservare e iterare, e alla fine chiedersi: ho rinunciato alla mia visione o ho iterato finché la macchina non ci è tornata?"]],
+                 ["Visione", ["Afterglow: la luce che lascia una scia nell'immagine, come il calore che resta quando la luce se n'è andata."]],
+                 ["Macchina e istruzioni", ["Una luce legata all'estremità di una corda oscilla o ruota mentre la fotocamera ne registra il percorso in lunga esposizione. La regola: una variabile alla volta — lunghezza e materiale della corda (pelle scamosciata, corda scout, cotone), diaframma (da f/4 a f/22), tempo (da 1/10 s a 30 s), focale (da 24 a 105 mm) e colore della luce."]],
+                 ["Iterazioni e risultati", ["Ho annotato in una tabella le impostazioni di ogni scatto e confrontato più di cento risultati. La combinazione preferita: ISO 200, f/20, 15 s, 60 mm, luce arancione su corda di cotone, con le scie più piene e stratificate."]],
+                 ["Confronto e riflessione", ["Alla fine ho messo la visione iniziale accanto ai risultati scelti. Non aspettavo che la macchina trovasse per caso la mia immagine: controllando le variabili ho capito cosa sapeva fare, e poi ho scelto tra le sue sorprese."]]] } },
+
+  { id: "kokoland", cat: "Publication",
+    name: { zh: "KOKO LAND 可可國度", en: "KOKO LAND", it: "KOKO LAND" },
+    cover: ["kk-poster1.jpg", "kk-cream1.jpg", "kk-group.jpg"],
+    imgs: [
+      ["kk-poster1.jpg", { zh: "A1 海報：Welcome to KOKOLAND", en: "A1 poster: Welcome to KOKOLAND", it: "Manifesto A1: Welcome to KOKOLAND" }],
+      ["kk-cream1.jpg", { zh: "攝影書《愛是 cream》封面", en: "Photo book Love is Cream, cover", it: "Libro fotografico Love is Cream, copertina" }],
+      ["kk-group.jpg", { zh: "2026 草率季全體攤商在臺北表演藝術中心的大合照", en: "All Taipei Art Book Fair 2026 exhibitors at Taipei Performing Arts Center", it: "Tutti gli espositori della Taipei Art Book Fair 2026 al Taipei Performing Arts Center" }, true],
+      ["kk-type.jpg", { zh: "奶油字體：A–Z 與「愛是」", en: "Cream type: A–Z and 愛是 ('love is')", it: "Caratteri di panna: A–Z e 愛是 ('l'amore è')" }, true],
+      ["kk-cream3.jpg", { zh: "扉頁：Kokoland Islander's Handbook", en: "Title page: Kokoland Islander's Handbook", it: "Frontespizio: Kokoland Islander's Handbook" }],
+      ["kk-cream6.jpg", { zh: "內頁：奶油狗狗蛋糕", en: "Inside: a cream puppy cake", it: "Interno: una torta-cagnolino di panna" }],
+      ["kk-cream9.jpg", { zh: "內頁：草莓鮮奶油蛋糕", en: "Inside: strawberry cream cake", it: "Interno: torta di fragole e panna" }],
+      ["kk-cream26.jpg", { zh: "內頁：聖代", en: "Inside: a parfait", it: "Interno: un parfait" }],
+      ["kk-cream38.jpg", { zh: "內頁：奶油字母", en: "Inside: cream letters", it: "Interno: lettere di panna" }],
+      ["kk-letter1.jpg", { zh: "奶油字母書：用奶油擠出的 A–Z", en: "Cream alphabet: A–Z piped in cream", it: "Alfabeto di panna: dalla A alla Z con la sac à poche" }, true],
+      ["kk-cream40.jpg", { zh: "封底：冰淇淋甜筒拼成的愛心", en: "Back cover: a heart made of ice-cream cones", it: "Quarta di copertina: un cuore fatto di coni gelato" }],
+      ["koko-book1.jpg", { zh: "撕取海報：Welcome to KOKO LAND", en: "Tear-off poster: Welcome to KOKO LAND", it: "Manifesto a strappo: Welcome to KOKO LAND" }],
+      ["koko-book3.jpg", { zh: "卡片：Remember Koko", en: "Card: Remember Koko", it: "Cartolina: Remember Koko" }],
+      ["koko-sign.jpg", { zh: "攤位休息牌：BACK SOON!", en: "Booth break sign: BACK SOON!", it: "Cartello di pausa: BACK SOON!" }]
+    ],
+    zh: { meta: "藝術書展參展・攝影書與字體，2026", short: "以 KOWALI 團隊、帳號 @remembermekoko 參加 2026 臺北藝術書展草率季（十週年）。Wawa、Lili、Koko 三個身分一起打造「可可國度」：一本關於奶油的攝影書《愛是 cream》、用奶油擠出的字母、logo、A1 海報與攤位。攝影書後來也被 @chibiandesme 收進他們的 mini library 推薦。", quote: "別害怕，可可國度的人都尬意你。",
+      sections: [["概念", ["「Welcome to KOKO LAND」。我們的身分很多，簡稱 Wawa、Lili、Koko，三個名字合起來就是 KOWALI。可可國度是一個不用害怕、每個人都被喜歡的地方：Don't be afraid, KOKO LAND people like you."]],
+                 ["攝影書《愛是 cream》", ["一本 40 頁的 A6 攝影書，收錄我們在各地吃到的奶油甜點：蛋糕、聖代、霜淇淋、鬆餅。扉頁寫著「This is a Kokoland Islander's Handbook — Enjoy with confidence」，把吃甜點寫成可可國度居民的生活指南；封底則是用冰淇淋甜筒拼成的愛心。", "我在團隊裡負責這本書的編輯，以及奶油字體的視覺。"]],
+                 ["奶油字母", ["用奶油一筆一筆擠出 A 到 Z 二十六個字母，拍攝後整理成一套字體，做成奶油字母書，也放進攝影書裡。"]],
+                 ["視覺與攤位", ["我們設計了「勿忘可可 Remember Koko」logo、「Welcome to KOKOLAND」A1 海報，以及附 QR code 的撕取海報和卡片。攤位用兩張 120×60 公分桌面，以 KO、WA、LI 三個圓牌標示身分，離開時放上「BACK SOON!」休息牌。"]],
+                 ["之後", ["《愛是 cream》被 @chibiandesme 收進他們的 mini library，介紹為「a photo book about cream」。"]]] },
+    en: { meta: "Art book fair exhibitor · photo book and type, 2026", short: "As team KOWALI (@remembermekoko) we exhibited at Taipei Art Book Fair 2026, its tenth edition. Three identities — Wawa, Lili and Koko — built 'KOKO LAND': a photo book about cream called Love is Cream, an alphabet piped in cream, a logo, an A1 poster and a booth. The book was later picked for @chibiandesme's mini library.", quote: "Don't be afraid, KOKO LAND people like you.",
+      sections: [["Concept", ["Welcome to KOKO LAND. We have many identities, Wawa, Lili and Koko for short, and together they spell KOWALI. KOKO LAND is a place with nothing to fear, where everyone is liked."]],
+                 ["Photo book: Love is Cream", ["A 40-page A6 photo book of the cream desserts we found — cakes, parfaits, soft serve and pancakes. The title page reads 'This is a Kokoland Islander's Handbook — Enjoy with confidence', turning dessert into a guide for life on the island; the back cover is a heart made of ice-cream cones.", "In the team I edited the book and created the visuals for the cream type."]],
+                 ["Cream alphabet", ["We piped the 26 letters from A to Z in cream, photographed them and set them as a typeface, printed as a letter book and used inside the photo book."]],
+                 ["Identity & booth", ["We designed the Remember Koko logo, a 'Welcome to KOKOLAND' A1 poster, and tear-off posters and cards with QR codes. The booth used two 120×60 cm tables marked with KO, WA and LI discs, with a 'BACK SOON!' sign for breaks."]],
+                 ["Afterwards", ["Love is Cream joined @chibiandesme's mini library, introduced as 'a photo book about cream'."]]] },
+    it: { meta: "Espositori a una fiera dell'editoria d'arte · libro fotografico e font, 2026", short: "Come team KOWALI (@remembermekoko) abbiamo esposto alla Taipei Art Book Fair 2026, decima edizione. Tre identità — Wawa, Lili e Koko — hanno costruito 'KOKO LAND': un libro fotografico sulla panna, Love is Cream, un alfabeto fatto di panna, un logo, un manifesto A1 e uno stand. Il libro è poi entrato nella mini library di @chibiandesme.", quote: "Non avere paura, a KOKO LAND piaci a tutti.",
+      sections: [["Concetto", ["Welcome to KOKO LAND. Abbiamo molte identità, in breve Wawa, Lili e Koko, che insieme formano KOWALI. KOKO LAND è un posto dove non c'è niente da temere e tutti sono benvoluti."]],
+                 ["Libro fotografico: Love is Cream", ["Un libro fotografico A6 di 40 pagine con i dolci alla panna che abbiamo trovato: torte, parfait, gelati soft e pancake. Il frontespizio dice 'This is a Kokoland Islander's Handbook — Enjoy with confidence', trasformando il dessert in una guida alla vita sull'isola; la quarta di copertina è un cuore fatto di coni gelato.", "Nel team ho curato l'editing del libro e la parte visiva dei caratteri di panna."]],
+                 ["Alfabeto di panna", ["Abbiamo disegnato con la panna le 26 lettere dalla A alla Z, le abbiamo fotografate e trasformate in un carattere, stampato come libro dell'alfabeto e usato nel libro fotografico."]],
+                 ["Identità e stand", ["Abbiamo disegnato il logo Remember Koko, il manifesto A1 'Welcome to KOKOLAND', manifesti a strappo e cartoline con QR code. Lo stand usava due tavoli da 120×60 cm con i dischi KO, WA e LI e un cartello 'BACK SOON!' per le pause."]],
+                 ["Dopo la fiera", ["Love is Cream è entrato nella mini library di @chibiandesme, presentato come 'a photo book about cream'."]]] } },
+
+  { id: "apple", cat: "Identity",
+    name: { zh: "青澀秋禾", en: "Green Autumn Harvest", it: "Raccolto d'autunno" },
+    imgs: [["04.jpg", { zh: "主視覺", en: "Key visual", it: "Visual principale" }, true], ["05.jpg", { zh: "票券與邀請函", en: "Tickets and invitations", it: "Biglietti e inviti" }, true]],
+    zh: { meta: "音樂會主視覺", short: "致理科技大學第 57 屆期末音樂會主視覺。以青蘋果為靈感，用像素點陣表現清純、初熟的青春感，也象徵音樂的層次。", quote: "青蘋果的意象，清純、初熟、充滿生機的青春感受。",
+      facts: [["role","主視覺設計・攝影"],["type","平面設計・攝影"],["for","致理科技大學 第 57 屆期末音樂會"],["scale","100–200 人"],["award","2026 臺灣國際學生創意設計大賽 參賽"]],
+      sections: [["理念", ["以「青蘋果」為靈感，透過蘋果的轉化傳達青春氣質。主視覺運用像素點陣手法，複雜的像素結構也象徵音樂的無限可能。"]],
+                 ["執行", ["深綠色主調搭配金黃字體，在沉穩中保留青春感。邀請函採用透明材質，讓光線穿透形成特殊效果。"]]] },
+    en: { meta: "Concert visual identity", short: "Key visual for the 57th end-of-year concert at Chihlee University. A green apple rendered in pixels carries a fresh, just-ripening sense of youth and the layers of music.", quote: "The green apple: fresh, just ripening, full of life.",
+      facts: [["role","Key visual design, photography"],["type","Graphic design, photography"],["for","Chihlee University, 57th end-of-year concert"],["scale","100–200 guests"],["award","TISDC 2026 — entry"]],
+      sections: [["Concept", ["Inspired by the green apple, the identity transforms the fruit to express youth. A pixel dot-matrix builds the key visual, its complex structure standing for music's endless possibilities."]],
+                 ["Execution", ["Deep green with golden type keeps the tone calm but young. Invitations are printed on transparent stock so light passes through."]]] },
+    it: { meta: "Identità visiva per un concerto", short: "Visual del 57° concerto di fine anno alla Chihlee University. Una mela verde fatta di pixel racconta una giovinezza fresca, appena matura, e gli strati della musica.", quote: "La mela verde: fresca, appena matura, piena di vita.",
+      facts: [["role","Visual principale, fotografia"],["type","Grafica, fotografia"],["for","Chihlee University, 57° concerto di fine anno"],["scale","100–200 persone"],["award","TISDC 2026 — partecipazione"]],
+      sections: [["Concetto", ["Ispirata alla mela verde, l'identità trasforma il frutto per esprimere la giovinezza. Una matrice di pixel costruisce il visual, e la sua struttura complessa rappresenta le infinite possibilità della musica."]],
+                 ["Realizzazione", ["Verde scuro e caratteri dorati danno un tono calmo ma giovane. Gli inviti sono stampati su supporto trasparente, attraversato dalla luce."]]] } }
+];
+
+/* ---------- Project credits: type, client/context, year, team (role: name) ---------- */
+const ME = { zh: "柯承翰", en: "Cheng-Han Ko", it: "Cheng-Han Ko" };
+const FX = {
+  daxi: {
+    zh: { type: "田野調查・地方創生提案", ctx: "日日田職物所｜114年桃園在地青年參與公共議題暨培力計畫", year: "2025", team: [["見習生／田野調查・企劃・簡報","柯承翰"],["PM","林佳汶"],["見習生","黃裕勝"],["主理人","高慶榮（日日田職物所）"],["主辦","桃園市政府青年事務局"]], award: "入選績優提案團隊決選（2025.10.30）" },
+    en: { type: "Field research · local revitalisation proposal", ctx: "Day Day Tian Studio | Taoyuan Youth Public Issues Programme 2025", year: "2025", team: [["Trainee / field research, planning, presentation","Cheng-Han Ko"],["PM","Lin Chia-Wen"],["Trainee","Huang Yu-Sheng"],["Founder","Kao Ching-Jung (Day Day Tian Studio)"],["Organiser","Taoyuan City Youth Affairs Bureau"]], award: "Finalist, outstanding proposal teams (30 Oct 2025)" },
+    it: { type: "Ricerca sul campo · proposta di rigenerazione", ctx: "Day Day Tian Studio | Programma giovani e temi pubblici di Taoyuan 2025", year: "2025", team: [["Tirocinante / ricerca, progetto, presentazione","Cheng-Han Ko"],["PM","Lin Chia-Wen"],["Tirocinante","Huang Yu-Sheng"],["Fondatore","Kao Ching-Jung (Day Day Tian Studio)"],["Organizzatore","Ufficio per i giovani di Taoyuan"]], award: "Finalista tra i migliori progetti (30 ott 2025)" } },
+  shennong: {
+    zh: { type: "文化導覽手冊", ctx: "日日田職物所 × 國立臺北商業大學｜大溪南興社區 神農永昌宮", year: "2025", team: [["視覺設計","柯承翰"],["合作","日日田職物所"]] },
+    en: { type: "Cultural guidebook", ctx: "Day Day Tian Studio × NTUB | Shennong Yongchang Temple, Nanxing, Daxi", year: "2025", team: [["Visual design","Cheng-Han Ko"],["Partner","Day Day Tian Studio"]] },
+    it: { type: "Guida culturale", ctx: "Day Day Tian Studio × NTUB | Tempio Shennong Yongchang, Nanxing, Daxi", year: "2025", team: [["Visual design","Cheng-Han Ko"],["Partner","Day Day Tian Studio"]] } },
+  tangyuan: {
+    zh: { type: "攤販品牌改造", ctx: "邱媽媽大湯圓｜114 年度 USR-Hub 計畫「籽食好客」・敘事展示設計課程", year: "2025", team: [["品牌視覺・名片・攝影紀錄","柯承翰"],["大旗設計","陳俊豪"],["設計","曾琮竣、張鈞舜"],["指導老師","林育如"],["客戶","邱媽媽大湯圓"]] },
+    en: { type: "Market stall rebrand", ctx: "Mama Qiu's Big Tangyuan | USR-Hub programme 2025 · Narrative Exhibition Design course", year: "2025", team: [["Brand design, business cards, photography","Cheng-Han Ko"],["Flag design","Chen Chun-Hao"],["Design","Tseng Tsung-Chun, Chang Chun-Shun"],["Advisor","Lin Yu-Ju"],["Client","Mama Qiu's Big Tangyuan"]] },
+    it: { type: "Rebranding di un banco del mercato", ctx: "Big Tangyuan di Mamma Qiu | Programma USR-Hub 2025 · corso di Narrative Exhibition Design", year: "2025", team: [["Brand design, biglietti, fotografia","Cheng-Han Ko"],["Bandiera","Chen Chun-Hao"],["Design","Tseng Tsung-Chun, Chang Chun-Shun"],["Docente","Lin Yu-Ju"],["Cliente","Big Tangyuan di Mamma Qiu"]] } },
+  alive: {
+    zh: { type: "畢業展識別與宣傳", ctx: "國立臺北商業大學 商業設計管理系 115 級畢業展｜校內展・新一代設計展", year: "2026", team: [["畢籌會二技總召・形象組／主視覺呈現・周邊製作・會議記錄","柯承翰"],["展場規劃・展覽統籌・網頁・動畫","張雯珺"],["主視覺設計・周邊規劃・預算","林況穎"],["文書・展場規劃・3D 與平面圖","潘品熙"],["指導老師","蔡誠一、朱以恬、伍小玲"]], award: "2026 放視大賞 視覺設計組 複選入圍" },
+    en: { type: "Graduation exhibition identity & campaign", ctx: "NTUB Commercial Design and Management, Class of 2026 | Campus show · Young Designers' Exhibition", year: "2026", team: [["Two-year programme chair, identity team / key visual application, merchandise, minutes","Cheng-Han Ko"],["Exhibition planning, coordination, website, animation","Chang Wen-Chun"],["Key visual design, merchandise planning, budget","Lin Kuang-Ying"],["Documents, exhibition planning, 3D and floor plans","Pan Pin-Hsi"],["Advisors","Tsai Cheng-Yi, Chu Yi-Tien, Wu Hsiao-Ling"]], award: "Vision Get Wild 2026, Visual Design — shortlisted" },
+    it: { type: "Identità e comunicazione della mostra di laurea", ctx: "NTUB Commercial Design and Management, classe 2026 | Mostra nel campus · Young Designers' Exhibition", year: "2026", team: [["Coordinatore del corso biennale, gruppo identità / applicazioni del visual, gadget, verbali","Cheng-Han Ko"],["Allestimento, coordinamento, sito, animazione","Chang Wen-Chun"],["Visual principale, gadget, budget","Lin Kuang-Ying"],["Documenti, allestimento, piante e 3D","Pan Pin-Hsi"],["Docenti","Tsai Cheng-Yi, Chu Yi-Tien, Wu Hsiao-Ling"]], award: "Vision Get Wild 2026, Visual Design — selezionato" } },
+  bottle: {
+    zh: { type: "永續產品設計", ctx: "2026 臺灣國際學生創意設計大賽", year: "2026", team: [["視覺設計・概念共創","柯承翰"],["產品開發","陳羿豪"]], award: "2026 臺灣國際學生創意設計大賽 參賽" },
+    en: { type: "Sustainable product design", ctx: "Taiwan International Student Design Competition 2026", year: "2026", team: [["Visual design, co-concept","Cheng-Han Ko"],["Product development","Chen Yi-Hao"]], award: "TISDC 2026 — entry" },
+    it: { type: "Design di prodotto sostenibile", ctx: "Taiwan International Student Design Competition 2026", year: "2026", team: [["Visual design, co-ideazione","Cheng-Han Ko"],["Sviluppo prodotto","Chen Yi-Hao"]], award: "TISDC 2026 — partecipazione" } },
+  afterglow: {
+    zh: { type: "實驗攝影・視覺研究", ctx: "教育部藝術與設計菁英培訓 視覺傳達設計工作坊｜The Machine Decides", year: "2026", team: [["概念・機器設計・攝影・簡報","柯承翰"],["工作坊導師","Dr. Gaia Scagnetti Hwang（Pratt Institute）"]] },
+    en: { type: "Experimental photography · visual research", ctx: "MOE Arts & Design Elite Programme, Visual Communication Workshop | The Machine Decides", year: "2026", team: [["Concept, machine design, photography, presentation","Cheng-Han Ko"],["Workshop tutor","Dr. Gaia Scagnetti Hwang (Pratt Institute)"]] },
+    it: { type: "Fotografia sperimentale · ricerca visiva", ctx: "Programma d'eccellenza del Ministero dell'Istruzione, workshop di comunicazione visiva | The Machine Decides", year: "2026", team: [["Concept, progetto della macchina, fotografia, presentazione","Cheng-Han Ko"],["Tutor del workshop","Dr. Gaia Scagnetti Hwang (Pratt Institute)"]] } },
+  kokoland: {
+    zh: { type: "藝術書展參展・攝影書・字體設計", ctx: "2026 臺北藝術書展 草率季（十週年）｜@remembermekoko", year: "2026", team: [["書籍編輯・字體視覺","柯承翰"],["團隊","KOWALI（Wawa、Lili、Koko）"]], award: "《愛是 cream》獲 @chibiandesme mini library 收藏推薦" },
+    en: { type: "Art book fair · photo book · type design", ctx: "Taipei Art Book Fair 2026 (10th edition) | @remembermekoko", year: "2026", team: [["Book editing, type visuals","Cheng-Han Ko"],["Team","KOWALI (Wawa, Lili, Koko)"]], award: "Love is Cream selected for @chibiandesme's mini library" },
+    it: { type: "Fiera dell'editoria d'arte · libro fotografico · type design", ctx: "Taipei Art Book Fair 2026 (decima edizione) | @remembermekoko", year: "2026", team: [["Editing del libro, visual dei caratteri","Cheng-Han Ko"],["Team","KOWALI (Wawa, Lili, Koko)"]], award: "Love is Cream scelto per la mini library di @chibiandesme" } },
+  apple: {
+    zh: { type: "音樂會主視覺", ctx: "致理科技大學 第 57 屆期末音樂會", year: "", team: [["主視覺設計・攝影","柯承翰"]], award: "2026 臺灣國際學生創意設計大賽 參賽" },
+    en: { type: "Concert visual identity", ctx: "Chihlee University, 57th end-of-year concert", year: "", team: [["Key visual design, photography","Cheng-Han Ko"]], award: "TISDC 2026 — entry" },
+    it: { type: "Identità visiva per un concerto", ctx: "Chihlee University, 57° concerto di fine anno", year: "", team: [["Visual principale, fotografia","Cheng-Han Ko"]], award: "TISDC 2026 — partecipazione" } }
+};
+const FXL = {
+  zh: { type: "類型", ctx: "客戶／脈絡", year: "年份", team: "團隊", award: "獎項" },
+  en: { type: "Type", ctx: "Client / Context", year: "Year", team: "Team", award: "Recognition" },
+  it: { type: "Tipo", ctx: "Cliente / Contesto", year: "Anno", team: "Team", award: "Riconoscimenti" }
+};
+function renderFacts(p) {
+  const f = FX[p.id][lang], L = FXL[lang];
+  return `<dl class="facts">
+    <dt>${L.type}</dt><dd>${esc(f.type)}</dd>
+    <dt>${L.ctx}</dt><dd>${esc(f.ctx)}</dd>
+    ${f.year ? `<dt>${L.year}</dt><dd>${esc(f.year)}</dd>` : ""}
+    <dt>${L.team}</dt><dd><ul class="team">${f.team.map(t => `<li${t[1] === ME[lang] ? ' class="me"' : ""}>${esc(t[0])}：${esc(t[1])}</li>`).join("")}</ul></dd>
+    ${f.award ? `<dt>${L.award}</dt><dd>${esc(f.award)}</dd>` : ""}
+  </dl>`;
+}
+
+/* ---------- Experience + Info ---------- */
+const CV = {
+  zh: { title: "經歷", sections: [
+    ["學歷", [["2024–","國立臺北商業大學 商業設計管理系","","logo-ntub.png"],["2019–24","致理科技大學 應用英語系 副學士"],["2018–19","義大利米蘭 Liceo S. Quasimodo 交換學生"]]],
+    ["工作與實務", [["2026.07–","工一科技 ONEWORK 美術部","台北｜重新規劃公司官網架構（解決方案、實績案例、關於、徵才），設計首頁、About 與 Project 頁介面和視覺 banner","logo-onework.svg"],["2025–26","115 級畢業籌備會 二技總召","與四技總召共同統籌 16 個專題、59 位同學的校內展與新一代設計展；桃園市青年局補助申請負責人","logo-cdm.png"],["2025","日日田職物所 地方創生團隊 見習生","桃園市青年見學蹲點計畫，120 小時，表現優異"],["2026","桃園全民運動會 攝影紀錄"],["2019–24","致理科技大學 英語外師助教"],["2019–24","致理科技大學 校內外活動攝影"]]],
+    ["獎項與競賽", [["2026","臺北藝術書展 草率季 參展","KOWALI 團隊（@remembermekoko），攝影書與攤位《KOKO LAND》"],["2026","放視大賞 視覺設計組 複選入圍","《ALIVE : IN.BREATH 呼吸存在》"],["2026","臺灣國際學生創意設計大賽 參賽","《瓶中信》《青澀秋禾》"],["2026","青春設計節 視覺傳達設計類 參賽"],["2023","青輔會 AI 工作坊企業作品競賽 最佳美術設計獎"],["2022","全國心智圖應用競賽 佳作"],["2022","台灣私房景點英文簡報競賽 佳作"]]],
+    ["培訓與證照", [["2026","教育部藝術與設計菁英培訓 視覺傳達設計工作坊","ArtCenter、武藏野美術大學、Pratt Institute 師資"],["—","電腦軟體應用 丙級技術士"],["—","TQC-OA 中文輸入 進階級"],["2019","義大利文 A1"]]],
+    ["社團", [["2024–","北商 野餐社 社長"],["2024","北商 管樂社 副美宣"],["2019–24","致理科技大學 管樂社 社長、事務長、美宣"]]]
+  ]},
+  en: { title: "Experience", sections: [
+    ["Education", [["2024–","National Taipei University of Business — Commercial Design and Management","","logo-ntub.png"],["2019–24","Chihlee University of Technology — Applied English (Associate degree)"],["2018–19","Exchange student, Liceo S. Quasimodo, Milan, Italy"]]],
+    ["Work", [["Jul 2026–","Art Department, ONEWORK","Taipei — restructured the company website (solutions, projects, about, careers) and designed the home, about and project pages and banners","logo-onework.svg"],["2025–26","Co-chair (two-year programme), Class of 2026 Graduation Exhibition Committee","Co-led the campus show and YODEX for 16 projects and 59 students; lead applicant for a Taoyuan Youth Affairs Bureau grant","logo-cdm.png"],["2025","Trainee, Day Day Tian Studio (local revitalisation team)","Taoyuan Youth Field Programme, 120 hours, rated outstanding"],["2026","Photographer, Taoyuan National Sports Games"],["2019–24","Teaching assistant to native English teachers, Chihlee"],["2019–24","Event photographer, Chihlee"]]],
+    ["Awards", [["2026","Taipei Art Book Fair — exhibitor","Team KOWALI (@remembermekoko), photo book and booth KOKO LAND"],["2026","Vision Get Wild — Visual Design, shortlisted","ALIVE : IN.BREATH"],["2026","Taiwan International Student Design Competition — entry","Message in a Bottle; Green Autumn Harvest"],["2026","Youth Innovative Design Festival — entry"],["2023","Youth Development AI Workshop — Best Art Direction"],["2022","National Mind Map Competition — Honourable mention"],["2022","English presentation contest on Taiwan's hidden spots — Honourable mention"]]],
+    ["Training", [["2026","MOE Arts & Design Elite Programme — Visual Communication Workshop","Tutors from ArtCenter, Musashino Art University, Pratt Institute"],["—","Computer Software Application, Level C technician"],["—","TQC-OA Chinese input, advanced"],["2019","Italian A1"]]],
+    ["Clubs", [["2024–","President, Picnic Club, NTUB"],["2024","Deputy art director, Wind Band, NTUB"],["2019–24","President, Wind Band, Chihlee"]]]
+  ]},
+  it: { title: "Esperienze", sections: [
+    ["Formazione", [["2024–","National Taipei University of Business — Commercial Design and Management","","logo-ntub.png"],["2019–24","Chihlee University of Technology — Inglese applicato (diploma)"],["2018–19","Anno di scambio, Liceo S. Quasimodo, Magenta (Milano)"]]],
+    ["Lavoro", [["Lug 2026–","Reparto artistico, ONEWORK","Taipei — riorganizzazione del sito aziendale (soluzioni, progetti, chi siamo, lavora con noi), design di home, about, pagine progetto e banner","logo-onework.svg"],["2025–26","Co-coordinatore (corso biennale), comitato della mostra di laurea 2026","Mostra nel campus e YODEX: 16 progetti, 59 studenti; referente della richiesta di contributo all'Ufficio giovani di Taoyuan","logo-cdm.png"],["2025","Tirocinante, Day Day Tian Studio (rigenerazione locale)","Programma giovani di Taoyuan, 120 ore, valutazione eccellente"],["2026","Fotografo, Giochi nazionali dello sport di Taoyuan"],["2019–24","Assistente dei docenti madrelingua inglese, Chihlee"],["2019–24","Fotografo di eventi, Chihlee"]]],
+    ["Premi", [["2026","Taipei Art Book Fair — espositore","Team KOWALI (@remembermekoko), libro fotografico e stand KOKO LAND"],["2026","Vision Get Wild — Visual Design, selezionato","ALIVE : IN.BREATH"],["2026","Taiwan International Student Design Competition — partecipazione","Messaggio in bottiglia; Raccolto d'autunno"],["2026","Youth Innovative Design Festival — partecipazione"],["2023","Workshop AI per giovani — Miglior direzione artistica"],["2022","Concorso nazionale di mappe mentali — Menzione"],["2022","Concorso di presentazioni in inglese — Menzione"]]],
+    ["Corsi e certificati", [["2026","Programma d'eccellenza del Ministero dell'Istruzione — Workshop di comunicazione visiva","Docenti di ArtCenter, Musashino Art University, Pratt Institute"],["—","Tecnico di applicazioni software, livello C"],["—","TQC-OA, digitazione cinese avanzata"],["2019","Italiano A1"]]],
+    ["Associazioni", [["2024–","Presidente, Picnic Club, NTUB"],["2024","Vice responsabile grafica, Banda musicale, NTUB"],["2019–24","Presidente, Banda musicale, Chihlee"]]]
+  ]}
+};
+
+const INFO = {
+  zh: { title: "個人資訊", big: "發現被忽視的價值，用設計讓它被看見，落地到真實的場域。",
+    paras: ["我是柯承翰（HanKO），目前在工一科技 ONEWORK 美術部負責官網視覺與介面設計，也是國立臺北商業大學商業設計管理系學生。專長是品牌視覺、平面設計、策展與攝影。", "五專在致理科技大學應用英語系讀商業與語言，也在義大利當了一年交換學生。那時的我是記錄者，用相機記錄眼前的世界。2024 年轉進商業設計後，我開始把看見的東西轉譯出來：從市場攤販、廟宇文化到海廢再生，起點都是一個還沒被好好說出來的故事。"],
+    cap: "攝影｜柯承翰", skills: "專長", sk: ["品牌視覺","平面設計","田野調查","企劃提案","策展","攝影"], lang: "語言", langs: [["中文","母語"],["English","流利"],["Italiano","A1"]], contact: "聯絡" },
+  en: { title: "Info", big: "Finding overlooked value, making it visible through design, and landing it in real places.",
+    paras: ["I'm Cheng-Han Ko (HanKO). I work in the art department at ONEWORK, designing the company's website and interfaces, and study Commercial Design and Management at National Taipei University of Business. My fields are brand identity, graphic design, curation and photography.", "I studied business and English at Chihlee University and spent a year as an exchange student in Italy. Back then I recorded the world through a camera. Since moving into design in 2024, I translate what I see: from market stalls and temple culture to ocean waste, every project starts with a story no one has told properly yet."],
+    cap: "Photo by Cheng-Han Ko", skills: "Skills", sk: ["Brand identity","Graphic design","Field research","Proposals","Curation","Photography"], lang: "Languages", langs: [["中文","Native"],["English","Fluent"],["Italiano","A1"]], contact: "Contact" },
+  it: { title: "Profilo", big: "Trovare il valore che nessuno guarda, renderlo visibile con il design e portarlo nei luoghi reali.",
+    paras: ["Sono Cheng-Han Ko (HanKO). Lavoro nel reparto artistico di ONEWORK, dove curo il sito e le interfacce dell'azienda, e studio Commercial Design and Management alla National Taipei University of Business. Mi occupo di identità visiva, grafica, curatela e fotografia.", "Ho studiato economia e inglese alla Chihlee University e ho trascorso un anno di scambio in Italia, vicino a Milano. Allora raccontavo il mondo con la macchina fotografica. Dal 2024, passato al design, traduco ciò che vedo: dai banchi del mercato alla cultura dei templi, fino ai rifiuti del mare, ogni progetto parte da una storia che nessuno ha ancora raccontato bene."],
+    cap: "Foto di Cheng-Han Ko", skills: "Competenze", sk: ["Identità visiva","Grafica","Ricerca sul campo","Proposte","Curatela","Fotografia"], lang: "Lingue", langs: [["中文","Madrelingua"],["English","Fluente"],["Italiano","A1"]], contact: "Contatti" }
+};
+
+/* ---------- App ---------- */
+const CATS = ["All", "Identity", "Research", "Exhibition", "Publication", "Object"];
+const HTML_LANG = { zh: "zh-Hant", en: "en", it: "it" };
+let lang = "zh", filter = "All";
+try { const s = localStorage.getItem("hanko-lang"); if (UI[s]) lang = s; } catch (e) {}
+const view = document.getElementById("view");
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const sub = p => lang === "zh" ? p.name.en : p.name.zh;
+/* List rows show my own role and the other people/partners, taken from the FX credits. */
+const roleOf = p => (FX[p.id][lang].team.find(t => t[1] === ME[lang]) || [])[0];
+const withOf = p => FX[p.id][lang].team.filter(t => t[1] !== ME[lang] && !/指導|導師|Advisor|Tutor|Docent|客戶|Client|Cliente|主辦|Organi/.test(t[0])).map(t => t[1]).join(lang === "zh" ? "、" : ", ") || "";
+
+function thumbs(p) {
+  if (!p.imgs.length) return `<div class="notile">${UI[lang].soon}</div>`;
+  const pick = p.cover ? p.cover.map(f => p.imgs.find(i => i[0] === f)).filter(Boolean) : p.imgs.slice(0, 3);
+  const n = pick.length;
+  return `<div class="thumbs${n === 1 ? " one" : n === 2 ? " two" : ""}">` + pick.map(i => `<img src="img/${i[0]}" alt="${esc(p.name[lang])} — ${esc(i[1][lang])}" loading="lazy">`).join("") + "</div>";
+}
+
+function renderWork() {
+  const u = UI[lang], list = P.filter(p => filter === "All" || p.cat === filter);
+  view.innerHTML = `
+    <section class="wheel" id="wheel" aria-label="HanKO portfolio">
+      <div class="ring"></div>
+      <button type="button" class="wheel-nav prev" aria-label="${WT[lang].prev}">←</button>
+      <button type="button" class="wheel-nav next" aria-label="${WT[lang].next}">→</button>
+      <div class="wheel-cap"><span class="wheel-name" aria-live="polite"></span><span>${WT[lang].hint}</span></div>
+    </section>
+    <section class="hero"><h1>${u.h1}</h1><p>${u.lead}</p></section>
+    <div class="filters" role="group" aria-label="Filter">
+      ${CATS.map(c => `<button type="button" data-cat="${c}" aria-pressed="${c === filter}">${u.cats[c]}</button>`).join("")}
+      <span class="count">${String(list.length).padStart(2, "0")} ${u.projects}</span>
+    </div>
+    ${list.map(p => `
+      <article class="row">
+        <div>
+          <h2><a href="#${p.id}">${esc(p.name[lang])}<small>${esc(sub(p))}</small></a></h2>
+          <div class="meta">${esc(p[lang].meta)}${roleOf(p) ? `<br>${u.f.role}: ${esc(roleOf(p))}` : ""}${withOf(p) ? `<br>${u.f.with}: ${esc(withOf(p))}` : ""}</div>
+          <p>${esc(p[lang].short)}</p>
+          <a class="more" href="#${p.id}">${u.view}</a>
+        </div>
+        <a href="#${p.id}" aria-label="${esc(p.name[lang])}">${thumbs(p)}</a>
+      </article>`).join("")}`;
+  view.querySelectorAll("[data-cat]").forEach(b => b.addEventListener("click", () => { filter = b.dataset.cat; renderWork(); }));
+  startWheel();
+}
+
+/* ---------- 3D tilt wheel ---------- */
+/* [image, project, base width px, aspect ratio] */
+const WHEEL = [
+  ["01.jpg", "alive", 150, "3/2"], ["ty-flag.jpg", "tangyuan", 130, "4/3"], ["09.jpg", "shennong", 110, "4/5"],
+  ["04.jpg", "apple", 120, "1/1"], ["12.jpg", "bottle", 100, "4/5"], ["ty-0093.jpg", "tangyuan", 105, "2/3"],
+  ["02.jpg", "alive", 125, "1/1"], ["10.jpg", "daxi", 120, "4/3"], ["05.jpg", "apple", 110, "4/5"],
+  ["ty-0081.jpg", "tangyuan", 125, "3/2"], ["03.jpg", "alive", 140, "4/3"], ["13.jpg", "bottle", 110, "1/1"],
+  ["ty-0490.jpg", "tangyuan", 120, "4/3"], ["06.jpg", "tangyuan", 130, "16/9"], ["ty-0370.jpg", "tangyuan", 100, "2/3"],
+  ["kk-poster1.jpg", "kokoland", 150, "3/2"], ["kk-type.jpg", "kokoland", 140, "3/2"], ["kk-cream1.jpg", "kokoland", 95, "5/7"], ["kk-cream6.jpg", "kokoland", 95, "5/7"],
+  ["ag-p12.jpg", "afterglow", 150, "16/9"], ["ag-p13.jpg", "afterglow", 140, "16/9"]
+];
+let stopWheel = () => {};
+const WT = {
+  zh: { hint: "左右滑動旋轉・點圖預覽", go: "看專案 →", close: "關閉", prev: "上一張", next: "下一張" },
+  en: { hint: "Swipe to spin · click to preview", go: "View project →", close: "Close", prev: "Previous", next: "Next" },
+  it: { hint: "Scorri per ruotare · clicca per l'anteprima", go: "Vedi progetto →", close: "Chiudi", prev: "Precedente", next: "Successiva" }
+};
+function startWheel() {
+  stopWheel();
+  const stage = document.getElementById("wheel");
+  if (!stage) return;
+  const ring = stage.querySelector(".ring");
+  const label = stage.querySelector(".wheel-name");
+  const proj = id => P.find(x => x.id === id);
+  ring.innerHTML = WHEEL.map((w, i) => {
+    const p = proj(w[1]);
+    return `<button type="button" class="tile" data-i="${i}" style="--w:${w[2]};--ar:${w[3]}" aria-label="${esc(p ? p.name[lang] : w[1])}"><img src="img/${w[0]}" alt="" draggable="false"></button>`;
+  }).join("");
+  const tiles = [...ring.children], n = tiles.length;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const BASE_TILT = 0.3, AUTO = 0.00011;
+  let spin = 0, vel = 0, tx = BASE_TILT, tz = 0, ttx = BASE_TILT, ttz = 0, s = 0;
+  let last = performance.now(), raf = 0, hover = -1, dragging = false, downTile = null, lastX = 0, lastT = 0, moved = 0, justDragged = false, paused = false;
+
+  const setLabel = i => {
+    hover = i;
+    if (i < 0) { label.textContent = ""; return; }
+    const p = proj(WHEEL[i][1]);
+    label.textContent = p ? p.name[lang] : "";
+  };
+
+  /* Pointer: tilt follows the cursor; press and drag spins the ring with inertia. */
+  const tilt = e => {
+    const r = stage.getBoundingClientRect();
+    ttx = BASE_TILT + ((e.clientY - r.top) / r.height - 0.5) * 0.55;
+    ttz = ((e.clientX - r.left) / r.width - 0.5) * 0.4;
+  };
+  const down = e => {
+    if (e.button !== 0 || e.target.closest(".wheel-nav")) return;
+    dragging = true; moved = 0; justDragged = false;
+    downTile = e.target.closest(".tile");
+    lastX = e.clientX; lastT = performance.now(); vel = 0;
+    stage.classList.add("grabbing");
+    addEventListener("pointermove", drag);
+    addEventListener("pointerup", up);
+    addEventListener("pointercancel", up);
+  };
+  const drag = e => {
+    const now = performance.now(), dx = e.clientX - lastX, dt = Math.max(1, now - lastT);
+    spin += dx * 0.006;
+    vel = (dx * 0.006) / dt * 16;
+    moved += Math.abs(dx);
+    if (moved > 6) justDragged = true;
+    lastX = e.clientX; lastT = now;
+    tilt(e);
+  };
+  /* A press that barely moved counts as a click on the tile it started on, even if the ring shifted under it. */
+  const up = () => {
+    dragging = false;
+    stage.classList.remove("grabbing");
+    removeEventListener("pointermove", drag);
+    removeEventListener("pointerup", up);
+    removeEventListener("pointercancel", up);
+    const t = downTile;
+    downTile = null;
+    if (t && !justDragged) openPreview(+t.dataset.i);
+  };
+  const leave = () => { ttx = BASE_TILT; ttz = 0; if (!dragging) setLabel(-1); };
+  const over = e => { const t = e.target.closest(".tile"); setLabel(t ? +t.dataset.i : -1); };
+  /* Mouse and touch open the preview in up(); this handles keyboard activation (Enter/Space), which has detail 0. */
+  const click = e => {
+    const t = e.target.closest(".tile");
+    if (!t || e.detail !== 0) return;
+    openPreview(+t.dataset.i);
+  };
+  /* Horizontal trackpad swipes spin the ring; vertical scrolling still scrolls the page. */
+  const swipe = e => {
+    if (Math.abs(e.deltaX) <= Math.abs(e.deltaY) || e.deltaX === 0) return;
+    e.preventDefault();
+    spin -= e.deltaX * 0.0025;
+    vel = 0;
+  };
+  /* Arrow buttons give one tile's worth of momentum; with 0.94 decay the total travel is about one step. */
+  const STEP = (Math.PI * 2) / n;
+  const nudge = e => {
+    const b = e.target.closest(".wheel-nav");
+    if (!b) return;
+    vel = (b.classList.contains("next") ? -1 : 1) * STEP * 0.06;
+  };
+  stage.addEventListener("wheel", swipe, { passive: false });
+  stage.addEventListener("click", nudge);
+  stage.addEventListener("pointermove", tilt);
+  stage.addEventListener("pointerdown", down);
+  stage.addEventListener("pointerleave", leave);
+  stage.addEventListener("pointerover", over);
+  stage.addEventListener("click", click);
+  stage.addEventListener("focusin", over);
+
+  /* Preview: large image, project name, prev/next, link into the project. */
+  const pv = document.getElementById("pv");
+  const pvImg = pv.querySelector("img"), pvName = pv.querySelector(".pv-name"), pvMeta = pv.querySelector(".pv-meta"), pvGo = pv.querySelector(".pv-go");
+  const t = WT[lang];
+  pv.querySelector(".pv-close").setAttribute("aria-label", t.close);
+  pv.querySelector(".pv-prev").setAttribute("aria-label", t.prev);
+  pv.querySelector(".pv-next").setAttribute("aria-label", t.next);
+  pvGo.textContent = t.go;
+  let cur = 0, returnFocus = null;
+  function show(i) {
+    cur = (i + n) % n;
+    const w = WHEEL[cur], p = proj(w[1]);
+    pvImg.src = "img/" + w[0];
+    pvImg.alt = p ? p.name[lang] : "";
+    pvName.textContent = p ? p.name[lang] : "";
+    pvMeta.textContent = p ? p[lang].meta : "";
+    pvGo.href = "#" + w[1];
+  }
+  function openPreview(i) {
+    returnFocus = document.activeElement;
+    show(i);
+    pv.hidden = false;
+    paused = true;
+    document.body.style.overflow = "hidden";
+    pv.querySelector(".pv-close").focus();
+  }
+  function closePreview() {
+    if (pv.hidden) return;
+    pv.hidden = true;
+    paused = false;
+    document.body.style.overflow = "";
+    if (returnFocus && returnFocus.focus) returnFocus.focus();
+  }
+  const pvClick = e => {
+    if (e.target === pv || e.target.closest(".pv-close")) closePreview();
+    else if (e.target.closest(".pv-prev")) show(cur - 1);
+    else if (e.target.closest(".pv-next")) show(cur + 1);
+    else if (e.target.closest(".pv-go")) closePreview();
+  };
+  const key = e => {
+    if (pv.hidden) return;
+    if (e.key === "Escape") closePreview();
+    else if (e.key === "ArrowLeft") show(cur - 1);
+    else if (e.key === "ArrowRight") show(cur + 1);
+  };
+  pv.addEventListener("click", pvClick);
+  addEventListener("keydown", key);
+
+  function frame(now) {
+    const dt = Math.min(50, now - last); last = now;
+    const r = stage.getBoundingClientRect();
+    if (r.bottom > 0 && r.top < innerHeight && !paused) {
+      if (!dragging) {
+        /* Hovering a tile holds the ring still so it can be clicked. */
+        const auto = reduce || hover >= 0 ? 0 : AUTO * dt;
+        spin += auto + vel;
+        vel *= 0.94;
+        if (Math.abs(vel) < 0.00005) vel = 0;
+      }
+      const ts = Math.min(1, Math.max(0, -r.top / (r.height * 0.85)));
+      tx += (ttx - tx) * 0.06; tz += (ttz - tz) * 0.06; s += (ts - s) * 0.1;
+      const k = Math.max(0.55, Math.min(1, r.width / 1100));
+      stage.style.setProperty("--k", k.toFixed(3));
+      /* Scrolling widens the ring and flattens the perspective so the spread reads as a stretch. */
+      const R = Math.min(r.width * (r.width < 700 ? 0.36 : 0.26), 330) * (1 + s * 0.9);
+      stage.style.perspective = (1400 + s * 1800).toFixed(0) + "px";
+      const st = Math.sin(tx), ct = Math.cos(tx), sz = Math.sin(tz), cz = Math.cos(tz);
+      for (let i = 0; i < n; i++) {
+        const a = spin + (i / n) * Math.PI * 2;
+        const x = Math.sin(a) * R, z = Math.cos(a) * R;
+        const y1 = z * st, z1 = z * ct;
+        const x2 = x * cz - y1 * sz, y2 = x * sz + y1 * cz;
+        const lift = i === hover ? 1.12 : 1;
+        tiles[i].style.transform = `translate(-50%,-50%) translate3d(${x2.toFixed(1)}px,${y2.toFixed(1)}px,${z1.toFixed(1)}px) scale(${lift})`;
+        tiles[i].style.opacity = i === hover ? "1" : (0.4 + 0.6 * (z / R + 1) / 2).toFixed(3);
+      }
+    }
+    raf = requestAnimationFrame(frame);
+  }
+  raf = requestAnimationFrame(frame);
+  stopWheel = () => {
+    cancelAnimationFrame(raf);
+    downTile = null;
+    up();
+    closePreview();
+    stage.removeEventListener("wheel", swipe);
+    stage.removeEventListener("click", nudge);
+    stage.removeEventListener("pointermove", tilt);
+    stage.removeEventListener("pointerdown", down);
+    stage.removeEventListener("pointerleave", leave);
+    stage.removeEventListener("pointerover", over);
+    stage.removeEventListener("click", click);
+    stage.removeEventListener("focusin", over);
+    pv.removeEventListener("click", pvClick);
+    removeEventListener("keydown", key);
+    stopWheel = () => {};
+  };
+}
+
+function renderProject(p) {
+  const u = UI[lang], t = p[lang], i = P.indexOf(p), nx = P[(i + 1) % P.length];
+  const q = lang === "zh" ? `「${esc(t.quote)}」` : `“${esc(t.quote)}”`;
+  view.innerHTML = `
+    <a class="back" href="#">${u.back}</a>
+    <h1 class="p-title">${esc(p.name[lang])}</h1>
+    <p class="p-sub">${esc(sub(p))}</p>
+    <div class="p-grid">
+      ${renderFacts(p)}
+      <div class="body">
+        <p class="quote">${q}</p>
+        ${t.sections.map(s => `<h3>${esc(s[0])}</h3>${s[1].map(x => `<p>${esc(x)}</p>`).join("")}`).join("")}
+      </div>
+    </div>
+    <div class="gallery">
+      ${p.imgs.length ? p.imgs.map(im => `<figure class="${im[2] ? "wide" : ""}"><img src="img/${im[0]}" alt="${esc(p.name[lang])} — ${esc(im[1][lang])}" loading="lazy"><figcaption>${esc(im[1][lang])}</figcaption></figure>`).join("")
+        : `<figure class="wide"><div class="notile" style="aspect-ratio:16/6">${u.soon}</div></figure>`}
+    </div>
+    <div class="next"><span>${u.next}</span><a href="#${nx.id}">${esc(nx.name[lang])} →</a></div>`;
+}
+
+function renderExperience() {
+  const c = CV[lang];
+  view.innerHTML = `
+    <h1 class="page-h">${c.title}</h1>
+    <div class="cv">
+      ${c.sections.map((s, i) => `<section class="${i === 0 ? "full" : ""}"><h3>${esc(s[0])}</h3><ul>
+        ${s[1].map(r => `<li><span class="y">${esc(r[0])}</span><span>${r[3] ? `<img class="org" src="img/${r[3]}" alt="">` : ""}${esc(r[1])}${r[2] ? `<span class="note">${esc(r[2])}</span>` : ""}</span></li>`).join("")}
+      </ul></section>`).join("")}
+    </div>`;
+}
+
+function renderInfo() {
+  const n = INFO[lang];
+  view.innerHTML = `
+    <h1 class="page-h">${n.title}</h1>
+    <section class="info">
+      <div>
+        <p class="big">${esc(n.big)}</p>
+        ${n.paras.map(x => `<p>${esc(x)}</p>`).join("")}
+        <img class="sea" src="img/00.jpg" alt="${esc(n.cap)}">
+        <div class="sea-cap">${esc(n.cap)}</div>
+      </div>
+      <div class="cv" style="grid-template-columns:minmax(0,1fr)">
+        <section><h3>${n.skills}</h3><div class="tags">${n.sk.map(s => `<span>${esc(s)}</span>`).join("")}</div></section>
+        <section><h3>${n.lang}</h3><ul>${n.langs.map(l => `<li><span class="y">${esc(l[0])}</span><span>${esc(l[1])}</span></li>`).join("")}</ul></section>
+        <section><h3>${{ zh: "合作與所屬單位", en: "Affiliations", it: "Affiliazioni" }[lang]}</h3><div class="aff">
+          <img class="sq" src="img/logo-ntub.png" alt="National Taipei University of Business">
+          <img src="img/logo-cdm.png" alt="Department of Commercial Design and Management, NTUB">
+          <img src="img/logo-onework.svg" alt="ONEWORK">
+          <img class="sq" src="img/logo-rrt.png" alt="日日田職物所 Day Day Tian Studio">
+        </div></section>
+        <section><h3>${n.contact}</h3><ul>
+          <li><span class="y">Email</span><span>hankko60405@gmail.com</span></li>
+          <li><span class="y">Instagram</span><span>@ko_hankko</span></li>
+          <li><span class="y">Behance</span><span><a href="https://www.behance.net/hankko604043cd">behance.net/hankko604043cd</a></span></li>
+        </ul></section>
+      </div>
+    </section>`;
+}
+
+function route(keepScroll) {
+  stopWheel();
+  const u = UI[lang];
+  document.documentElement.lang = HTML_LANG[lang];
+  document.querySelector('[data-nav="work"]').textContent = u.work;
+  document.querySelector('[data-nav="experience"]').textContent = u.exp;
+  document.querySelector('[data-nav="info"]').textContent = u.info;
+  document.querySelectorAll("[data-lang]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
+
+  const h = location.hash.replace("#", "");
+  const p = P.find(x => x.id === h);
+  document.querySelectorAll("[data-nav]").forEach(a => a.removeAttribute("aria-current"));
+  if (h === "experience") { renderExperience(); document.querySelector('[data-nav="experience"]').setAttribute("aria-current", "page"); }
+  else if (h === "info") { renderInfo(); document.querySelector('[data-nav="info"]').setAttribute("aria-current", "page"); }
+  else if (p) renderProject(p);
+  else { renderWork(); document.querySelector('[data-nav="work"]').setAttribute("aria-current", "page"); }
+  if (!keepScroll) window.scrollTo(0, 0);
+}
+
+document.querySelectorAll("[data-lang]").forEach(b => b.addEventListener("click", () => {
+  lang = b.dataset.lang;
+  try { localStorage.setItem("hanko-lang", lang); } catch (e) {}
+  route(true);
+}));
+window.addEventListener("hashchange", () => route(false));
+route(false);
+</script>
+</body>
+</html>
