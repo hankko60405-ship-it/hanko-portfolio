@@ -282,7 +282,7 @@
     <button type="button" class="pv-next">→</button>
   </div>
   <footer>
-    <span>© 2026 HanKO 柯承翰</span>
+    <span>© 2026 HanKO 柯承翰<span class="views" hidden></span></span>
     <span><a href="mailto:hankko60405@gmail.com">hankko60405@gmail.com</a> · <a href="https://www.instagram.com/ko_hankko/" target="_blank" rel="noopener">IG @ko_hankko</a> · <a href="https://www.behance.net/hankko604043cd" target="_blank" rel="noopener">Behance</a></span>
   </footer>
 </div>
@@ -1020,6 +1020,7 @@ function route(keepScroll) {
   document.querySelector('[data-nav="work"]').textContent = u.work;
   document.querySelector('[data-nav="experience"]').textContent = u.exp;
   document.querySelector('[data-nav="info"]').textContent = u.info;
+  paintViews();
   document.querySelectorAll("[data-lang]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
 
   const h = location.hash.replace("#", "");
@@ -1038,6 +1039,34 @@ document.querySelectorAll("[data-lang]").forEach(b => b.addEventListener("click"
   route(true);
 }));
 window.addEventListener("hashchange", () => route(false));
+/* ---------- Visitor count ----------
+   Abacus (free, no account) keeps the number. Each browser is counted once, and only on the live site,
+   so local tests and previews read the number without adding to it. */
+var views = null;
+function paintViews() {
+  const el = document.querySelector(".views");
+  if (!el || views == null) return;
+  const n = views.toLocaleString("en-US");
+  el.textContent = { zh: ` · 已有 ${n} 人看過`, en: ` · ${n} visitors`, it: ` · ${n} visitatori` }[lang];
+  el.hidden = false;
+}
+(async () => {
+  const base = "https://abacus.jasoncameron.dev", id = "hanko-portfolio-hankko60405/visitors";
+  let counted = true;
+  try { counted = localStorage.getItem("hanko-counted") === "1"; } catch (e) {}
+  const live = location.hostname === "hankko60405-ship-it.github.io";
+  const verb = live && !counted ? "hit" : "get";
+  try {
+    const r = await fetch(`${base}/${verb}/${id}`);
+    if (!r.ok) return;
+    const j = await r.json();
+    if (typeof j.value !== "number") return;
+    views = j.value;
+    if (verb === "hit") { try { localStorage.setItem("hanko-counted", "1"); } catch (e) {} }
+    paintViews();
+  } catch (e) {}
+})();
+
 /* ---------- TDRI notice (temporary) ---------- */
 (() => {
   const tn = document.getElementById("tn"), chip = document.querySelector(".tn-chip");
