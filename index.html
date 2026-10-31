@@ -81,6 +81,20 @@
   .pv { position: fixed; inset: 0; z-index: 50; background: rgba(8, 8, 9, .94); display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px;
         padding: max(56px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(24px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
   .pv[hidden] { display: none; }
+  /* Opening motion: work images flash full-screen at 0.1 s each, then "Welcome", then the curtain lifts. */
+  .intro { position: fixed; inset: 0; z-index: 80; background: #0b0b0b; color: #f2f0ea; overflow: hidden; cursor: pointer; transition: transform .7s cubic-bezier(.7, 0, .2, 1); }
+  .intro img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; }
+  .intro img.on { opacity: 1; }
+  .intro-w { position: absolute; z-index: 1; inset: 0; display: grid; place-content: center; text-align: center; gap: 10px; opacity: 0; }
+  .intro-hi { font-family: var(--display); font-weight: 800; font-size: clamp(64px, 16vw, 220px); letter-spacing: -.05em; line-height: .9; font-variation-settings: "opsz" 96; }
+  .intro-sub { font-family: var(--mono); font-size: 13px; color: #a7a39b; letter-spacing: .04em; }
+  .intro-load { position: absolute; inset: 0; display: grid; place-content: center; font-family: var(--display); font-weight: 800; font-size: 21px; letter-spacing: -.04em; color: #6f6b64; }
+  .intro.playing .intro-load { display: none; }
+  .intro.welcome img { opacity: 0; }
+  .intro.welcome .intro-w { opacity: 1; animation: intro-hi .7s cubic-bezier(.2, .8, .2, 1) both; }
+  @keyframes intro-hi { from { opacity: 0; transform: scale(1.08); letter-spacing: .02em; } }
+  .intro.out { transform: translateY(-100%); }
+  .intro-skip { position: absolute; z-index: 2; right: max(16px, env(safe-area-inset-right, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px)); font-family: var(--mono); font-size: 12px; color: rgba(242, 240, 234, .6); mix-blend-mode: difference; }
   /* Temporary notice for the TDRI 2027 winter internship reviewers. Remove the #tn markup, these styles and the TDRI block in the script to take it down. */
   .tn { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: 16px; background: rgba(8, 8, 9, .66); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
   .tn[hidden] { display: none; }
@@ -238,6 +252,17 @@
 </style>
 </head>
 <body>
+<div class="intro" id="intro" aria-hidden="true">
+  <span class="intro-load">HanKO</span>
+  <div class="intro-w"><span class="intro-hi">Welcome</span><span class="intro-sub">HanKO 柯承翰 — Portfolio</span></div>
+  <span class="intro-skip">Skip ↵</span>
+</div>
+<script>
+/* Skip the opening when it has already played in this tab, or when the visitor prefers less motion. */
+(() => { let seen = false; try { seen = sessionStorage.getItem("hanko-intro") === "1"; } catch (e) {}
+  if (seen || matchMedia("(prefers-reduced-motion: reduce)").matches) document.getElementById("intro").remove();
+  else document.documentElement.style.overflow = "hidden"; })();
+</script>
 <div class="wrap">
   <header class="head">
     <a class="logo" href="#" aria-label="HanKO">HanKO</a>
@@ -1067,6 +1092,46 @@ function paintViews() {
   } catch (e) {}
 })();
 
+/* ---------- Opening motion ---------- */
+window.introDone = new Promise(done => {
+  const el = document.getElementById("intro");
+  if (!el) return done();
+  const FLASH = 100, HOLD = 1100, LIFT = 700;
+  const files = Array.from({ length: 21 }, (_, i) => `img/intro/i${String(i + 1).padStart(2, "0")}.jpg`);
+  let finished = false, timer = 0;
+  const finish = () => {
+    if (finished) return; finished = true; clearTimeout(timer);
+    el.classList.add("out");
+    try { sessionStorage.setItem("hanko-intro", "1"); } catch (e) {}
+    setTimeout(() => { el.remove(); document.documentElement.style.overflow = ""; done(); }, LIFT);
+  };
+  const welcome = () => { el.classList.add("welcome"); timer = setTimeout(finish, HOLD); };
+  el.addEventListener("click", finish);
+  setTimeout(finish, 9000); /* safety: never leave the site covered */
+  addEventListener("keydown", finish, { once: true });
+  /* Start once the first few images are decoded (at most 1.2 s). Timing follows the clock, so a slow frame never stretches the run;
+     a frame whose image is not ready yet is skipped. */
+  const imgs = files.map(src => { const im = new Image(); im.alt = ""; im.decoding = "async"; im.src = src; el.appendChild(im); return im; });
+  const ready = im => (im.decode ? im.decode() : new Promise((r, j) => { im.onload = r; im.onerror = j; })).then(() => true, () => false);
+  const first = Promise.all(imgs.slice(0, 6).map(ready));
+  const whenVisible = () => document.visibilityState === "visible" ? Promise.resolve() :
+    new Promise(r => document.addEventListener("visibilitychange", function v() { if (document.visibilityState === "visible") { document.removeEventListener("visibilitychange", v); r(); } }));
+  Promise.race([first, new Promise(r => setTimeout(r, 1200))]).then(whenVisible).then(() => {
+    if (finished) return;
+    el.classList.add("playing");
+    const t0 = performance.now(); let shown = null;
+    const tick = () => {
+      if (finished) return;
+      const i = Math.floor((performance.now() - t0) / FLASH);
+      if (i >= imgs.length) { if (shown) shown.classList.remove("on"); return welcome(); }
+      const im = imgs[i];
+      if (im !== shown && im.complete && im.naturalWidth) { if (shown) shown.classList.remove("on"); im.classList.add("on"); shown = im; }
+      timer = setTimeout(tick, 16);
+    };
+    tick();
+  });
+});
+
 /* ---------- TDRI notice (temporary) ---------- */
 (() => {
   const tn = document.getElementById("tn"), chip = document.querySelector(".tn-chip");
@@ -1083,7 +1148,7 @@ function paintViews() {
   chip.addEventListener("click", open);
   let seen = false;
   try { seen = sessionStorage.getItem("hanko-tdri-seen") === "1"; } catch (e) {}
-  if (seen) chip.hidden = false; else open();
+  window.introDone.then(() => { if (seen) chip.hidden = false; else open(); });
 })();
 route(false);
 </script>
