@@ -238,10 +238,10 @@
   footer a:hover { color: var(--fg); border-color: var(--fg); }
   /* Summary timeline after the project list */
   .tl { margin-top: 72px; padding-top: 18px; border-top: 1px solid var(--line); }
-  .tl-stage { position: relative; height: clamp(380px, 56vh, 540px); margin-top: 16px; overflow: hidden; touch-action: pan-y; outline: none; }
+  .tl-stage { position: relative; height: clamp(440px, 64vh, 640px); margin-top: 16px; overflow: hidden; touch-action: pan-y; outline: none; }
   .tl-stage:focus-visible { box-shadow: inset 0 0 0 2px var(--fg); }
-  .tl-stage::before { content: ""; position: absolute; left: 0; right: 0; top: 72%; height: 1px; background: var(--line); opacity: .5; }
-  .tl-track { position: absolute; left: 0; top: 72%; display: flex; column-gap: 12px; will-change: transform; }
+  .tl-stage::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--line); opacity: .5; }
+  .tl-track { position: absolute; left: 0; top: 50%; display: flex; column-gap: 12px; will-change: transform; }
   .tl-copy { display: flex; gap: 12px; flex: none; }
   .tl-seg { flex: none; height: 30px; display: flex; gap: 2px; padding: 0; border: 0; background: none; cursor: pointer; opacity: .5; transition: opacity .3s; }
   .tl-seg img { width: 46px; height: 100%; object-fit: cover; transition: opacity .35s ease, transform .35s ease; }
@@ -249,10 +249,9 @@
   .tl-seg.on img { opacity: 0; transform: scaleY(.3); }
   .tl-play { position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: var(--fg); pointer-events: none; }
   .tl-film { position: absolute; inset: 0; pointer-events: none; }
-  .tl-row { position: absolute; left: 0; top: 72%; display: flex; gap: 10px; opacity: 0; will-change: transform; transition: opacity .4s ease; }
-  .tl-row.in { opacity: 1; }
-  .tl-row img { flex: none; object-fit: cover; box-shadow: 0 10px 30px rgba(0, 0, 0, .22); transform: scaleY(.2); transition: transform .5s cubic-bezier(.2, .8, .2, 1); }
-  .tl-row.in img { transform: none; }
+  .tl-row { position: absolute; left: 0; top: 50%; height: 0; will-change: transform; }
+  .tl-row img { position: absolute; max-width: none; object-fit: cover; box-shadow: 0 12px 34px rgba(0, 0, 0, .28); opacity: 0; transform: translate(var(--fx), var(--fy)) scale(.08); transition: transform .65s cubic-bezier(.16, .9, .22, 1) var(--d), opacity .3s ease var(--d); }
+  .tl-row.in img { opacity: 1; transform: none; }
   .tl-info { display: grid; grid-template-columns: 1.1fr repeat(3, 1fr); gap: 24px; padding-top: 16px; border-top: 1px solid var(--line); min-height: 130px; }
   .tl-name { display: flex; flex-direction: column; gap: 4px; }
   .tl-no { font-family: var(--mono); font-size: 12px; color: var(--muted); }
@@ -261,7 +260,7 @@
   .tl-k { display: block; font-size: 12px; color: var(--muted); margin-bottom: 4px; }
   .tl-info p { margin: 0; font-size: 14px; line-height: 1.65; }
   @media (max-width: 800px) {
-    .tl-stage { height: 340px; }
+    .tl-stage { height: 400px; }
     .tl-seg { height: 24px; } .tl-seg img { width: 30px; }
     .tl-info { grid-template-columns: minmax(0, 1fr); gap: 12px; }
   }
@@ -1354,29 +1353,39 @@ function startTimeline() {
       <div><span class="tl-k">${t.q}</span><p>${esc(d[0])}</p></div>
       <div><span class="tl-k">${t.r}</span><p>${esc(d[1])}</p></div>
       <div><span class="tl-k">${t.m}</span><p>${esc(d[2])}</p></div>`;
-    /* The project's photos open into one continuous row (true proportions) that slides past the playhead. */
-    if (film) { const f = film; f.classList.remove("in"); setTimeout(() => f.remove(), 400); }
-    const H = stage.clientHeight, h = Math.round(Math.min(330, H * .54));
+    /* The project's photos burst out of the playhead and settle left to right: mixed sizes, staggered above and below the line, slightly overlapping. */
+    if (film) { const f = film; f.classList.remove("in"); setTimeout(() => f.remove(), 450); }
+    const H = stage.clientHeight, h = Math.round(Math.min(230, H * .34));
+    const SIZE = [1, .76, 1.12, .84, .96, .7, 1.06, .8], YOFF = [-.6, .5, -.26, .66, -.7, .3, -.44, .6];
     const thumbs = [...mid.children[i].querySelectorAll("img")];
     film = document.createElement("div"); film.className = "tl-row";
-    filmW = 0;
+    const boxes = []; let x = 0;
     p.imgs.forEach((im, n) => {
-      const t = thumbs[n], ar = t && t.naturalWidth ? t.naturalWidth / t.naturalHeight : 1.4, w = Math.round(h * ar);
-      const el = document.createElement("img");
-      el.src = "img/" + im[0]; el.alt = ""; el.decoding = "async"; el.style.cssText = `width:${w}px;height:${h}px`;
-      film.appendChild(el); filmW += w + 10;
+      const t = thumbs[n], ar = t && t.naturalWidth ? t.naturalWidth / t.naturalHeight : 1.4;
+      const hh = Math.round(h * SIZE[n % SIZE.length]), w = Math.round(hh * ar), top = Math.round(YOFF[n % YOFF.length] * h - hh / 2);
+      boxes.push([x, top, w, hh]);
+      x += Math.round(w * .74);
     });
-    filmW -= 10;
+    const last = boxes[boxes.length - 1];
+    filmW = last ? last[0] + last[2] : 0;
+    /* Burst origin: the point of the cluster that sits under the playhead right now. */
+    const pos = ((off % L) + L) % L, [a0, b0] = spans[i], t0 = Math.min(1, Math.max(0, (pos - a0) / Math.max(1, b0 - a0))), ox = t0 * filmW;
+    p.imgs.forEach((im, n) => {
+      const [bx, by, w, hh] = boxes[n], el = document.createElement("img");
+      el.src = "img/" + im[0]; el.alt = ""; el.decoding = "async";
+      el.style.cssText = `left:${bx}px;top:${by}px;width:${w}px;height:${hh}px;z-index:${n + 1};--fx:${(ox - bx - w / 2).toFixed(0)}px;--fy:${(-by - hh / 2).toFixed(0)}px;--d:${reduce ? 0 : Math.min(n, 12) * 38}ms`;
+      film.appendChild(el);
+    });
     filmBox.appendChild(film);
     placeFilm();
     setTimeout(() => film && film.classList.add("in"), 20);
   }
-  /* Progress through the active segment decides how far the row has slid: first photo on entry, last photo on exit. */
+  /* Progress through the active segment decides how far the cluster has slid: first photos on entry, last photos on exit. */
   function placeFilm() {
     if (!film || cur < 0) return;
     const pos = ((off % L) + L) % L, [a, b] = spans[cur];
     const t = Math.min(1, Math.max(0, (pos - a) / Math.max(1, b - a)));
-    film.style.transform = `translate3d(${(stage.clientWidth / 2 - t * filmW).toFixed(1)}px, calc(-100% - 28px), 0)`;
+    film.style.transform = `translate3d(${(stage.clientWidth / 2 - t * filmW).toFixed(1)}px, 0, 0)`;
   }
   const render = () => {
     const pos = ((off % L) + L) % L, W = stage.clientWidth;
