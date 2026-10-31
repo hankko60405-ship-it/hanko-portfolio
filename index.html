@@ -281,6 +281,25 @@
     .hn-dot { display: none; }
     .hn-gallery { justify-content: flex-start; margin-left: 0; font-size: 28px; }
   }
+  /* More work: card wall and image viewer */
+  .more { margin-top: 64px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .more-h { margin: 0 0 18px; font-family: var(--mono); font-weight: 400; font-size: 12px; color: var(--muted); }
+  .more-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 20px; }
+  .more-card { display: flex; flex-direction: column; gap: 4px; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+  .more-img { position: relative; display: block; aspect-ratio: 4 / 3; overflow: hidden; background: var(--tile); margin-bottom: 6px; }
+  .more-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s cubic-bezier(.2, .8, .2, 1); }
+  .more-card:hover .more-img img, .more-card:focus-visible .more-img img { transform: scale(1.04); }
+  .more-card:focus-visible { outline: 2px solid var(--fg); outline-offset: 4px; }
+  .more-n { position: absolute; right: 8px; bottom: 8px; min-width: 22px; padding: 1px 7px; border-radius: 999px; background: rgba(0, 0, 0, .6); color: #fff; font-size: 12px; text-align: center; }
+  .more-card b { font-weight: 500; font-size: 15px; line-height: 1.4; }
+  .more-cat { font-size: 12px; color: var(--muted); }
+  .mw { position: fixed; inset: 0; z-index: 55; background: rgba(8, 8, 9, .94); overflow-y: auto; padding: 56px 16px 40px; }
+  .mw-in { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+  .mw-in img { width: 100%; height: auto; display: block; }
+  .mw-t { margin: 0 0 4px; display: flex; flex-direction: column; gap: 2px; color: #f2f0ea; }
+  .mw-t span { font-size: 13px; color: #a7a39b; }
+  .mw-x { position: fixed; top: max(14px, env(safe-area-inset-top, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(242, 240, 234, .35); background: rgba(10, 10, 11, .6); color: #f2f0ea; font-size: 16px; cursor: pointer; }
+  @media (max-width: 800px) { .more-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 14px; } .more-card b { font-size: 13.5px; } }
   footer { margin-top: 56px; padding-top: 14px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-family: var(--mono); font-size: 12px; color: var(--muted); }
 
   @media (max-width: 800px) {
@@ -921,10 +940,12 @@ function renderWork() {
         </div>
         <a href="#${p.id}" aria-label="${esc(p.name[lang])}">${thumbs(p)}</a>
       </article>`).join("")}
-    ${timelineHTML()}`;
+    ${timelineHTML()}
+    ${moreHTML()}`;
   view.querySelectorAll("[data-cat]").forEach(b => b.addEventListener("click", () => { filter = b.dataset.cat; renderWork(); }));
   startWheel();
   startTimeline();
+  startMore();
 }
 
 /* ---------- 3D tilt wheel ---------- */
@@ -1430,6 +1451,37 @@ function startTimeline() {
   const go = () => { measure(); if (!L) return setTimeout(go, 100); off = target = (spans[0][0] + spans[0][1]) / 2; render(); tick(); };
   go();
   addEventListener("resize", () => { if (document.body.contains(stage)) { measure(); render(); } });
+}
+
+/* ---------- More work: smaller pieces shown as a card wall (images and titles from the Notion archive) ---------- */
+const MORE = [{"imgs": ["lang.jpg"], "name": {"zh": "The Language of Package 主視覺", "en": "The Language of Package — key visual", "it": "The Language of Package — visual"}, "cat": {"zh": "主視覺", "en": "Key visual", "it": "Visual"}}, {"imgs": ["apple-1.jpg", "apple-2.jpg", "apple-3.jpg"], "name": {"zh": "Apple Studio 3C 產品包裝", "en": "Apple Studio — 3C product packaging", "it": "Apple Studio — packaging per prodotti 3C"}, "cat": {"zh": "包裝設計", "en": "Packaging", "it": "Packaging"}}, {"imgs": ["chime.jpg"], "name": {"zh": "致理管樂社 時光奏鳴音樂會 主視覺", "en": "Chihlee Wind Band — 'Time Sonata' concert visual", "it": "Banda Chihlee — visual del concerto 'Sonata del tempo'"}, "cat": {"zh": "主視覺", "en": "Key visual", "it": "Visual"}}, {"imgs": ["wish.jpg"], "name": {"zh": "北商管樂社 願音永奏音樂會 主視覺", "en": "NTUB Wind Band — 'Play On' concert visual", "it": "Banda NTUB — visual del concerto 'Suonare per sempre'"}, "cat": {"zh": "主視覺", "en": "Key visual", "it": "Visual"}}, {"imgs": ["peanut.jpg"], "name": {"zh": "花生醬包裝 Re-Design", "en": "Peanut butter packaging re-design", "it": "Packaging del burro di arachidi: re-design"}, "cat": {"zh": "包裝設計", "en": "Packaging", "it": "Packaging"}}, {"imgs": ["flower-1.jpg", "flower-2.jpg"], "name": {"zh": "明蓮有限公司 水淨花語 設計作品", "en": "Minglian Co. — 'Water-Clear Flower Language'", "it": "Minglian — 'Il linguaggio dei fiori d'acqua'"}, "cat": {"zh": "立體設計", "en": "3D design", "it": "Design 3D"}}, {"imgs": ["tee-front.jpg", "tee-back.jpg"], "name": {"zh": "北商管樂社 服裝圖案設計", "en": "NTUB Wind Band — T-shirt graphics", "it": "Banda NTUB — grafica per t-shirt"}, "cat": {"zh": "服裝圖案", "en": "Apparel", "it": "Abbigliamento"}}, {"imgs": ["calendar.jpg"], "name": {"zh": "2025 月曆設計：水晶", "en": "2025 calendar: Crystals", "it": "Calendario 2025: Cristalli"}, "cat": {"zh": "平面設計", "en": "Graphic design", "it": "Grafica"}}, {"imgs": ["pain.jpg"], "name": {"zh": "痛覺感應 視覺傳達設計原創練習", "en": "The Perception of Pain — visual communication study", "it": "La percezione del dolore — studio di comunicazione visiva"}, "cat": {"zh": "視覺練習", "en": "Visual study", "it": "Studio visivo"}}];
+const MORE_UI = { zh: { h: "其他作品", close: "關閉" }, en: { h: "More work", close: "Close" }, it: { h: "Altri lavori", close: "Chiudi" } };
+function moreHTML() {
+  const t = MORE_UI[lang];
+  return `<section class="more" aria-labelledby="more-h">
+    <h3 id="more-h" class="more-h">${t.h}</h3>
+    <div class="more-grid">${MORE.map((m, i) => `<button type="button" class="more-card" data-i="${i}">
+      <span class="more-img"><img src="img/more/${m.imgs[0]}" alt="" loading="lazy">${m.imgs.length > 1 ? `<span class="more-n">${m.imgs.length}</span>` : ""}</span>
+      <b>${esc(m.name[lang])}</b><span class="more-cat">${esc(m.cat[lang])}</span>
+    </button>`).join("")}</div>
+  </section>`;
+}
+function startMore() {
+  view.querySelectorAll(".more-card").forEach(c => c.addEventListener("click", () => openMore(+c.dataset.i, c)));
+}
+function openMore(i, from) {
+  const m = MORE[i], t = MORE_UI[lang];
+  const box = document.createElement("div");
+  box.className = "mw"; box.setAttribute("role", "dialog"); box.setAttribute("aria-modal", "true"); box.setAttribute("aria-label", m.name[lang]);
+  box.innerHTML = `<button type="button" class="mw-x" aria-label="${t.close}">✕</button>
+    <div class="mw-in"><p class="mw-t"><b>${esc(m.name[lang])}</b><span>${esc(m.cat[lang])}</span></p>
+    ${m.imgs.map(f => `<img src="img/more/${f}" alt="${esc(m.name[lang])}">`).join("")}</div>`;
+  const close = () => { box.remove(); document.body.style.overflow = ""; removeEventListener("keydown", key); from && from.focus(); };
+  const key = e => { if (e.key === "Escape") close(); };
+  box.addEventListener("click", e => { if (e.target === box || e.target.closest(".mw-x")) close(); });
+  addEventListener("keydown", key);
+  document.body.appendChild(box); document.body.style.overflow = "hidden";
+  box.querySelector(".mw-x").focus();
 }
 
 /* ---------- Opening motion ---------- */
