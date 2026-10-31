@@ -82,28 +82,38 @@
         padding: max(56px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(24px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
   .pv[hidden] { display: none; }
   /* Temporary notice for the TDRI 2027 winter internship reviewers. Remove the #tn markup, these styles and the TDRI block in the script to take it down. */
-  .tn { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: 16px; background: rgba(8, 8, 9, .62); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+  .tn { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: 16px; background: rgba(8, 8, 9, .66); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
   .tn[hidden] { display: none; }
-  .tn-frame { width: min(440px, 100%); border-radius: 28px; padding: 10px 10px 4px; background: linear-gradient(160deg, #8fd0ff 0%, #5eb3f2 55%, #a9dcff 100%); box-shadow: 0 30px 80px rgba(0, 0, 0, .45); animation: tn-in .35s cubic-bezier(.2, .8, .2, 1); }
-  @keyframes tn-in { from { opacity: 0; transform: translateY(14px) scale(.97); } }
-  @media (prefers-reduced-motion: reduce) { .tn-frame { animation: none; } }
-  .tn-card { background: #18181a; color: #f2f0ea; border-radius: 20px; padding: 20px 18px 16px; }
-  .tn-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
-  .tn-to { margin: 0 0 4px; font-family: var(--mono); font-size: 12px; color: #9fd6ff; }
-  .tn-head h2 { margin: 0; font-size: 19px; font-weight: 700; line-height: 1.35; }
-  .tn-x { flex: none; width: 32px; height: 32px; border-radius: 50%; border: 1px solid #3a3a3e; background: transparent; color: #f2f0ea; font-size: 14px; cursor: pointer; }
+  .tn-card { width: min(760px, 100%); aspect-ratio: 16 / 9; display: flex; flex-direction: column; background: #161616; color: #f2f0ea; border: 1px solid #333; border-radius: 10px; padding: clamp(20px, 3.2vw, 34px); box-shadow: 0 30px 80px rgba(0, 0, 0, .5); animation: tn-in .35s cubic-bezier(.2, .8, .2, 1); }
+  @keyframes tn-in { from { opacity: 0; transform: translateY(14px) scale(.98); } }
+  @media (prefers-reduced-motion: reduce) { .tn-card { animation: none; } }
+  .tn-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+  .tn-to { margin: 0 0 6px; font-size: 15px; font-weight: 700; }
+  .tn-head h2 { margin: 0; font-size: clamp(20px, 2.4vw, 26px); font-weight: 700; line-height: 1.3; }
+  .tn-note { margin: 8px 0 0; font-size: 12.5px; line-height: 1.6; color: #a7a39b; }
+  .tn-x { flex: none; width: 34px; height: 34px; border-radius: 50%; border: 1px solid #444; background: transparent; color: #f2f0ea; font-size: 14px; cursor: pointer; }
   .tn-x:hover, .tn-x:focus-visible { border-color: #f2f0ea; outline: none; }
-  .tn ul { list-style: none; margin: 0; padding: 0; }
-  .tn li { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 11px 0; border-top: 1px solid #2c2c30; }
-  .tn-n { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: #26262a; box-shadow: inset 0 0 0 2px #5eb3f2; font-family: var(--mono); font-size: 13px; color: #9fd6ff; }
-  .tn-k { display: block; font-size: 12.5px; color: #a7a39b; margin-bottom: 2px; }
-  .tn li b { font-size: 16px; font-weight: 700; }
-  .tn-s { display: block; font-size: 12.5px; color: #c9c5bd; margin-top: 2px; }
-  .tn-ok { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: #f2f0ea; color: #18181a; font-size: 15px; font-weight: 700; }
-  .tn-sign { margin: 12px 0 0; padding-top: 12px; border-top: 1px solid #2c2c30; font-size: 12.5px; color: #a7a39b; }
-  .tn-go { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 12px 10px 10px; border: 0; background: none; color: #0b3f6b; font: 700 15px var(--text); cursor: pointer; }
-  .tn-go:focus-visible { outline: 2px solid #0b3f6b; outline-offset: -2px; border-radius: 12px; }
-  .tn-chip { position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px)); z-index: 40; border: 0; border-radius: 999px; padding: 8px 14px; background: linear-gradient(160deg, #8fd0ff, #5eb3f2); color: #0b3f6b; font: 700 13px var(--text); cursor: pointer; box-shadow: 0 6px 20px rgba(0, 0, 0, .25); }
+  .tn ul { list-style: none; margin: auto 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid #333; }
+  .tn li { padding: 16px 16px 0 0; }
+  .tn li + li { padding-left: 16px; border-left: 1px solid #333; }
+  .tn-k { display: block; font-size: 12.5px; color: #a7a39b; margin-bottom: 6px; }
+  .tn li b { display: block; font-size: clamp(18px, 2.1vw, 22px); font-weight: 700; line-height: 1.3; }
+  .tn-s { display: block; font-size: 13px; color: #d6d2ca; margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .tn-foot { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-top: 14px; border-top: 1px solid #333; }
+  .tn-sign { margin: 0; font-size: 12.5px; color: #a7a39b; }
+  .tn-go { flex: none; display: inline-flex; gap: 10px; align-items: center; padding: 10px 18px; border: 1px solid #f2f0ea; border-radius: 999px; background: #f2f0ea; color: #161616; font: 700 14px var(--text); cursor: pointer; }
+  .tn-go:hover { background: #fff; }
+  .tn-go:focus-visible { outline: 2px solid #f2f0ea; outline-offset: 3px; }
+  @media (max-width: 640px) {
+    .tn-card { aspect-ratio: auto; max-height: calc(100dvh - 32px); overflow-y: auto; }
+    .tn ul { grid-template-columns: minmax(0, 1fr); margin: 18px 0; }
+    .tn li, .tn li + li { padding: 12px 0; border-left: 0; }
+    .tn li + li { border-top: 1px solid #333; }
+    .tn-foot { flex-direction: column; align-items: stretch; }
+    .tn-go { justify-content: center; }
+  }
+  .tn-chip { position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px)); z-index: 40; border: 1px solid #444; border-radius: 999px; padding: 8px 14px; background: #161616; color: #f2f0ea; font: 700 13px var(--text); cursor: pointer; box-shadow: 0 6px 20px rgba(0, 0, 0, .25); }
+  .tn-chip:hover, .tn-chip:focus-visible { border-color: #f2f0ea; outline: none; }
   .tn-chip[hidden] { display: none; }
   .pv figure { margin: 0; display: grid; gap: 14px; justify-items: center; min-width: 0; }
   .pv img { max-width: 100%; max-height: 72vh; object-fit: contain; box-shadow: 0 20px 60px rgba(0, 0, 0, .5); }
@@ -244,20 +254,24 @@
   </header>
   <main id="view"></main>
   <div class="tn" id="tn" role="dialog" aria-modal="true" aria-labelledby="tn-title" hidden>
-    <div class="tn-frame">
-      <div class="tn-card">
-        <div class="tn-head">
-          <div><p class="tn-to">致：台灣設計研究院</p><h2 id="tn-title">2027 寒假實習 申請說明</h2></div>
-          <button type="button" class="tn-x" aria-label="關閉">✕</button>
+    <div class="tn-card">
+      <div class="tn-head">
+        <div>
+          <p class="tn-to">致：台灣設計研究院</p>
+          <h2 id="tn-title">2027 寒假實習 申請說明</h2>
+          <p class="tn-note">因報名資料有所疏漏，特於作品集網站補充說明，造成不便，敬請見諒。</p>
         </div>
-        <ul>
-          <li><span class="tn-n">01</span><span><span class="tn-k">目前就讀年級</span><b>大學二技三年級</b></span><span></span></li>
-          <li><span class="tn-n">02</span><span><span class="tn-k">是否可以全程參與實習</span><b>是</b></span><span class="tn-ok" aria-hidden="true">✓</span></li>
-          <li><span class="tn-n">03</span><span><span class="tn-k">我可以配合的實習期間</span><b>全部檔期</b><span class="tn-s">2027 年寒假實習期間皆可配合</span></span><span></span></li>
-        </ul>
-        <p class="tn-sign">國立臺北商業大學 商業設計管理系　柯承翰</p>
+        <button type="button" class="tn-x" aria-label="關閉">✕</button>
       </div>
-      <button type="button" class="tn-go"><span>進入作品集</span><span aria-hidden="true">→</span></button>
+      <ul>
+        <li><span class="tn-k">目前就讀年級</span><b>大學二技三年級</b></li>
+        <li><span class="tn-k">是否可以全程參與實習</span><b>是</b></li>
+        <li><span class="tn-k">我可以配合的實習期間</span><b>全部檔期</b><span class="tn-s">2027/1/11 至 2027/2/19</span></li>
+      </ul>
+      <div class="tn-foot">
+        <p class="tn-sign">國立臺北商業大學 商業設計管理系　柯承翰</p>
+        <button type="button" class="tn-go"><span>進入作品集</span><span aria-hidden="true">→</span></button>
+      </div>
     </div>
   </div>
   <button type="button" class="tn-chip" hidden>致設研院・申請說明</button>
