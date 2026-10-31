@@ -238,9 +238,6 @@
   footer a:hover { color: var(--fg); border-color: var(--fg); }
   /* Summary timeline after the project list */
   .tl { margin-top: 72px; padding-top: 18px; border-top: 1px solid var(--line); }
-  .tl-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
-  .tl-head h2 { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(36px, 6vw, 72px); letter-spacing: -.045em; line-height: .95; }
-  .tl-head p { margin: 0; max-width: 30em; color: var(--muted); font-size: 14px; line-height: 1.6; }
   .tl-stage { position: relative; height: clamp(420px, 62vh, 620px); margin-top: 16px; overflow: hidden; touch-action: pan-y; outline: none; }
   .tl-stage:focus-visible { box-shadow: inset 0 0 0 2px var(--fg); }
   .tl-stage::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--line); opacity: .5; }
@@ -1323,8 +1320,7 @@ function timelineHTML() {
   const t = TL_UI[lang];
   const segs = P.map((p, i) => `<button type="button" class="tl-seg" data-i="${i}" tabindex="-1" aria-label="${String(i + 1).padStart(2, "0")} ${esc(p.name[lang])}">${p.imgs.map(im => `<img src="${stripSrc(im[0])}" alt="" loading="lazy" draggable="false">`).join("")}</button>`).join("");
   /* Three identical copies make the strip loop without a visible seam. */
-  return `<section class="tl" aria-labelledby="tl-h">
-    <div class="tl-head"><h2 id="tl-h">${t.h}</h2></div>
+  return `<section class="tl" aria-label="${t.h}">
     <div class="tl-stage" tabindex="0" aria-label="${t.h}">
       <div class="tl-track"><div class="tl-copy">${segs}</div><div class="tl-copy" aria-hidden="true">${segs}</div><div class="tl-copy" aria-hidden="true">${segs}</div></div>
       <div class="tl-pile" aria-hidden="true"></div>
