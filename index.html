@@ -17,7 +17,7 @@
 <title>HanKO 作品集</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=JetBrains+Mono:wght@400&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
 <style>
   /* Layout: list-style portfolio after haoweitu.info. Logo left, three pages centre, language switch right. Projects are full-width rows (text left, images right); inner pages are hash views with a fact column, long text and an image stack. */
   :root {
@@ -31,7 +31,8 @@
     --display: "Bricolage Grotesque", "Noto Sans TC", "PingFang TC", sans-serif;
     /* Body text: Source Han Sans (Noto Sans TC on Google Fonts) for both Chinese and Latin. */
     --text: "Noto Sans TC", "Source Han Sans TC", "Source Han Sans", "PingFang TC", sans-serif;
-    --mono: "JetBrains Mono", "SF Mono", Menlo, monospace;
+    /* Small labels, years and counters: Source Han Sans with even-width numbers (no dotted zero). */
+    --mono: "Noto Sans TC", "Source Han Sans TC", "PingFang TC", sans-serif;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) { --bg: #121211; --fg: #f2f0ea; --muted: #9a958b; --line: #f2f0ea; --hair: #2e2d2a; --tile: #1d1c1a; --logo-filter: brightness(0) invert(1); color-scheme: dark; }
@@ -41,7 +42,7 @@
   * { box-sizing: border-box; }
   html, body { background: var(--bg); color: var(--fg); }
   body {
-    margin: 0; font-family: var(--text); font-size: 15px; line-height: 1.6;
+    margin: 0; font-family: var(--text); font-size: 15px; line-height: 1.6; font-variant-numeric: tabular-nums;
     padding-left: max(18px, env(safe-area-inset-left, 0px));
     padding-right: max(18px, env(safe-area-inset-right, 0px));
     padding-block: 0 56px;
