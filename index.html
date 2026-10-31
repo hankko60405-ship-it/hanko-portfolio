@@ -890,7 +890,7 @@ const SUM = {
   ]
  }
 };
-const TL_UI = {"zh": {"h": "作品總結", "lead": "沿著時間軸往下滾動，看每個專案的痛點、結果與方法論", "q": "痛點", "r": "結果", "m": "方法論", "go": "看專案 →"}, "en": {"h": "In summary", "lead": "Scroll along the timeline to see each project's pain point, result and method", "q": "Pain point", "r": "Result", "m": "Method", "go": "View project →"}, "it": {"h": "In sintesi", "lead": "Scorri lungo la linea del tempo per vedere problema, risultato e metodo di ogni progetto", "q": "Il problema", "r": "Risultato", "m": "Metodo", "go": "Vedi progetto →"}};
+const TL_UI = {"zh": {"h": "沿途所得", "q": "痛點", "r": "結果", "m": "方法論", "go": "看專案 →"}, "en": {"h": "Along the way", "q": "Pain point", "r": "Result", "m": "Method", "go": "View project →"}, "it": {"h": "Lungo la strada", "q": "Il problema", "r": "Risultato", "m": "Metodo", "go": "Vedi progetto →"}};
 
 function renderWork() {
   const u = UI[lang], list = P.filter(p => filter === "All" || p.cat === filter);
@@ -1324,7 +1324,7 @@ function timelineHTML() {
   const segs = P.map((p, i) => `<button type="button" class="tl-seg" data-i="${i}" tabindex="-1" aria-label="${String(i + 1).padStart(2, "0")} ${esc(p.name[lang])}">${p.imgs.map(im => `<img src="${stripSrc(im[0])}" alt="" loading="lazy" draggable="false">`).join("")}</button>`).join("");
   /* Three identical copies make the strip loop without a visible seam. */
   return `<section class="tl" aria-labelledby="tl-h">
-    <div class="tl-head"><h2 id="tl-h">${t.h}</h2><p>${t.lead}</p></div>
+    <div class="tl-head"><h2 id="tl-h">${t.h}</h2></div>
     <div class="tl-stage" tabindex="0" aria-label="${t.h}">
       <div class="tl-track"><div class="tl-copy">${segs}</div><div class="tl-copy" aria-hidden="true">${segs}</div><div class="tl-copy" aria-hidden="true">${segs}</div></div>
       <div class="tl-pile" aria-hidden="true"></div>
