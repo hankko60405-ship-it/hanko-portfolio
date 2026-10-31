@@ -17,7 +17,7 @@
 <title>HanKO 作品集</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Noto+Sans+TC:wght@400;500;700;900&family=Nanum+Pen+Script&display=swap">
 <style>
   /* Layout: list-style portfolio after haoweitu.info. Logo left, three pages centre, language switch right. Projects are full-width rows (text left, images right); inner pages are hash views with a fact column, long text and an image stack. */
   :root {
@@ -236,6 +236,54 @@
 
   footer a { color: inherit; border-bottom: 1px solid var(--muted); transition: color .2s, border-color .2s; }
   footer a:hover { color: var(--fg); border-color: var(--fg); }
+  /* Summary timeline after the project list */
+  .tl { margin-top: 72px; padding-top: 18px; border-top: 1px solid var(--line); }
+  .tl-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
+  .tl-head h2 { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(36px, 6vw, 72px); letter-spacing: -.045em; line-height: .95; }
+  .tl-head p { margin: 0; max-width: 30em; color: var(--muted); font-size: 14px; line-height: 1.6; }
+  .tl-stage { position: relative; height: clamp(420px, 62vh, 620px); margin-top: 16px; overflow: hidden; }
+  .tl-stage::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--line); opacity: .5; }
+  .tl-strip { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 8px; }
+  .tl-seg { flex: var(--n) 1 0; min-width: 0; height: 30px; display: flex; gap: 2px; padding: 0; border: 0; background: none; cursor: pointer; opacity: .45; transition: opacity .3s, height .3s; }
+  .tl-seg.on { opacity: 1; height: 38px; }
+  .tl-seg:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+  .tl-seg img { flex: 1 1 0; min-width: 0; height: 100%; object-fit: cover; }
+  .tl-play { position: absolute; top: 0; bottom: 0; left: 0; width: 1px; background: var(--fg); pointer-events: none; transition: left .25s cubic-bezier(.2, .8, .2, 1); }
+  .tl-stage:hover .tl-play { transition: none; }
+  .tl-pile { position: absolute; inset: 0; pointer-events: none; }
+  .tl-pile img { position: absolute; object-fit: cover; box-shadow: 0 10px 30px rgba(0, 0, 0, .22); opacity: 0; transform: translate(var(--fx), var(--fy)) scale(.12); transition: transform .6s cubic-bezier(.2, .8, .2, 1) var(--d), opacity .35s ease var(--d); }
+  .tl-pile img.in { opacity: 1; transform: none; }
+  .tl-hint { position: absolute; right: 0; bottom: 6px; font-size: 12px; color: var(--muted); }
+  .tl-info { display: grid; grid-template-columns: 1.1fr repeat(3, 1fr); gap: 24px; padding-top: 16px; border-top: 1px solid var(--line); min-height: 130px; }
+  .tl-name { display: flex; flex-direction: column; gap: 4px; }
+  .tl-no { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .tl-name b { font-family: var(--display); font-size: 22px; letter-spacing: -.02em; }
+  .tl-name a { margin-top: 6px; font-size: 13px; width: fit-content; border-bottom: 1px solid var(--muted); }
+  .tl-k { display: block; font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+  .tl-info p { margin: 0; font-size: 14px; line-height: 1.65; }
+  @media (max-width: 800px) {
+    .tl-stage { height: 380px; }
+    .tl-strip { gap: 4px; }
+    .tl-seg { height: 22px; } .tl-seg.on { height: 30px; }
+    .tl-info { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .tl-pile img, .tl-play { transition: none; } }
+  /* Hand-drawn notes: a handwriting face and loose pen arrows, used sparingly on project pages. */
+  .hn { font-family: "Nanum Pen Script", cursive; font-weight: 400; color: var(--fg); line-height: 1; letter-spacing: 0; }
+  .hn svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .p-head { position: relative; }
+  .hn-scroll { position: absolute; right: 4%; bottom: 4px; display: flex; flex-direction: column; align-items: center; font-size: 34px; }
+  .hn-dot { align-self: flex-start; margin: 0 0 -6px -10px; font-size: 30px; }
+  .hn-arrow { width: 28px; height: 54px; margin-top: 6px; }
+  .hn-label { margin: 0 0 10px; font-size: 34px; }
+  .hn-side { margin-left: 12px; font-size: 26px; vertical-align: -2px; color: var(--muted); }
+  .hn-gallery { display: flex; align-items: flex-end; justify-content: flex-end; gap: 6px; margin: 48px 6% -6px 0; font-size: 32px; }
+  .hn-curve { width: 92px; height: 58px; order: -1; transform: translateY(18px); }
+  @media (max-width: 800px) {
+    .hn-scroll { position: static; align-items: flex-start; margin: 12px 0 0; font-size: 28px; }
+    .hn-dot { display: none; }
+    .hn-gallery { justify-content: flex-start; margin-left: 0; font-size: 28px; }
+  }
   footer { margin-top: 56px; padding-top: 14px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-family: var(--mono); font-size: 12px; color: var(--muted); }
 
   @media (max-width: 800px) {
@@ -332,6 +380,8 @@ const UI = {
 /* ---------- Projects ---------- */
 const P = [
   { id: "alive", cat: "Exhibition",
+    /* Hand-drawn notes (trial on this project): side notes by section index, and a note above the gallery. */
+    hand: { side: { 2: "← my role", 3: "← the hard call" }, gallery: "(Bubbles = breath)" },
     name: { zh: "ALIVE : IN.BREATH 呼吸存在", en: "ALIVE : IN.BREATH", it: "ALIVE : IN.BREATH" },
     imgs: [["01.jpg", { zh: "主視覺海報", en: "Key poster", it: "Manifesto principale" }, true], ["02.jpg", { zh: "周邊與識別證", en: "Merchandise and passes", it: "Gadget e pass" }], ["03.jpg", { zh: "展場", en: "Exhibition booth", it: "Lo stand" }]],
     zh: { meta: "畢業展識別，2026", short: "北商商設系 115 級畢業展，以呼吸比喻設計應如空氣般存在於生活中，用氣泡作為核心視覺，延伸到展場、周邊與社群，入圍 2026 放視大賞視覺設計組複選。", quote: "設計不該是刻意為之的裝飾，而是如空氣般，存在於生活的每一處。",
@@ -702,6 +752,147 @@ function thumbs(p) {
   return `<div class="thumbs${n === 1 ? " one" : n === 2 ? " two" : ""}">` + pick.map(i => `<img src="img/${i[0]}" alt="${esc(p.name[lang])} — ${esc(i[1][lang])}" loading="lazy">`).join("") + "</div>";
 }
 
+/* ---------- Summary timeline: what each project solved, what it left, and the method that travels ---------- */
+const SUM = {
+ "alive": {
+  "zh": [
+   "二技與四技分開管理、16 個專題與 59 位同學，需要一套共同的語言，也需要一條讓每個專題都被看見的動線",
+   "氣泡識別與周邊在校內展與新一代設計展落地，並入圍放視大賞視覺設計組複選",
+   "先訂規則再分工，用審查規範、時程與交接文件讓大型團隊有同一個節奏"
+  ],
+  "en": [
+   "Two programmes run separately, 16 projects and 59 students needed one shared language and a route where every project gets seen",
+   "The bubble identity and merchandise landed at the campus show and YODEX, and the show was shortlisted at Vision Get Wild",
+   "Set the rules before dividing the work: review rules, timelines and handover notes give a big team one rhythm"
+  ],
+  "it": [
+   "Due corsi gestiti separatamente, 16 progetti e 59 studenti avevano bisogno di un linguaggio comune e di un percorso in cui ogni progetto fosse visto",
+   "L'identità a bolle e i gadget sono arrivati alla mostra nel campus e a YODEX, e la mostra è stata selezionata a Vision Get Wild",
+   "Prima le regole, poi la divisione del lavoro: criteri di revisione, tempi e documenti di passaggio danno a un grande team lo stesso ritmo"
+  ]
+ },
+ "apple": {
+  "zh": [
+   "期末音樂會需要一套讓人記得，又能把演出資訊說清楚的視覺",
+   "海報、DM 與透明邀請函一系列完成，並參加 2026 臺灣國際學生創意設計大賽",
+   "從一個意象延伸出標準字、輔助圖形與材質，讓整套視覺說同一句話"
+  ],
+  "en": [
+   "The end-of-year concert needed a visual people would remember that still made the concert details clear",
+   "Posters, flyers and transparent invitations were completed as one series and entered in the 2026 Taiwan International Student Design Competition",
+   "Grow the logotype, supporting graphics and materials from one image, so the whole system says one thing"
+  ],
+  "it": [
+   "Il concerto di fine anno aveva bisogno di un visual memorabile che rendesse chiare le informazioni",
+   "Manifesti, volantini e inviti trasparenti completati come serie e presentati al Taiwan International Student Design Competition 2026",
+   "Far nascere logotipo, grafiche e materiali da un'unica immagine, perché tutto il sistema dica una cosa sola"
+  ]
+ },
+ "tangyuan": {
+  "zh": [
+   "品項有十多種，大家卻只認得大湯圓，新客看不出這裡賣什麼",
+   "大旗、攤車與名片在市場落地使用，開始有人詢問各品項價錢，也吸引年輕客人",
+   "把攤位當成一套服務來設計，讓每個接觸點都回答「這裡賣什麼」"
+  ],
+  "en": [
+   "More than ten products, yet people only knew the big tangyuan and newcomers couldn't tell what was sold",
+   "The flag, cart and cards are in use at the market; customers now ask about other products and younger visitors stop by",
+   "Design the stall as a service, so every touchpoint answers 'what is sold here?'"
+  ],
+  "it": [
+   "Più di dieci prodotti, ma tutti conoscevano solo i tangyuan grandi e i nuovi clienti non capivano cosa si vendesse",
+   "Bandiera, carretto e biglietti sono in uso; ora i clienti chiedono degli altri prodotti e arrivano anche i più giovani",
+   "Progettare il banco come un servizio, perché ogni punto di contatto risponda a 'cosa si vende qui?'"
+  ]
+ },
+ "kokoland": {
+  "zh": [
+   "三個人要在藝術書展上，讓陌生人在一個小攤位前停下來",
+   "攝影書《愛是 cream》、奶油字母與攤位完成參展，攝影書被 @chibiandesme 收進 mini library",
+   "用一個共同的世界觀串起書、字體、海報與攤位"
+  ],
+  "en": [
+   "Three of us had to make strangers stop at one small booth at an art book fair",
+   "The photo book Love is Cream, the cream alphabet and the booth were shown, and the book joined @chibiandesme's mini library",
+   "Tie the book, type, poster and booth together with one shared world"
+  ],
+  "it": [
+   "In tre dovevamo far fermare degli sconosciuti davanti a un piccolo stand a una fiera dell'editoria d'arte",
+   "Il libro Love is Cream, l'alfabeto di panna e lo stand sono stati esposti, e il libro è entrato nella mini library di @chibiandesme",
+   "Legare libro, caratteri, manifesto e stand con un unico mondo condiviso"
+  ]
+ },
+ "daxi": {
+  "zh": [
+   "大溪老街假日塞車、行人空間不足，轉運站二樓長期閒置",
+   "提出四個空間策略與四階段計畫，入選青年局績優提案團隊決選",
+   "田野調查、利害關係人分析，再找出時機點，借即將到來的人潮改變老街生態"
+  ],
+  "en": [
+   "Weekend jams, too little room for pedestrians, and an empty upper floor at the old bus station",
+   "Four spatial strategies and a four-phase plan, a finalist among the Youth Affairs Bureau's outstanding proposals",
+   "Field research, stakeholder mapping, then find the right moment, using the coming crowds to change the street"
+  ],
+  "it": [
+   "Traffico nel fine settimana, poco spazio per i pedoni e il piano superiore della vecchia stazione vuoto",
+   "Quattro strategie spaziali e un piano in quattro fasi, in finale tra le migliori proposte dell'Ufficio giovani",
+   "Ricerca sul campo, mappa dei portatori d'interesse, poi il momento giusto: usare il flusso in arrivo per cambiare la via"
+  ]
+ },
+ "shennong": {
+  "zh": [
+   "神農信仰與安金工藝內容很深，孩子和家長不容易讀懂",
+   "完成一本親子導覽手冊，結合插圖角色、圖示系統、地圖與互動任務",
+   "把專業又複雜的地方知識，轉譯成外行人也看得懂的內容"
+  ],
+  "en": [
+   "The Divine Farmer faith and gold-leaf craft run deep, and are hard for children and parents to read",
+   "A family guidebook with illustrated characters, an icon system, maps and hands-on tasks",
+   "Translate specialist local knowledge into something anyone can understand"
+  ],
+  "it": [
+   "La fede del Divino Agricoltore e l'arte della foglia d'oro sono profonde e difficili da leggere per bambini e genitori",
+   "Una guida per famiglie con personaggi illustrati, icone, mappe e attività",
+   "Tradurre conoscenze locali specialistiche in qualcosa che chiunque possa capire"
+  ]
+ },
+ "afterglow": {
+  "zh": [
+   "設定願景後交給機器製作，要回答是放棄想像，還是把機器拉回想要的樣子",
+   "從上百張長曝光中挑出最飽滿、最有層次的光軌，也接受與原本想像的落差",
+   "一次只改一個變數並記錄參數，用實驗找出可以重複的組合"
+  ],
+  "en": [
+   "Set a vision, hand it to a machine, then decide: drop the idea, or pull the machine back to it",
+   "From over a hundred long exposures, the richest, most layered light trails, and an honest look at the gap from the idea",
+   "Change one variable at a time and log every setting, to find combinations that can be repeated"
+  ],
+  "it": [
+   "Definire una visione, affidarla a una macchina e poi scegliere: rinunciare o riportare la macchina all'idea",
+   "Da oltre cento lunghe esposizioni, le scie di luce più piene e stratificate, accettando la distanza dall'idea",
+   "Cambiare una variabile alla volta e annotare ogni parametro, per trovare combinazioni ripetibili"
+  ]
+ },
+ "bottle": {
+  "zh": [
+   "海洋廢棄寶特瓶很多，卻很少被轉化成日常會留下來的東西",
+   "以 R-PET 再生纖維做成磨光與纏繞兩款書殼，參加 2026 臺灣國際學生創意設計大賽",
+   "從淨灘的真實經驗出發，把材料問題轉成有故事的產品"
+  ],
+  "en": [
+   "Ocean plastic bottles are everywhere, yet rarely become something people keep",
+   "Polished and entwined book covers made from recycled R-PET fibre, entered in the 2026 Taiwan International Student Design Competition",
+   "Start from real beach-clean experience and turn a material problem into a product with a story"
+  ],
+  "it": [
+   "Le bottiglie di plastica in mare sono ovunque, ma raramente diventano qualcosa da conservare",
+   "Copertine levigate e intrecciate in fibra R-PET riciclata, presentate al Taiwan International Student Design Competition 2026",
+   "Partire da una vera pulizia della spiaggia e trasformare un problema di materiale in un prodotto con una storia"
+  ]
+ }
+};
+const TL_UI = {"zh": {"h": "作品總結", "lead": "滑過時間軸，看每個專案解決了什麼、留下了什麼，以及哪些方法能帶到下一個地方", "q": "解決的問題", "r": "留下的結果", "m": "帶得走的方法", "go": "看專案 →", "hint": "移動游標瀏覽・點選切換"}, "en": {"h": "In summary", "lead": "Move along the timeline to see what each project solved, what it left behind, and which methods carry over to the next place", "q": "Problem solved", "r": "What it left", "m": "Method I carry forward", "go": "View project →", "hint": "Move to browse · tap to switch"}, "it": {"h": "In sintesi", "lead": "Scorri la linea del tempo per vedere cosa ha risolto ogni progetto, cosa ha lasciato e quali metodi porto nel prossimo luogo", "q": "Problema risolto", "r": "Cosa ha lasciato", "m": "Metodo che porto con me", "go": "Vedi progetto →", "hint": "Muoviti per sfogliare · tocca per cambiare"}};
+
 function renderWork() {
   const u = UI[lang], list = P.filter(p => filter === "All" || p.cat === filter);
   view.innerHTML = `
@@ -725,9 +916,11 @@ function renderWork() {
           <a class="more" href="#${p.id}">${u.view}</a>
         </div>
         <a href="#${p.id}" aria-label="${esc(p.name[lang])}">${thumbs(p)}</a>
-      </article>`).join("")}`;
+      </article>`).join("")}
+    ${timelineHTML()}`;
   view.querySelectorAll("[data-cat]").forEach(b => b.addEventListener("click", () => { filter = b.dataset.cat; renderWork(); }));
   startWheel();
+  startTimeline();
 }
 
 /* ---------- 3D tilt wheel ---------- */
@@ -972,15 +1165,19 @@ function renderProject(p) {
   const q = lang === "zh" ? `「${esc(t.quote)}」` : `“${esc(t.quote)}”`;
   view.innerHTML = `
     <a class="back" href="#">${u.back}</a>
-    <h1 class="p-title">${esc(p.name[lang])}</h1>
-    <p class="p-sub">${esc(sub(p))}</p>
+    <div class="p-head">
+      <h1 class="p-title">${esc(p.name[lang])}</h1>
+      <p class="p-sub">${esc(sub(p))}</p>
+      ${p.hand ? `<div class="hn hn-scroll" aria-hidden="true"><span class="hn-dot">:</span>(Scroll for more)<svg class="hn-arrow" viewBox="0 0 40 70" aria-hidden="true"><path d="M21 3 C 18 18, 23 33, 19 60"/><path d="M9 47 C 13 52, 16 56, 19 61 C 22 55, 26 50, 31 46"/></svg></div>` : ""}
+    </div>
     <div class="p-grid">
-      ${renderFacts(p)}
+      ${p.hand ? `<div>${`<p class="hn hn-label" aria-hidden="true">(Details)</p>`}${renderFacts(p)}</div>` : renderFacts(p)}
       <div class="body">
         <p class="quote">${q}</p>
-        ${t.sections.map(s => `<h3>${esc(s[0])}</h3>${s[1].map(x => `<p>${esc(x)}</p>`).join("")}`).join("")}
+        ${t.sections.map((s, k) => `<h3>${esc(s[0])}${p.hand && p.hand.side[k] ? `<span class="hn hn-side" aria-hidden="true">${p.hand.side[k]}</span>` : ""}</h3>${s[1].map(x => `<p>${esc(x)}</p>`).join("")}`).join("")}
       </div>
     </div>
+    ${p.hand && p.hand.gallery ? `<div class="hn hn-gallery" aria-hidden="true">${p.hand.gallery}<svg class="hn-curve" viewBox="0 0 110 70" aria-hidden="true"><path d="M104 6 C 80 2, 40 8, 22 40 C 18 48, 16 55, 15 63"/><path d="M5 51 C 9 55, 12 60, 15 64 C 19 59, 23 55, 28 52"/></svg></div>` : ""}
     <div class="gallery">
       ${p.imgs.length ? p.imgs.map(im => `<figure class="${im[2] ? "wide" : ""}"><img src="img/${im[0]}" alt="${esc(p.name[lang])} — ${esc(im[1][lang])}" loading="lazy"><figcaption>${esc(im[1][lang])}</figcaption></figure>`).join("")
         : `<figure class="wide"><div class="notile" style="aspect-ratio:16/6">${u.soon}</div></figure>`}
@@ -1121,6 +1318,71 @@ function paintViews() {
     paintViews();
   } catch (e) {}
 })();
+
+const stripSrc = f => "img/strip/" + f.replace(/\.(jpg|png|webp)$/, ".jpg");
+function timelineHTML() {
+  const t = TL_UI[lang];
+  return `<section class="tl" aria-labelledby="tl-h">
+    <div class="tl-head"><h2 id="tl-h">${t.h}</h2><p>${t.lead}</p></div>
+    <div class="tl-stage">
+      <div class="tl-pile" aria-hidden="true"></div>
+      <div class="tl-strip">${P.map((p, i) => `<button type="button" class="tl-seg" data-i="${i}" style="--n:${p.imgs.length}" aria-label="${String(i + 1).padStart(2, "0")} ${esc(p.name[lang])}">${p.imgs.map(im => `<img src="${stripSrc(im[0])}" alt="" loading="lazy" draggable="false">`).join("")}</button>`).join("")}</div>
+      <div class="tl-play" aria-hidden="true"></div>
+      <span class="tl-hint">${t.hint}</span>
+    </div>
+    <div class="tl-info" aria-live="polite"></div>
+  </section>`;
+}
+/* Slots for the collage around the playhead (offsets from the centre, width, aspect ratio). */
+const TL_SLOTS = [[-250, -150, 240, 1.4], [40, -170, 220, 1.25], [255, -40, 180, .8], [-40, 120, 260, 1.5], [-330, 90, 170, 1], [230, 150, 200, 1.3]];
+function startTimeline() {
+  const root = view.querySelector(".tl");
+  if (!root) return;
+  const stage = root.querySelector(".tl-stage"), pile = root.querySelector(".tl-pile"), play = root.querySelector(".tl-play"), info = root.querySelector(".tl-info");
+  const segs = [...root.querySelectorAll(".tl-seg")];
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let cur = -1;
+  const setPlay = x => { play.style.left = x + "px"; };
+  const segCenter = i => { const r = segs[i].getBoundingClientRect(), s = stage.getBoundingClientRect(); return r.left - s.left + r.width / 2; };
+  function activate(i, x) {
+    if (i === cur) return;
+    cur = i;
+    const p = P[i], t = TL_UI[lang], d = SUM[p.id][lang];
+    segs.forEach((s, k) => s.classList.toggle("on", k === i));
+    info.innerHTML = `<div class="tl-name"><span class="tl-no">${String(i + 1).padStart(2, "0")}</span><b>${esc(p.name[lang])}</b><a href="#${p.id}">${t.go}</a></div>
+      <div><span class="tl-k">${t.q}</span><p>${esc(d[0])}</p></div>
+      <div><span class="tl-k">${t.r}</span><p>${esc(d[1])}</p></div>
+      <div><span class="tl-k">${t.m}</span><p>${esc(d[2])}</p></div>`;
+    /* Old images fade away; the new project's images burst out from the line. */
+    [...pile.children].forEach(el => { el.classList.remove("in"); setTimeout(() => el.remove(), 350); });
+    const W = stage.clientWidth, H = stage.clientHeight, k = Math.max(.5, Math.min(1, W / 1000));
+    const span = 360 * k + 30, cx = Math.min(W - span, Math.max(span, x));
+    p.imgs.slice(0, TL_SLOTS.length).forEach((im, n) => {
+      const [sx, sy, sw, ar] = TL_SLOTS[n], w = sw * k, h = w / ar;
+      const left = cx + sx * k - w / 2, top = H / 2 + sy * k - h / 2;
+      const el = document.createElement("img");
+      el.src = "img/" + im[0]; el.alt = ""; el.decoding = "async";
+      el.style.cssText = `left:${left}px;top:${top}px;width:${w}px;height:${h}px;--fx:${x - left - w / 2}px;--fy:${H / 2 - top - h / 2}px;--d:${reduce ? 0 : n * 45}ms`;
+      pile.appendChild(el);
+      requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add("in")));
+    });
+  }
+  const segAt = x => { const s = stage.getBoundingClientRect(); return segs.findIndex(g => { const r = g.getBoundingClientRect(); return x >= r.left - s.left - 5 && x <= r.right - s.left + 5; }); };
+  stage.addEventListener("pointermove", e => {
+    if (e.pointerType !== "mouse") return;
+    const x = e.clientX - stage.getBoundingClientRect().left;
+    setPlay(x);
+    const i = segAt(x);
+    if (i >= 0) activate(i, x);
+  });
+  stage.addEventListener("pointerleave", () => { if (cur >= 0) setPlay(segCenter(cur)); });
+  segs.forEach((g, i) => {
+    g.addEventListener("click", () => { const x = segCenter(i); setPlay(x); activate(i, x); });
+    g.addEventListener("focus", () => { const x = segCenter(i); setPlay(x); activate(i, x); });
+  });
+  /* Start on the first project once the strip has laid out. */
+  requestAnimationFrame(() => { const x = segCenter(0); setPlay(x); activate(0, x); });
+}
 
 /* ---------- Opening motion ---------- */
 window.introDone = new Promise(done => {
