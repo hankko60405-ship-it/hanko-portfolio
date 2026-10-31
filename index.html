@@ -241,19 +241,19 @@
   .tl-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
   .tl-head h2 { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(36px, 6vw, 72px); letter-spacing: -.045em; line-height: .95; }
   .tl-head p { margin: 0; max-width: 30em; color: var(--muted); font-size: 14px; line-height: 1.6; }
-  .tl-stage { position: relative; height: clamp(420px, 62vh, 620px); margin-top: 16px; overflow: hidden; }
+  .tl-stage { position: relative; height: clamp(420px, 62vh, 620px); margin-top: 16px; overflow: hidden; touch-action: pan-y; outline: none; }
+  .tl-stage:focus-visible { box-shadow: inset 0 0 0 2px var(--fg); }
   .tl-stage::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--line); opacity: .5; }
-  .tl-strip { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 8px; }
-  .tl-seg { flex: var(--n) 1 0; min-width: 0; height: 30px; display: flex; gap: 2px; padding: 0; border: 0; background: none; cursor: pointer; opacity: .45; transition: opacity .3s, height .3s; }
-  .tl-seg.on { opacity: 1; height: 38px; }
-  .tl-seg:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
-  .tl-seg img { flex: 1 1 0; min-width: 0; height: 100%; object-fit: cover; }
-  .tl-play { position: absolute; top: 0; bottom: 0; left: 0; width: 1px; background: var(--fg); pointer-events: none; transition: left .25s cubic-bezier(.2, .8, .2, 1); }
-  .tl-stage:hover .tl-play { transition: none; }
+  .tl-track { position: absolute; left: 0; top: 50%; display: flex; column-gap: 12px; will-change: transform; }
+  .tl-copy { display: flex; gap: 12px; flex: none; }
+  .tl-seg { flex: none; height: 30px; display: flex; gap: 2px; padding: 0; border: 0; background: none; cursor: pointer; opacity: .5; transition: opacity .3s; }
+  .tl-seg img { width: 22px; height: 100%; object-fit: cover; transition: opacity .35s ease, transform .35s ease; }
+  .tl-seg.on { opacity: 1; }
+  .tl-seg.on img { opacity: 0; transform: scaleY(.3); }
+  .tl-play { position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: var(--fg); pointer-events: none; }
   .tl-pile { position: absolute; inset: 0; pointer-events: none; }
   .tl-pile img { position: absolute; object-fit: cover; box-shadow: 0 10px 30px rgba(0, 0, 0, .22); opacity: 0; transform: translate(var(--fx), var(--fy)) scale(.12); transition: transform .6s cubic-bezier(.2, .8, .2, 1) var(--d), opacity .35s ease var(--d); }
   .tl-pile img.in { opacity: 1; transform: none; }
-  .tl-hint { position: absolute; right: 0; bottom: 6px; font-size: 12px; color: var(--muted); }
   .tl-info { display: grid; grid-template-columns: 1.1fr repeat(3, 1fr); gap: 24px; padding-top: 16px; border-top: 1px solid var(--line); min-height: 130px; }
   .tl-name { display: flex; flex-direction: column; gap: 4px; }
   .tl-no { font-family: var(--mono); font-size: 12px; color: var(--muted); }
@@ -263,11 +263,10 @@
   .tl-info p { margin: 0; font-size: 14px; line-height: 1.65; }
   @media (max-width: 800px) {
     .tl-stage { height: 380px; }
-    .tl-strip { gap: 4px; }
-    .tl-seg { height: 22px; } .tl-seg.on { height: 30px; }
+    .tl-seg { height: 24px; } .tl-seg img { width: 16px; }
     .tl-info { grid-template-columns: minmax(0, 1fr); gap: 12px; }
   }
-  @media (prefers-reduced-motion: reduce) { .tl-pile img, .tl-play { transition: none; } }
+  @media (prefers-reduced-motion: reduce) { .tl-pile img, .tl-seg img { transition: none; } }
   /* Hand-drawn notes: a handwriting face and loose pen arrows, used sparingly on project pages. */
   .hn { font-family: "Nanum Pen Script", cursive; font-weight: 400; color: var(--fg); line-height: 1; letter-spacing: 0; }
   .hn svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
@@ -366,13 +365,13 @@
 <script>
 /* ---------- UI strings ---------- */
 const UI = {
-  zh: { work: "Portfolio", exp: "經歷", info: "關於我", h1: "Selected work", lead: "品牌識別、地方創生、展覽與田野調查。<br>2024 至今。", projects: "個專案", view: "看專案", back: "← 全部作品", next: "下一個專案", soon: "照片待補",
+  zh: { work: "Portfolio", exp: "經歷", info: "關於我", h1: "Selected work", lead: "品牌識別、地方創生、展覽與田野調查<br>2024 至 2026", projects: "個專案", view: "看專案", back: "← 全部作品", next: "下一個專案", soon: "照片待補",
     cats: { All: "全部", Identity: "品牌識別", Research: "研究", Exhibition: "展覽", Publication: "出版", Object: "物件" },
     f: { year: "年份", type: "類型", role: "角色", with: "合作", program: "計畫", place: "地點", for: "對象", course: "課程", status: "狀態", team: "團隊", award: "獎項", also: "另見", sdgs: "SDGs", scale: "規模", advisor: "指導老師" } },
-  en: { work: "Portfolio", exp: "Experience", info: "About me", h1: "Selected work", lead: "Brand identity, local revitalisation,<br>exhibitions and field research. 2024–now.", projects: "projects", view: "View project", back: "← All work", next: "Next project", soon: "Photos coming soon",
+  en: { work: "Portfolio", exp: "Experience", info: "About me", h1: "Selected work", lead: "Brand identity, local revitalisation, exhibitions and field research<br>2024–2026", projects: "projects", view: "View project", back: "← All work", next: "Next project", soon: "Photos coming soon",
     cats: { All: "All", Identity: "Identity", Research: "Research", Exhibition: "Exhibition", Publication: "Publication", Object: "Object" },
     f: { year: "Year", type: "Type", role: "Role", with: "With", program: "Programme", place: "Place", for: "For", course: "Course", status: "Status", team: "Team", award: "Award", also: "Also", sdgs: "SDGs", scale: "Scale", advisor: "Advisors" } },
-  it: { work: "Portfolio", exp: "Esperienze", info: "Chi sono", h1: "Lavori scelti", lead: "Identità visiva, rigenerazione locale,<br>mostre e ricerca sul campo. Dal 2024.", projects: "progetti", view: "Vedi progetto", back: "← Tutti i lavori", next: "Progetto successivo", soon: "Foto in arrivo",
+  it: { work: "Portfolio", exp: "Esperienze", info: "Chi sono", h1: "Lavori scelti", lead: "Identità visiva, rigenerazione locale, mostre e ricerca sul campo<br>2024–2026", projects: "progetti", view: "Vedi progetto", back: "← Tutti i lavori", next: "Progetto successivo", soon: "Foto in arrivo",
     cats: { All: "Tutti", Identity: "Identità", Research: "Ricerca", Exhibition: "Mostre", Publication: "Editoria", Object: "Oggetti" },
     f: { year: "Anno", type: "Tipo", role: "Ruolo", with: "Con", program: "Programma", place: "Luogo", for: "Per", course: "Corso", status: "Stato", team: "Team", award: "Premio", also: "Anche", sdgs: "SDGs", scale: "Dimensioni", advisor: "Docenti" } }
 };
@@ -891,7 +890,7 @@ const SUM = {
   ]
  }
 };
-const TL_UI = {"zh": {"h": "作品總結", "lead": "滑過時間軸，看每個專案解決了什麼、留下了什麼，以及哪些方法能帶到下一個地方", "q": "解決的問題", "r": "留下的結果", "m": "帶得走的方法", "go": "看專案 →", "hint": "移動游標瀏覽・點選切換"}, "en": {"h": "In summary", "lead": "Move along the timeline to see what each project solved, what it left behind, and which methods carry over to the next place", "q": "Problem solved", "r": "What it left", "m": "Method I carry forward", "go": "View project →", "hint": "Move to browse · tap to switch"}, "it": {"h": "In sintesi", "lead": "Scorri la linea del tempo per vedere cosa ha risolto ogni progetto, cosa ha lasciato e quali metodi porto nel prossimo luogo", "q": "Problema risolto", "r": "Cosa ha lasciato", "m": "Metodo che porto con me", "go": "Vedi progetto →", "hint": "Muoviti per sfogliare · tocca per cambiare"}};
+const TL_UI = {"zh": {"h": "作品總結", "lead": "沿著時間軸往下滾動，看每個專案的痛點、結果與方法論", "q": "痛點", "r": "結果", "m": "方法論", "go": "看專案 →"}, "en": {"h": "In summary", "lead": "Scroll along the timeline to see each project's pain point, result and method", "q": "Pain point", "r": "Result", "m": "Method", "go": "View project →"}, "it": {"h": "In sintesi", "lead": "Scorri lungo la linea del tempo per vedere problema, risultato e metodo di ogni progetto", "q": "Il problema", "r": "Risultato", "m": "Metodo", "go": "Vedi progetto →"}};
 
 function renderWork() {
   const u = UI[lang], list = P.filter(p => filter === "All" || p.cat === filter);
@@ -1322,66 +1321,90 @@ function paintViews() {
 const stripSrc = f => "img/strip/" + f.replace(/\.(jpg|png|webp)$/, ".jpg");
 function timelineHTML() {
   const t = TL_UI[lang];
+  const segs = P.map((p, i) => `<button type="button" class="tl-seg" data-i="${i}" tabindex="-1" aria-label="${String(i + 1).padStart(2, "0")} ${esc(p.name[lang])}">${p.imgs.map(im => `<img src="${stripSrc(im[0])}" alt="" loading="lazy" draggable="false">`).join("")}</button>`).join("");
+  /* Three identical copies make the strip loop without a visible seam. */
   return `<section class="tl" aria-labelledby="tl-h">
     <div class="tl-head"><h2 id="tl-h">${t.h}</h2><p>${t.lead}</p></div>
-    <div class="tl-stage">
+    <div class="tl-stage" tabindex="0" aria-label="${t.h}">
+      <div class="tl-track"><div class="tl-copy">${segs}</div><div class="tl-copy" aria-hidden="true">${segs}</div><div class="tl-copy" aria-hidden="true">${segs}</div></div>
       <div class="tl-pile" aria-hidden="true"></div>
-      <div class="tl-strip">${P.map((p, i) => `<button type="button" class="tl-seg" data-i="${i}" style="--n:${p.imgs.length}" aria-label="${String(i + 1).padStart(2, "0")} ${esc(p.name[lang])}">${p.imgs.map(im => `<img src="${stripSrc(im[0])}" alt="" loading="lazy" draggable="false">`).join("")}</button>`).join("")}</div>
       <div class="tl-play" aria-hidden="true"></div>
-      <span class="tl-hint">${t.hint}</span>
     </div>
     <div class="tl-info" aria-live="polite"></div>
   </section>`;
 }
 /* Slots for the collage around the playhead (offsets from the centre, width, aspect ratio). */
 const TL_SLOTS = [[-250, -150, 240, 1.4], [40, -170, 220, 1.25], [255, -40, 180, .8], [-40, 120, 260, 1.5], [-330, 90, 170, 1], [230, 150, 200, 1.3]];
+let tlTimer = 0;
 function startTimeline() {
+  clearTimeout(tlTimer);
   const root = view.querySelector(".tl");
   if (!root) return;
-  const stage = root.querySelector(".tl-stage"), pile = root.querySelector(".tl-pile"), play = root.querySelector(".tl-play"), info = root.querySelector(".tl-info");
-  const segs = [...root.querySelectorAll(".tl-seg")];
+  const stage = root.querySelector(".tl-stage"), track = root.querySelector(".tl-track"), pile = root.querySelector(".tl-pile"), info = root.querySelector(".tl-info");
+  const copies = [...root.querySelectorAll(".tl-copy")], mid = copies[1];
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let cur = -1;
-  const setPlay = x => { play.style.left = x + "px"; };
-  const segCenter = i => { const r = segs[i].getBoundingClientRect(), s = stage.getBoundingClientRect(); return r.left - s.left + r.width / 2; };
-  function activate(i, x) {
+  const DRIFT = reduce ? 0 : 0.035;             /* px per ms while idle: a slow, endless drift to the right */
+  let L = 0, spans = [], off = 0, target = 0, cur = -1, hover = false, visible = true, last = performance.now();
+  const measure = () => {
+    L = mid.offsetWidth + parseFloat(getComputedStyle(track).columnGap || 0);
+    spans = [...mid.children].map(g => [g.offsetLeft - mid.offsetLeft, g.offsetLeft - mid.offsetLeft + g.offsetWidth]);
+  };
+  function activate(i) {
     if (i === cur) return;
     cur = i;
     const p = P[i], t = TL_UI[lang], d = SUM[p.id][lang];
-    segs.forEach((s, k) => s.classList.toggle("on", k === i));
+    root.querySelectorAll(".tl-seg").forEach(g => g.classList.toggle("on", +g.dataset.i === i));
     info.innerHTML = `<div class="tl-name"><span class="tl-no">${String(i + 1).padStart(2, "0")}</span><b>${esc(p.name[lang])}</b><a href="#${p.id}">${t.go}</a></div>
       <div><span class="tl-k">${t.q}</span><p>${esc(d[0])}</p></div>
       <div><span class="tl-k">${t.r}</span><p>${esc(d[1])}</p></div>
       <div><span class="tl-k">${t.m}</span><p>${esc(d[2])}</p></div>`;
-    /* Old images fade away; the new project's images burst out from the line. */
     [...pile.children].forEach(el => { el.classList.remove("in"); setTimeout(() => el.remove(), 350); });
-    const W = stage.clientWidth, H = stage.clientHeight, k = Math.max(.5, Math.min(1, W / 1000));
-    const span = 360 * k + 30, cx = Math.min(W - span, Math.max(span, x));
+    const W = stage.clientWidth, H = stage.clientHeight, k = Math.max(.5, Math.min(1, W / 1000)), cx = W / 2;
     p.imgs.slice(0, TL_SLOTS.length).forEach((im, n) => {
       const [sx, sy, sw, ar] = TL_SLOTS[n], w = sw * k, h = w / ar;
       const left = cx + sx * k - w / 2, top = H / 2 + sy * k - h / 2;
       const el = document.createElement("img");
       el.src = "img/" + im[0]; el.alt = ""; el.decoding = "async";
-      el.style.cssText = `left:${left}px;top:${top}px;width:${w}px;height:${h}px;--fx:${x - left - w / 2}px;--fy:${H / 2 - top - h / 2}px;--d:${reduce ? 0 : n * 45}ms`;
+      el.style.cssText = `left:${left}px;top:${top}px;width:${w}px;height:${h}px;--fx:${cx - left - w / 2}px;--fy:${H / 2 - top - h / 2}px;--d:${reduce ? 0 : n * 45}ms`;
       pile.appendChild(el);
-      requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add("in")));
+      setTimeout(() => el.classList.add("in"), 30);
     });
   }
-  const segAt = x => { const s = stage.getBoundingClientRect(); return segs.findIndex(g => { const r = g.getBoundingClientRect(); return x >= r.left - s.left - 5 && x <= r.right - s.left + 5; }); };
-  stage.addEventListener("pointermove", e => {
-    if (e.pointerType !== "mouse") return;
-    const x = e.clientX - stage.getBoundingClientRect().left;
-    setPlay(x);
-    const i = segAt(x);
-    if (i >= 0) activate(i, x);
+  const render = () => {
+    const pos = ((off % L) + L) % L, W = stage.clientWidth;
+    track.style.transform = `translate3d(${(W / 2 - L - pos).toFixed(1)}px, -50%, 0)`;
+    let i = spans.findIndex(([a, b]) => pos >= a - 6 && pos <= b + 6);
+    if (i < 0) i = spans.reduce((best, [a, b], k) => Math.abs(pos - (a + b) / 2) < Math.abs(pos - (spans[best][0] + spans[best][1]) / 2) ? k : best, 0);
+    activate(i);
+  };
+  /* One small loop: ease toward the target, drift when idle, stop once the section leaves the page. */
+  const tick = () => {
+    if (!document.body.contains(stage)) return;
+    const now = performance.now(), dt = Math.min(64, now - last); last = now;
+    if (visible && !hover) target += DRIFT * dt;
+    off += (target - off) * 0.14;
+    if (visible) render();
+    tlTimer = setTimeout(tick, 16);
+  };
+  const centerOn = i => { const [a, b] = spans[i], pos = ((off % L) + L) % L; let d = (a + b) / 2 - pos; if (d > L / 2) d -= L; if (d < -L / 2) d += L; target = off + d; };
+  /* Wheel over the strip moves it (down = forward to the right); elsewhere the page scrolls as usual. */
+  stage.addEventListener("wheel", e => { e.preventDefault(); target += (Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX) * 0.9; }, { passive: false });
+  stage.addEventListener("pointerenter", e => { if (e.pointerType === "mouse") hover = true; });
+  stage.addEventListener("pointerleave", () => { hover = false; });
+  /* Touch: drag sideways to move the strip; vertical swipes still scroll the page. */
+  let dragX = null;
+  stage.addEventListener("pointerdown", e => { if (e.pointerType !== "mouse") { dragX = e.clientX; hover = true; } });
+  stage.addEventListener("pointermove", e => { if (dragX != null) { target -= e.clientX - dragX; dragX = e.clientX; } });
+  const endDrag = () => { if (dragX != null) { dragX = null; hover = false; } };
+  stage.addEventListener("pointerup", endDrag); stage.addEventListener("pointercancel", endDrag);
+  root.querySelectorAll(".tl-seg").forEach(g => g.addEventListener("click", () => { hover = true; centerOn(+g.dataset.i); setTimeout(() => { hover = stage.matches(":hover"); }, 1600); }));
+  stage.addEventListener("keydown", e => {
+    if (e.key === "ArrowRight" || e.key === "ArrowLeft") { e.preventDefault(); hover = true; centerOn((cur + (e.key === "ArrowRight" ? 1 : P.length - 1)) % P.length); }
   });
-  stage.addEventListener("pointerleave", () => { if (cur >= 0) setPlay(segCenter(cur)); });
-  segs.forEach((g, i) => {
-    g.addEventListener("click", () => { const x = segCenter(i); setPlay(x); activate(i, x); });
-    g.addEventListener("focus", () => { const x = segCenter(i); setPlay(x); activate(i, x); });
-  });
-  /* Start on the first project once the strip has laid out. */
-  requestAnimationFrame(() => { const x = segCenter(0); setPlay(x); activate(0, x); });
+  if ("IntersectionObserver" in window) new IntersectionObserver(es => { visible = es[0].isIntersecting; }, { rootMargin: "100px" }).observe(stage);
+  const go = () => { measure(); if (!L) return setTimeout(go, 100); off = target = (spans[0][0] + spans[0][1]) / 2; render(); tick(); };
+  go();
+  addEventListener("resize", () => { if (document.body.contains(stage)) { measure(); render(); } });
 }
 
 /* ---------- Opening motion ---------- */
