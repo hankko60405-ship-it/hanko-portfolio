@@ -159,9 +159,6 @@
 
   .row { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 40px; padding-block: 18px 22px; border-bottom: 1px solid var(--line); }
   .row h2 { margin: 0; font-family: var(--display); font-weight: 500; font-size: 22px; letter-spacing: -.02em; line-height: 1.25; }
-  .back + .hero-tag { margin-top: 26px; }
-  .back + .hero-tag + .p-title { margin-top: 10px; }
-  .hero-tag { display: block; width: fit-content; margin: 0 0 8px; padding: 3px 10px; border: 1px solid var(--fg); border-radius: 999px; font: 600 11px var(--mono); letter-spacing: .06em; text-transform: uppercase; }
 
   .row h2 small { display: block; font-size: 14px; font-weight: 400; color: var(--muted); letter-spacing: 0; margin-top: 2px; }
   .row .meta { font-family: var(--mono); font-size: 12.5px; color: var(--muted); margin: 6px 0 12px; }
@@ -388,7 +385,7 @@ const P = [
         ["Realizzazione", ["Verde scuro e caratteri dorati danno un tono calmo ma giovane. L'impaginazione delle informazioni è semplice, per bilanciare il visual vivace con dati chiari sul concerto. Gli inviti sono stampati su supporto trasparente, attraversato dalla luce.", "Il concerto si è tenuto la sera del 27 novembre 2025. Il progetto è anche su Behance: behance.net/gallery/239665787"]],
         ["Strumenti", ["Photoshop, Illustrator, Lightroom"]]
       ] } },
-  { id: "tangyuan", cat: "Identity", hero: true,
+  { id: "tangyuan", cat: "Identity",
     name: { zh: "邱媽媽 大湯圓", en: "Mama Qiu's Big Tangyuan", it: "Big Tangyuan di Mamma Qiu" },
     cover: ["ty-logo.png", "ty-0093.jpg", "ty-0072.jpg"],
     imgs: [
@@ -722,7 +719,7 @@ function renderWork() {
     ${list.map(p => `
       <article class="row">
         <div>
-          <h2>${p.hero ? `<span class="hero-tag">Hero Project</span>` : ""}<a href="#${p.id}">${esc(p.name[lang])}<small>${esc(sub(p))}</small></a></h2>
+          <h2><a href="#${p.id}">${esc(p.name[lang])}<small>${esc(sub(p))}</small></a></h2>
           <div class="meta">${esc(p[lang].meta)}${roleOf(p) ? `<br>${u.f.role}: ${esc(roleOf(p))}` : ""}${withOf(p) ? `<br>${u.f.with}: ${esc(withOf(p))}` : ""}</div>
           <p>${esc(p[lang].short)}</p>
           <a class="more" href="#${p.id}">${u.view}</a>
@@ -975,7 +972,7 @@ function renderProject(p) {
   const q = lang === "zh" ? `「${esc(t.quote)}」` : `“${esc(t.quote)}”`;
   view.innerHTML = `
     <a class="back" href="#">${u.back}</a>
-    ${p.hero ? `<span class="hero-tag">Hero Project</span>` : ""}<h1 class="p-title">${esc(p.name[lang])}</h1>
+    <h1 class="p-title">${esc(p.name[lang])}</h1>
     <p class="p-sub">${esc(sub(p))}</p>
     <div class="p-grid">
       ${renderFacts(p)}
