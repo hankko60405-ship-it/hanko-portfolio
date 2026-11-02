@@ -1162,13 +1162,14 @@ function renderWork() {
 /* ---------- 3D tilt wheel ---------- */
 /* [image, project, base width px, aspect ratio] */
 const WHEEL = [
-  ["01.jpg", "alive", 150, "3/2"], ["09.jpg", "shennong", 110, "4/5"],
-  ["04.jpg", "apple", 120, "1/1"], ["12.jpg", "bottle", 100, "4/5"], ["ty-0093.jpg", "tangyuan", 105, "2/3"],
-  ["02.jpg", "alive", 125, "1/1"], ["10.jpg", "daxi", 120, "4/3"], ["05.jpg", "apple", 110, "4/5"],
-  ["ty-0081.jpg", "tangyuan", 125, "3/2"], ["03.jpg", "alive", 140, "4/3"], ["13.jpg", "bottle", 110, "1/1"],
-  ["ty-0490.jpg", "tangyuan", 120, "4/3"], ["06.jpg", "tangyuan", 130, "16/9"], ["ty-0370.jpg", "tangyuan", 100, "2/3"],
-  ["kk-poster1.jpg", "kokoland", 150, "3/2"], ["kk-type.jpg", "kokoland", 140, "3/2"], ["kk-cream1.jpg", "kokoland", 95, "5/7"], ["kk-cream6.jpg", "kokoland", 95, "5/7"],
-  ["ag-p12.jpg", "afterglow", 150, "16/9"], ["ag-p13.jpg", "afterglow", 140, "16/9"]
+  ["01.jpg", "alive", 150, "3/2"], ["09.jpg", "shennong", 110, "4/5"], ["pain-cover.jpg", "pain", 145, "16/9"], ["04.jpg", "apple", 120, "1/1"],
+  ["12.jpg", "bottle", 100, "4/5"], ["box-apple-1.jpg", "box", 125, "3/2"], ["ty-0093.jpg", "tangyuan", 105, "2/3"], ["02.jpg", "alive", 125, "1/1"],
+  ["lang-poster.jpg", "lang", 100, "5/7"], ["10.jpg", "daxi", 120, "4/3"], ["05.jpg", "apple", 110, "4/5"], ["wish-kv.jpg", "wish", 135, "16/9"],
+  ["ty-0081.jpg", "tangyuan", 125, "3/2"], ["03.jpg", "alive", 140, "4/3"], ["flower-show.jpg", "flower", 125, "3/2"], ["13.jpg", "bottle", 110, "1/1"],
+  ["ty-0490.jpg", "tangyuan", 120, "4/3"], ["wish-ghibli.jpg", "wish", 95, "5/7"], ["06.jpg", "tangyuan", 130, "16/9"], ["ty-0370.jpg", "tangyuan", 100, "2/3"],
+  ["box-hero.jpg", "box", 130, "16/9"], ["kk-poster1.jpg", "kokoland", 150, "3/2"], ["kk-type.jpg", "kokoland", 140, "3/2"], ["flower-piece.jpg", "flower", 120, "16/9"],
+  ["kk-cream1.jpg", "kokoland", 95, "5/7"], ["kk-cream6.jpg", "kokoland", 95, "5/7"], ["lang-type.jpg", "lang", 110, "4/3"], ["ag-p12.jpg", "afterglow", 150, "16/9"],
+  ["ag-p13.jpg", "afterglow", 140, "16/9"], ["pain-cards.jpg", "pain", 120, "16/9"]
 ];
 let stopWheel = () => {};
 const WT = {
@@ -1253,6 +1254,8 @@ function startWheel() {
   };
   /* Arrow buttons give one tile's worth of momentum; with 0.94 decay the total travel is about one step. */
   const STEP = (Math.PI * 2) / n;
+  /* More photos: widen the ring and shrink each tile a little so they stay readable (tuned for 20). */
+  const GROW = Math.max(1, Math.sqrt(n / 20)), FIT = Math.min(1, Math.pow(20 / n, 0.3));
   const nudge = e => {
     const b = e.target.closest(".wheel-nav");
     if (!b) return;
@@ -1355,10 +1358,10 @@ function startWheel() {
       }
       const ts = Math.min(1, Math.max(0, -r.top / (r.height * 0.85)));
       tx += (ttx - tx) * 0.06; tz += (ttz - tz) * 0.06; s += (ts - s) * 0.1;
-      const k = Math.max(0.55, Math.min(1, r.width / 1100));
+      const k = Math.max(0.55, Math.min(1, r.width / 1100)) * FIT;
       stage.style.setProperty("--k", k.toFixed(3));
       /* Scrolling widens the ring and flattens the perspective so the spread reads as a stretch. */
-      const R = Math.min(r.width * (r.width < 700 ? 0.36 : 0.26), 330) * (1 + s * 0.9);
+      const R = Math.min(r.width * (r.width < 700 ? 0.36 : 0.26) * GROW, 330 * GROW, r.width * 0.4) * (1 + s * 0.9);
       stage.style.perspective = (1400 + s * 1800).toFixed(0) + "px";
       const st = Math.sin(tx), ct = Math.cos(tx), sz = Math.sin(tz), cz = Math.cos(tz);
       for (let i = 0; i < n; i++) {
