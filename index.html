@@ -196,11 +196,7 @@
   .booth3d canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
   .b3d-poster { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; object-fit: cover; transition: opacity .6s ease; }
   .booth3d.ready .b3d-poster { opacity: 0; pointer-events: none; }
-  .b3d-hint { position: absolute; z-index: 2; top: 14px; right: 16px; color: #2b2a28; font-family: "Nanum Pen Script", cursive; font-size: 26px; line-height: 1; pointer-events: none; opacity: 0; transition: opacity .4s; }
-  .booth3d.ready .b3d-hint { opacity: .85; }
-  .booth3d.used .b3d-hint { opacity: 0; }
-  @media (max-width: 760px) { .b3d-hint { font-size: 22px; } }
-  @media (prefers-reduced-motion: reduce) { .b3d-poster, .b3d-hint { transition: none; } }
+  @media (prefers-reduced-motion: reduce) { .b3d-poster { transition: none; } }
   .next { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; margin-top: 48px; padding-top: 14px; border-top: 1px solid var(--line); }
   .next span { font-family: var(--mono); font-size: 12px; color: var(--muted); }
   .next a { font-family: var(--display); font-weight: 600; font-size: clamp(22px, 3vw, 34px); letter-spacing: -.03em; text-align: right; }
@@ -1453,11 +1449,10 @@ function startWheel() {
 }
 
 /* 3D booth model (booth3d.js), placed after a named image in a project's gallery. */
-const MODEL_UI = { zh: "← 拖曳旋轉 →", en: "← drag to turn →", it: "← trascina per ruotare →" };
 function renderModel(p) {
   const m = p.model;
   return `<figure class="wide"><div class="booth3d" role="img" aria-label="${esc(m.cap[lang])}">
-    <img class="b3d-poster" src="img/${m.poster}" alt="" loading="lazy"><span class="b3d-hint" aria-hidden="true">${MODEL_UI[lang]}</span>
+    <img class="b3d-poster" src="img/${m.poster}" alt="" loading="lazy">
   </div><figcaption>${esc(m.cap[lang])}</figcaption></figure>`;
 }
 let stopModel = () => {};
