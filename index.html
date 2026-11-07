@@ -194,7 +194,7 @@
   .orbit { position: relative; aspect-ratio: 16 / 9; background: #23252e; overflow: hidden; cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
   .orbit:active { cursor: grabbing; }
   .orbit:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
-  .orbit img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .12s linear; pointer-events: none; background: none; }
+  .orbit img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; pointer-events: none; will-change: transform, opacity; background: none; }
   .orbit img.on { opacity: 1; }
   .orbit-ui { position: absolute; left: 0; right: 0; bottom: 0; display: flex; align-items: center; gap: 12px; padding: 14px 16px; color: #f2f0ea; font-family: var(--mono); font-size: 12px; background: linear-gradient(transparent, rgba(10, 12, 20, .55)); }
   .orbit-ui button { flex: none; width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(242, 240, 234, .6); background: rgba(10, 12, 20, .25); color: inherit; font: inherit; font-size: 15px; cursor: pointer; }
@@ -206,7 +206,7 @@
   .orbit-hint { position: absolute; top: 14px; right: 16px; color: #f2f0ea; font-family: "Nanum Pen Script", cursive; font-size: 26px; line-height: 1; opacity: .9; pointer-events: none; transition: opacity .4s; }
   .orbit.used .orbit-hint { opacity: 0; }
   @media (max-width: 760px) { .orbit-ui { padding: 10px; gap: 8px; } .orbit-ui button { width: 30px; height: 30px; } .orbit-hint { font-size: 22px; } }
-  @media (prefers-reduced-motion: reduce) { .orbit img, .orbit-dots i, .orbit-hint { transition: none; } }
+  @media (prefers-reduced-motion: reduce) { .orbit-dots i, .orbit-hint { transition: none; } }
   .next { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; margin-top: 48px; padding-top: 14px; border-top: 1px solid var(--line); }
   .next span { font-family: var(--mono); font-size: 12px; color: var(--muted); }
   .next a { font-family: var(--display); font-weight: 600; font-size: clamp(22px, 3vw, 34px); letter-spacing: -.03em; text-align: right; }
@@ -1485,16 +1485,25 @@ function initOrbit(p) {
   const imgs = [...box.querySelectorAll("img")], dots = [...box.querySelectorAll(".orbit-dots i")], label = box.querySelector(".orbit-label");
   const n = imgs.length, reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   let at = 0, timer = 0, hold = false;
-  const show = k => {
+  /* Fly-through: the current view rushes past the camera while the next one flies in from the distance. */
+  const fly = (from, to, dir) => {
+    if (reduce || from === to) return;
+    [from, to].forEach(im => im.getAnimations().forEach(a => a.cancel()));
+    from.animate([{ opacity: 1, transform: "none", filter: "blur(0)" }, { opacity: 0, transform: `translateX(${-dir * 14}%) scale(1.45)`, filter: "blur(8px)" }], { duration: 420, easing: "cubic-bezier(.55,0,.8,.2)" });
+    to.animate([{ opacity: 0, transform: `translateX(${dir * 16}%) scale(.72)`, filter: "blur(8px)" }, { opacity: 1, transform: "none", filter: "blur(0)" }], { duration: 460, easing: "cubic-bezier(.15,.8,.25,1)" });
+  };
+  const show = (k, dir = 1) => {
+    const prev = imgs[at];
     at = (k + n) % n;
+    fly(prev, imgs[at], dir);
     imgs.forEach((im, i) => im.classList.toggle("on", i === at));
     dots.forEach((d, i) => d.classList.toggle("on", i === at));
     label.textContent = `${at + 1} / ${n}　${p.orbit[at][1][lang]}`;
   };
   const touch = () => box.classList.add("used");
-  const step = d => { touch(); show(at + d); };
+  const step = d => { touch(); show(at + d, d); };
   /* Slow autoplay while nobody is using it; never with reduced motion. */
-  const tick = () => { clearTimeout(timer); if (!reduce && !hold) timer = setTimeout(() => { show(at + 1); tick(); }, 1000); };
+  const tick = () => { clearTimeout(timer); if (!reduce && !hold) timer = setTimeout(() => { show(at + 1, 1); tick(); }, 1400); };
   box.querySelector(".o-prev").addEventListener("click", () => step(-1));
   box.querySelector(".o-next").addEventListener("click", () => step(1));
   box.addEventListener("keydown", e => { if (e.key === "ArrowLeft") { step(-1); e.preventDefault(); } if (e.key === "ArrowRight") { step(1); e.preventDefault(); } });
