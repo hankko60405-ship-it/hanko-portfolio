@@ -186,7 +186,7 @@
   .body h3 { font-family: var(--mono); font-weight: 400; font-size: 12px; color: var(--muted); margin: 24px 0 6px; letter-spacing: .04em; }
   .body p { font-size: 15px; line-height: 1.85; margin: 0 0 12px; max-width: 38em; }
   .gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 40px; }
-  .gallery figure { margin: 0; }
+  .gallery figure { margin: 0; scroll-margin-top: 96px; }
   .gallery figure.wide { grid-column: 1 / -1; }
   .gallery img { width: 100%; background: var(--tile); }
   .gallery figcaption { font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin-top: 6px; }
@@ -269,6 +269,14 @@
   .hn { font-family: "Nanum Pen Script", cursive; font-weight: 400; color: var(--fg); line-height: 1; letter-spacing: 0; }
   .hn svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .p-head { position: relative; }
+  /* Contact sheet under the title: every image of the project, click to jump to it. */
+  .p-strip { display: flex; flex-wrap: wrap; gap: 6px; margin: 28px 0 8px; padding: 0; list-style: none; }
+  .p-strip button { display: block; padding: 0; border: 0; background: var(--tile); cursor: pointer; height: 68px; transition: transform .25s ease, opacity .25s ease; }
+  .p-strip button:hover, .p-strip button:focus-visible { transform: translateY(-3px); }
+  .p-strip button:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+  .p-strip img { display: block; height: 100%; width: auto; }
+  @media (max-width: 760px) { .p-strip { gap: 4px; margin-top: 20px; } .p-strip button { height: 44px; } }
+  @media (prefers-reduced-motion: reduce) { .p-strip button { transition: none; } }
   .hn-scroll { position: absolute; right: 4%; bottom: 4px; display: flex; flex-direction: column; align-items: center; font-size: 34px; }
   .hn-dot { align-self: flex-start; margin: 0 0 -6px -10px; font-size: 30px; }
   .hn-arrow { width: 28px; height: 54px; margin-top: 6px; }
@@ -595,21 +603,39 @@ const P = [
         ["Risultato", ["Presentato il 30 ottobre 2025 alla finale delle migliori proposte dell'Ufficio per i giovani di Taoyuan."]]
       ] } },
   { id: "shennong", cat: "Publication",
-    hand: { side: { 1: "← kid-friendly" }, gallery: "(Inside the book)" },
+    hand: { side: { 2: "← red face → gold face", 3: "← Ko: wordmark + layout" }, gallery: "(Inside the book)" },
     name: { zh: "野神降臨", en: "Descent of the Wild God", it: "La discesa del dio selvatico" },
-    imgs: [["09.jpg", { zh: "封面與內頁展開", en: "Cover and spreads", it: "Copertina e pagine interne" }, true]],
-    zh: { meta: "手冊設計，2025", short: "大溪南興社區神農永昌宮的文化導覽手冊，用插圖角色、圖示系統、地圖與互動任務，把神農信仰與安金工藝轉譯成親子讀得懂的內容。", quote: "把廟宇裡幾百年的故事，變成小朋友願意翻開來看的東西。",
-      facts: [["year","2025"],["type","手冊設計・插圖系統・版面"],["role","視覺設計"],["with","日日田職物所 × 國立臺北商業大學"],["for","親子、來訪民眾"],["place","桃園大溪南興社區 神農永昌宮"]],
-      sections: [["理念", ["永昌宮擁有豐富的神農文化與安金工藝，卻缺少一般民眾讀得懂的導覽媒介。這本手冊以活潑插圖與易讀版面重新包裝信仰與工藝知識，適合親子一起閱讀。"]],
-                 ["設計", ["以橘色為主色調，透過趣味角色帶讀者認識神農大帝的故事與安金工藝；結合地圖、圖示系統、廟宇照片與互動任務，兼顧視覺與資訊深度。"]]] },
-    en: { meta: "Publication design, 2025", short: "A guidebook to the Shennong Yongchang Temple in Nanxing, Daxi. Illustrated characters, an icon system, maps and small missions turn temple faith and gold-leaf craft into something families can read together.", quote: "Turning centuries of temple stories into something a child wants to open.",
-      facts: [["year","2025"],["type","Booklet, illustration system, layout"],["role","Visual design"],["with","Day Day Tian Studio × NTUB"],["for","Families and visitors"],["place","Shennong Yongchang Temple, Nanxing, Daxi"]],
-      sections: [["Concept", ["The temple holds a rich Shennong tradition and gold-leaf craft, but nothing a casual visitor can easily read. The booklet repackages that knowledge with lively drawings and a clear layout for parents and children."]],
-                 ["Design", ["Orange leads the palette. Playful characters introduce the legend of the Divine Farmer and the craft of gold leaf, supported by maps, icons, temple photographs and hands-on tasks."]]] },
-    it: { meta: "Progetto editoriale, 2025", short: "Una guida al tempio Shennong Yongchang nel quartiere di Nanxing, a Daxi. Personaggi illustrati, un sistema di icone, mappe e piccole missioni rendono la fede e l'arte della foglia d'oro leggibili per le famiglie.", quote: "Trasformare secoli di storie del tempio in qualcosa che un bambino ha voglia di aprire.",
-      facts: [["year","2025"],["type","Opuscolo, illustrazioni, impaginazione"],["role","Visual design"],["with","Day Day Tian Studio × NTUB"],["for","Famiglie e visitatori"],["place","Tempio Shennong Yongchang, Nanxing, Daxi"]],
-      sections: [["Concetto", ["Il tempio custodisce una ricca tradizione legata a Shennong e all'arte della foglia d'oro, ma mancava una guida per il pubblico. L'opuscolo la racconta con disegni vivaci e un'impaginazione chiara."]],
-                 ["Design", ["L'arancione guida la palette. Personaggi giocosi presentano la leggenda del Divino Agricoltore e la lavorazione della foglia d'oro, con mappe, icone, fotografie del tempio e attività da fare."]]] } },
+    cover: ["sn-cover.jpg", "sn-map.jpg", "sn-logo.jpg"],
+    imgs: [
+      ["sn-cover.jpg", { zh: "封面與封底", en: "Front and back cover", it: "Copertina e retro" }, true],
+      ["sn-logo.jpg", { zh: "標準字：封面直式與封底橫式", en: "Wordmark: vertical cover lockup and horizontal back-cover lockup", it: "Logotipo: versione verticale in copertina e orizzontale sul retro" }, true],
+      ["sn-colour.jpg", { zh: "色彩計畫：比例為全書印刷色塊實測", en: "Colour plan: shares measured from the printed pages", it: "Palette: proporzioni misurate sulle pagine stampate" }, true],
+      ["sn-flow.jpg", { zh: "閱讀動線：16 頁走完一趟尋寶任務", en: "Reading flow: 16 pages as one treasure hunt", it: "Percorso di lettura: 16 pagine come una caccia al tesoro" }, true],
+      ["sn-parts.jpg", { zh: "版面元件：每一種框都有固定的角色", en: "Layout components: each box has one job", it: "Componenti: ogni riquadro ha un solo compito" }, true],
+      ["sn-intro.jpg", { zh: "任務卡與神農大帝登場", en: "The mission card and Shennong's entrance", it: "La carta missione e l'arrivo di Shennong" }, true],
+      ["sn-tools.jpg", { zh: "背包與工具庫：14 個圖示對應神農的貢獻", en: "Backpack and toolbox: 14 icons for Shennong's gifts", it: "Zaino e cassetta degli attrezzi: 14 icone per i doni di Shennong" }, true],
+      ["sn-map.jpg", { zh: "藏寶地圖跨頁", en: "Treasure-map spread", it: "Doppia pagina della mappa del tesoro" }, true],
+      ["sn-temple.jpg", { zh: "安金藏在哪：廟內實景與五個位置", en: "Where is the gold? The temple interior and five places to look", it: "Dov'è l'oro? L'interno del tempio e cinque punti da cercare" }, true],
+      ["sn-gold.jpg", { zh: "安金教室三步驟與完成頁", en: "Gilding class in three steps, and the finished page", it: "Lezione di doratura in tre passi e pagina finale" }, true]
+    ],
+    zh: { meta: "手冊設計，2025", short: "日日田職物所與北商合作的編輯設計期末，五人小組為大溪南興社區神農永昌宮做一本親子導覽手冊，把讀書變成一趟尋寶任務，跟著神農大帝收集工具、看地圖、找出廟裡的安金，柯承翰負責標準字與版面編排", quote: "把廟宇裡幾百年的故事，變成小朋友願意翻開來看的東西。",
+      sections: [["背景", ["日日田職物所與國立臺北商業大學商業設計管理系合作的編輯設計期末，柯承翰、陳羿豪、卓彥成、吳映萱、李羽仙五人一組，為桃園大溪南興社區的神農永昌宮製作導覽手冊，主題是神農文化與安金工藝"]],
+                 ["痛點", ["永昌宮建於清乾隆七年（1742 年），有神農嘗百草的傳說，廟裡的神像與木作都貼滿金箔，可是手邊的資料多半是寫給大人看的文史整理，小朋友走進廟裡，只看得到滿室金光，卻不知道為什麼"]],
+                 ["發想", ["把讀一本書變成一趟尋寶任務：讀者先拿到任務卡，跟著神農大帝打開背包、把工具收進工具庫、看地圖找寶箱，最後走進廟裡找出安金藏在哪", "神農大帝的臉一開始是紅色的，學完安金教室的三個步驟後，最後一頁變成金色，讓「安金」這件事不用多解釋也看得出來"]],
+                 ["行動", ["柯承翰負責標準字與版面編排", "標準字用粗獷的手寫筆觸寫出「野神降臨」，把角色的臉放進字裡，再加一圈白邊，像一張貼紙，封面用直式，封底改成橫式", "版面建立幾個固定元件：對話框是角色在說話，黃色資訊框講故事，橘色資訊框出任務，綠色標籤當段落標題與按鈕，大面積的橘色波浪色塊用來換場景，讓小朋友不讀說明也知道每一塊在做什麼", "全書以橘色為主色，約佔印刷色塊的一半，搭配褐、黃、綠三色，地圖做成跨頁滿版，廟內照片則留給真實的金光"]],
+                 ["結果", ["完成 16 頁（含封面封底）、約 154 × 216 mm 的導覽手冊，內含 14 個工具圖示、一張跨頁藏寶地圖與三步驟的安金教室，角色插畫與圖示由小組共同完成"]]] },
+    en: { meta: "Publication design, 2025", short: "A final project for Editorial Design, run with Day Day Tian Studio: a team of five made a family guidebook to the Shennong Yongchang Temple in Nanxing, Daxi. Reading becomes a treasure hunt in which children follow Shennong, collect tools, read a map and find the temple's gold leaf. Cheng-Han Ko designed the wordmark and the layout.", quote: "Turning centuries of temple stories into something a child wants to open.",
+      sections: [["Background", ["A final project for the Editorial Design course, run by Day Day Tian Studio with NTUB's Department of Commercial Design and Management. Cheng-Han Ko, Chen Yi-Hao, Cho Yen-Cheng, Wu Ying-Hsuan and Li Yu-Hsien made a guidebook to the Shennong Yongchang Temple in Nanxing, Daxi, on Shennong culture and the craft of gilding."]],
+                 ["The problem", ["The temple was built in 1742, carries the legend of Shennong tasting a hundred herbs, and its statues and carvings are covered in gold leaf. Yet most of the material about it is local history written for adults. Children walk in, see a room full of gold, and have no idea why."]],
+                 ["The idea", ["Turn reading into a treasure hunt. The reader gets a mission card, follows Shennong as he opens his backpack, files tools into a toolbox, reads a map to find the chests, and finally searches the temple for its gold.", "Shennong's face starts out red. After the three-step gilding class it turns gold on the last page, so the idea of gilding needs no explanation."]],
+                 ["What Ko did", ["Cheng-Han Ko designed the wordmark and the layout.", "The wordmark spells 野神降臨 in rough hand-lettered strokes, tucks the character's face among the letters and adds a white edge so it reads like a sticker: vertical on the cover, horizontal on the back.", "The layout runs on a few fixed parts. Speech bubbles are the character talking; yellow boxes tell the story; orange boxes set the task; green tags act as headings and buttons; large orange waves change the scene. A child can tell what each block does without reading instructions.", "Orange covers about half of all printed colour, supported by umber, yellow and green. The map runs as a full-bleed spread, and the temple photographs are left to carry the real gold."]],
+                 ["Outcome", ["A 16-page guidebook (covers included), about 154 × 216 mm, with 14 tool icons, a treasure-map spread and a three-step gilding class. The illustrations and icons were made by the team together."]]] },
+    it: { meta: "Progetto editoriale, 2025", short: "Progetto finale di Editorial Design con Day Day Tian Studio: un gruppo di cinque ha creato una guida per famiglie al tempio Shennong Yongchang di Nanxing, a Daxi. La lettura diventa una caccia al tesoro in cui i bambini seguono Shennong, raccolgono attrezzi, leggono una mappa e trovano l'oro del tempio. Cheng-Han Ko ha curato il logotipo e l'impaginazione.", quote: "Trasformare secoli di storie del tempio in qualcosa che un bambino ha voglia di aprire.",
+      sections: [["Contesto", ["Progetto finale del corso di Editorial Design, in collaborazione tra Day Day Tian Studio e il Dipartimento di Design Commerciale della NTUB. Cheng-Han Ko, Chen Yi-Hao, Cho Yen-Cheng, Wu Ying-Hsuan e Li Yu-Hsien hanno realizzato una guida al tempio Shennong Yongchang di Nanxing, a Daxi, sulla cultura di Shennong e sull'arte della doratura."]],
+                 ["Il problema", ["Il tempio risale al 1742, custodisce la leggenda di Shennong che assaggia cento erbe e le sue statue e i suoi intagli sono coperti di foglia d'oro. Ma il materiale esistente è storia locale scritta per adulti: i bambini entrano, vedono una sala piena d'oro e non sanno perché."]],
+                 ["L'idea", ["Fare della lettura una caccia al tesoro. Il lettore riceve una carta missione, segue Shennong che apre lo zaino, ripone gli attrezzi nella cassetta, legge una mappa per trovare i forzieri e infine cerca l'oro nel tempio.", "Il volto di Shennong all'inizio è rosso; dopo la lezione di doratura in tre passi diventa d'oro nell'ultima pagina, così la doratura si capisce senza spiegazioni."]],
+                 ["Il lavoro di Ko", ["Cheng-Han Ko ha curato il logotipo e l'impaginazione.", "Il logotipo scrive 野神降臨 con tratti a mano ruvidi, inserisce il volto del personaggio tra i caratteri e aggiunge un bordo bianco come un adesivo: verticale in copertina, orizzontale sul retro.", "L'impaginazione si basa su pochi elementi fissi: i fumetti sono il personaggio che parla, i riquadri gialli raccontano, quelli arancioni assegnano il compito, le etichette verdi fanno da titoli e pulsanti, le grandi onde arancioni cambiano scena. Un bambino capisce a cosa serve ogni blocco senza leggere istruzioni.", "L'arancione copre circa metà del colore stampato, con terra d'ombra, giallo e verde. La mappa occupa una doppia pagina al vivo e le fotografie del tempio mostrano l'oro vero."]],
+                 ["Risultato", ["Una guida di 16 pagine (copertine comprese), circa 154 × 216 mm, con 14 icone degli attrezzi, una mappa del tesoro su doppia pagina e una lezione di doratura in tre passi. Illustrazioni e icone sono state realizzate dal gruppo insieme."]]] } },
   { id: "afterglow", cat: "Research",
     hand: { side: { 3: "← 100+ tries", 4: "← let it go" }, gallery: "(Light trails)" },
     name: { zh: "Afterglow 餘暉", en: "Afterglow", it: "Afterglow" },
@@ -867,25 +893,9 @@ const FX = {
     en: { type: "Field research · local revitalisation proposal", ctx: "Day Day Tian Studio | Taoyuan Youth Public Issues Programme 2025", year: "2025", team: [["Trainee / field research, planning, presentation","Cheng-Han Ko"],["PM","Lin Chia-Wen"],["Trainee","Huang Yu-Sheng"],["Founder","Kao Ching-Jung (Day Day Tian Studio)"],["Organiser","Taoyuan City Youth Affairs Bureau"]], award: "Finalist, outstanding proposal teams (30 Oct 2025)" },
     it: { type: "Ricerca sul campo · proposta di rigenerazione", ctx: "Day Day Tian Studio | Programma giovani e temi pubblici di Taoyuan 2025", year: "2025", team: [["Tirocinante / ricerca, progetto, presentazione","Cheng-Han Ko"],["PM","Lin Chia-Wen"],["Tirocinante","Huang Yu-Sheng"],["Fondatore","Kao Ching-Jung (Day Day Tian Studio)"],["Organizzatore","Ufficio per i giovani di Taoyuan"]], award: "Finalista tra i migliori progetti (30 ott 2025)" } },
   shennong: {
-    zh: { type: "文化導覽手冊", ctx: "日日田職物所 × 國立臺北商業大學｜大溪南興社區 神農永昌宮", year: "2025.02 – 2025.04", team: [["視覺設計","柯承翰"],["合作","日日田職物所"]] },
-    en: { type: "Cultural guidebook", ctx: "Day Day Tian Studio × NTUB | Shennong Yongchang Temple, Nanxing, Daxi", year: "2025.02 – 2025.04", team: [["Visual design","Cheng-Han Ko"],["Partner","Day Day Tian Studio"]] },
-    it: { type: "Guida culturale", ctx: "Day Day Tian Studio × NTUB | Tempio Shennong Yongchang, Nanxing, Daxi", year: "2025.02 – 2025.04", team: [["Visual design","Cheng-Han Ko"],["Partner","Day Day Tian Studio"]] } },
-  tangyuan: {
-    zh: { type: "攤販品牌改造", ctx: "邱媽媽大湯圓｜114 年度 USR-Hub 計畫「籽食好客」・敘事展示設計課程", year: "2025", team: [["品牌視覺・大圖輸出設計・攝影紀錄","柯承翰"],["名片設計","張鈞舜"],["大旗設計","陳俊豪"],["資料整理","曾琮竣"],["指導老師","林育如"],["客戶","邱媽媽大湯圓"]] },
-    en: { type: "Market stall rebrand", ctx: "Mama Qiu's Big Tangyuan | USR-Hub programme 2025 · Narrative Exhibition Design course", year: "2025", team: [["Brand identity, large-format print design, photography","Cheng-Han Ko"],["Business cards","Chang Chun-Shun"],["Flag design","Chen Chun-Hao"],["Research","Tseng Tsung-Chun"],["Advisor","Lin Yu-Ju"],["Client","Mama Qiu's Big Tangyuan"]] },
-    it: { type: "Rebranding di un banco del mercato", ctx: "Big Tangyuan di Mamma Qiu | Programma USR-Hub 2025 · corso di Narrative Exhibition Design", year: "2025", team: [["Identità visiva, stampe di grande formato, fotografia","Cheng-Han Ko"],["Biglietti da visita","Chang Chun-Shun"],["Bandiera","Chen Chun-Hao"],["Ricerca","Tseng Tsung-Chun"],["Docente","Lin Yu-Ju"],["Cliente","Big Tangyuan di Mamma Qiu"]] } },
-  alive: {
-    zh: { type: "畢業展識別與宣傳", ctx: "國立臺北商業大學 商業設計管理系 115 級畢業展｜校內展・新一代設計展", year: "2026", team: [["畢籌會二技總召・形象組／主視覺呈現・周邊製作・會議記錄","柯承翰"],["展場規劃・展覽統籌・網頁・動畫","張雯珺"],["主視覺設計・周邊規劃・預算","林況穎"],["文書・展場規劃・3D 與平面圖","潘品熙"],["指導老師","蔡誠一、朱以恬、伍小玲"]], award: "2026 放視大賞 視覺設計組 複選入圍" },
-    en: { type: "Graduation exhibition identity & campaign", ctx: "NTUB Commercial Design and Management, Class of 2026 | Campus show · Young Designers' Exhibition", year: "2026", team: [["Two-year programme chair, identity team / key visual application, merchandise, minutes","Cheng-Han Ko"],["Exhibition planning, coordination, website, animation","Chang Wen-Chun"],["Key visual design, merchandise planning, budget","Lin Kuang-Ying"],["Documents, exhibition planning, 3D and floor plans","Pan Pin-Hsi"],["Advisors","Tsai Cheng-Yi, Chu Yi-Tien, Wu Hsiao-Ling"]], award: "Vision Get Wild 2026, Visual Design — shortlisted" },
-    it: { type: "Identità e comunicazione della mostra di laurea", ctx: "NTUB Commercial Design and Management, classe 2026 | Mostra nel campus · Young Designers' Exhibition", year: "2026", team: [["Coordinatore del corso biennale, gruppo identità / applicazioni del visual, gadget, verbali","Cheng-Han Ko"],["Allestimento, coordinamento, sito, animazione","Chang Wen-Chun"],["Visual principale, gadget, budget","Lin Kuang-Ying"],["Documenti, allestimento, piante e 3D","Pan Pin-Hsi"],["Docenti","Tsai Cheng-Yi, Chu Yi-Tien, Wu Hsiao-Ling"]], award: "Vision Get Wild 2026, Visual Design — selezionato" } },
-  lang: {
-    zh: { type: "展覽主視覺・海報", ctx: "北商包裝設計期末展｜弘毅樓 A313", year: "2025", team: [["文字設計","柯承翰"],["色彩","許庭嘉"],["指導老師","伍小玲"]] },
-    en: { type: "Exhibition key visual, poster", ctx: "NTUB packaging design end-of-year show | Hongyi Building A313", year: "2025", team: [["Typography","Cheng-Han Ko"],["Colour","Hsu Ting-Chia"],["Advisor","Wu Hsiao-Ling"]] },
-    it: { type: "Visual di mostra, manifesto", ctx: "Mostra di fine anno di packaging NTUB | edificio Hongyi A313", year: "2025", team: [["Tipografia","Cheng-Han Ko"],["Colore","Hsu Ting-Chia"],["Docente","Wu Hsiao-Ling"]] } },
-  wish: {
-    zh: { type: "音樂會主視覺・節目冊", ctx: "北商管樂社 × 北商弦樂社 聯合期末音樂會", year: "2025", team: [["海報・節目冊設計","柯承翰"],["主辦","北商管樂社、北商弦樂社"]] },
-    en: { type: "Concert visual, programme book", ctx: "NTUB Wind Band × String Orchestra joint end-of-year concert", year: "2025", team: [["Poster and programme book design","Cheng-Han Ko"],["Organisers","NTUB Wind Band, NTUB String Orchestra"]] },
-    it: { type: "Visual di concerto, libretto", ctx: "Concerto congiunto di fine anno, banda e orchestra d'archi NTUB", year: "2025", team: [["Manifesto e libretto","Cheng-Han Ko"],["Organizzatori","Banda e orchestra d'archi NTUB"]] } },
+    zh: { type: "文化導覽手冊・標準字・版面編排", ctx: "日日田職物所 × 國立臺北商業大學商業設計管理系｜編輯設計期末，大溪南興社區 神農永昌宮", year: "2025.02 – 2025.04", team: [["標準字・版面編排","柯承翰"],["組員","陳羿豪、卓彥成、吳映萱、李羽仙"],["合作","日日田職物所"]] },
+    en: { type: "Cultural guidebook, wordmark, layout", ctx: "Day Day Tian Studio × NTUB Commercial Design and Management | Editorial Design final project, Shennong Yongchang Temple, Nanxing, Daxi", year: "2025.02 – 2025.04", team: [["Wordmark, layout","Cheng-Han Ko"],["Team","Chen Yi-Hao, Cho Yen-Cheng, Wu Ying-Hsuan, Li Yu-Hsien"],["Partner","Day Day Tian Studio"]] },
+    it: { type: "Guida culturale, logotipo, impaginazione", ctx: "Day Day Tian Studio × NTUB Design Commerciale | Progetto finale di Editorial Design, tempio Shennong Yongchang, Nanxing, Daxi", year: "2025.02 – 2025.04", team: [["Logotipo, impaginazione","Cheng-Han Ko"],["Gruppo","Chen Yi-Hao, Cho Yen-Cheng, Wu Ying-Hsuan, Li Yu-Hsien"],["Partner","Day Day Tian Studio"]] } },
   flower: {
     zh: { type: "立體裝置・回收材質", ctx: "北商 × 明蓮企業有限公司 產學合作", year: "2025", team: [["設計・製作・作品攝影","柯承翰"],["設計・製作","許庭嘉、陳宣羽"],["指導老師","林育如、黃鼎豪"],["客戶","明蓮企業有限公司"]] },
     en: { type: "Sculpture, recycled materials", ctx: "NTUB × Minglian Enterprise Co., Ltd., industry–academia collaboration", year: "2025", team: [["Design, making, photography","Cheng-Han Ko"],["Design, making","Hsu Ting-Chia, Chen Hsuan-Yu"],["Advisors","Lin Yu-Ju, Huang Ding-Hao"],["Client","Minglian Enterprise Co., Ltd."]] },
@@ -1076,19 +1086,19 @@ const SUM = {
  },
  "shennong": {
   "zh": [
-   "神農信仰與安金工藝內容很深，孩子和家長不容易讀懂",
-   "完成一本親子導覽手冊，結合插圖角色、圖示系統、地圖與互動任務",
-   "把專業又複雜的地方知識，轉譯成外行人也看得懂的內容"
+   "永昌宮滿室金身，資料卻多是寫給大人的，小朋友看得到金光卻不知道為什麼",
+   "五人小組完成 16 頁親子導覽手冊，柯承翰負責標準字與版面編排",
+   "把讀書變成一趟尋寶任務，讓地方知識不用解釋也看得懂"
   ],
   "en": [
-   "The Divine Farmer faith and gold-leaf craft run deep, and are hard for children and parents to read",
-   "A family guidebook with illustrated characters, an icon system, maps and hands-on tasks",
-   "Translate specialist local knowledge into something anyone can understand"
+   "The temple is full of gold, but its story is written for adults; children see the shine and not the reason",
+   "A team of five made a 16-page family guidebook; Ko designed the wordmark and layout",
+   "Turn reading into a treasure hunt so local knowledge explains itself"
   ],
   "it": [
-   "La fede del Divino Agricoltore e l'arte della foglia d'oro sono profonde e difficili da leggere per bambini e genitori",
-   "Una guida per famiglie con personaggi illustrati, icone, mappe e attività",
-   "Tradurre conoscenze locali specialistiche in qualcosa che chiunque possa capire"
+   "Il tempio è pieno d'oro, ma la sua storia è scritta per adulti: i bambini vedono la luce, non il perché",
+   "Un gruppo di cinque ha creato una guida per famiglie di 16 pagine; Ko ha curato logotipo e impaginazione",
+   "Fare della lettura una caccia al tesoro, così il sapere locale si spiega da sé"
   ]
  },
  "afterglow": {
@@ -1415,6 +1425,7 @@ function renderProject(p) {
       <p class="p-sub">${esc(sub(p))}</p>
       ${p.hand ? `<div class="hn hn-scroll" aria-hidden="true"><span class="hn-dot">:</span>(Scroll for more)<svg class="hn-arrow" viewBox="0 0 40 70" aria-hidden="true"><path d="M21 3 C 18 18, 23 33, 19 60"/><path d="M9 47 C 13 52, 16 56, 19 61 C 22 55, 26 50, 31 46"/></svg></div>` : ""}
     </div>
+    ${p.imgs.length > 1 ? `<ul class="p-strip" aria-label="${esc(p.name[lang])}">${p.imgs.map((im, k) => `<li><button type="button" data-k="${k}" aria-label="${esc(im[1][lang])}"><img src="img/${im[0]}" alt="" loading="lazy"></button></li>`).join("")}</ul>` : ""}
     <div class="p-grid">
       ${p.hand ? `<div>${`<p class="hn hn-label" aria-hidden="true">(Details)</p>`}${renderFacts(p)}</div>` : renderFacts(p)}
       <div class="body">
@@ -1428,6 +1439,11 @@ function renderProject(p) {
         : `<figure class="wide"><div class="notile" style="aspect-ratio:16/6">${u.soon}</div></figure>`}
     </div>
     <div class="next"><span>${u.next}</span><a href="#${nx.id}">${esc(nx.name[lang])} →</a></div>`;
+  const figs = view.querySelectorAll(".gallery figure");
+  view.querySelectorAll(".p-strip button").forEach(b => b.addEventListener("click", () => {
+    const f = figs[+b.dataset.k]; if (!f) return;
+    f.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+  }));
 }
 
 /* Photos shown when hovering an experience row (row field 5 names the set). */
