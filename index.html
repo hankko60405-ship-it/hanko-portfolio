@@ -190,23 +190,17 @@
   .gallery figure.wide { grid-column: 1 / -1; }
   .gallery img { width: 100%; background: var(--tile); }
   .gallery figcaption { font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin-top: 6px; }
-  /* Orbit: a stack of renders from different angles; drag, swipe or arrow keys move around the booth. */
-  .orbit { position: relative; aspect-ratio: 16 / 9; background: #23252e; overflow: hidden; cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
-  .orbit:active { cursor: grabbing; }
-  .orbit:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
-  .orbit img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; pointer-events: none; will-change: transform, opacity; background: none; }
-  .orbit img.on { opacity: 1; }
-  .orbit-ui { position: absolute; left: 0; right: 0; bottom: 0; display: flex; align-items: center; gap: 12px; padding: 14px 16px; color: #f2f0ea; font-family: var(--mono); font-size: 12px; background: linear-gradient(transparent, rgba(10, 12, 20, .55)); }
-  .orbit-ui button { flex: none; width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(242, 240, 234, .6); background: rgba(10, 12, 20, .25); color: inherit; font: inherit; font-size: 15px; cursor: pointer; }
-  .orbit-ui button:hover, .orbit-ui button:focus-visible { background: rgba(242, 240, 234, .2); }
-  .orbit-dots { display: flex; gap: 6px; }
-  .orbit-dots i { width: 6px; height: 6px; border-radius: 50%; background: rgba(242, 240, 234, .35); transition: background .3s; }
-  .orbit-dots i.on { background: #f2f0ea; }
-  .orbit-label { margin-left: auto; text-align: right; }
-  .orbit-hint { position: absolute; top: 14px; right: 16px; color: #f2f0ea; font-family: "Nanum Pen Script", cursive; font-size: 26px; line-height: 1; opacity: .9; pointer-events: none; transition: opacity .4s; }
-  .orbit.used .orbit-hint { opacity: 0; }
-  @media (max-width: 760px) { .orbit-ui { padding: 10px; gap: 8px; } .orbit-ui button { width: 30px; height: 30px; } .orbit-hint { font-size: 22px; } }
-  @media (prefers-reduced-motion: reduce) { .orbit-dots i, .orbit-hint { transition: none; } }
+  /* 3D booth: a turntable model, loaded only when it comes near the screen. */
+  .booth3d { position: relative; aspect-ratio: 16 / 9; background: radial-gradient(ellipse at 50% 42%, #fbfaf7, #dcd9d3); overflow: hidden; cursor: grab; touch-action: pan-y; }
+  .booth3d:active { cursor: grabbing; }
+  .booth3d canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .b3d-poster { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; object-fit: cover; transition: opacity .6s ease; }
+  .booth3d.ready .b3d-poster { opacity: 0; pointer-events: none; }
+  .b3d-hint { position: absolute; z-index: 2; top: 14px; right: 16px; color: #2b2a28; font-family: "Nanum Pen Script", cursive; font-size: 26px; line-height: 1; pointer-events: none; opacity: 0; transition: opacity .4s; }
+  .booth3d.ready .b3d-hint { opacity: .85; }
+  .booth3d.used .b3d-hint { opacity: 0; }
+  @media (max-width: 760px) { .b3d-hint { font-size: 22px; } }
+  @media (prefers-reduced-motion: reduce) { .b3d-poster, .b3d-hint { transition: none; } }
   .next { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; margin-top: 48px; padding-top: 14px; border-top: 1px solid var(--line); }
   .next span { font-family: var(--mono); font-size: 12px; color: var(--muted); }
   .next a { font-family: var(--display); font-weight: 600; font-size: clamp(22px, 3vw, 34px); letter-spacing: -.03em; text-align: right; }
@@ -342,6 +336,7 @@
   }
   @media (prefers-reduced-motion: reduce) { .thumbs img { transition: none; } }
 </style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 </head>
 <body>
 <div class="intro" id="intro" aria-hidden="true">
@@ -425,21 +420,12 @@ const P = [
     hand: { side: { 2: "← Ko's role", 3: "← the hard call" }, gallery: "(Design)" },
     name: { zh: "ALIVE : IN.BREATH 呼吸存在", en: "ALIVE : IN.BREATH", it: "ALIVE : IN.BREATH" },
     cover: ["al-kv.jpg", "al-booth.jpg", "02.jpg"],
-    orbit: [
-      ["booth-1.jpg", { zh: "俯瞰全景", en: "Overview from above", it: "Vista dall'alto" }],
-      ["booth-2.jpg", { zh: "斜角俯瞰", en: "Corner view from above", it: "Vista d'angolo dall'alto" }],
-      ["booth-3.jpg", { zh: "右側", en: "Right side", it: "Lato destro" }],
-      ["booth-4.jpg", { zh: "接待區", en: "Reception", it: "Accoglienza" }],
-      ["booth-5.jpg", { zh: "正面近看", en: "Front, closer", it: "Fronte, da vicino" }],
-      ["booth-6.jpg", { zh: "正面全景", en: "Front", it: "Fronte" }],
-      ["booth-7.jpg", { zh: "走道內部", en: "Inside the aisle", it: "Dentro il corridoio" }]
-    ],
+    model: { after: "al-booth.jpg", poster: "booth-1.jpg", cap: { zh: "展場 3D 模型：拖曳旋轉、滾輪縮放，依展場模擬圖簡化重建", en: "Booth in 3D: drag to turn, scroll to zoom; a simplified rebuild from the booth renders", it: "Lo stand in 3D: trascina per ruotare, scorri per lo zoom; ricostruzione semplificata dai render" } },
     imgs: [
       ["al-kv.jpg", { zh: "主視覺海報與呈現：牆面、捲筒與社群貼文", en: "Key poster and how it was presented: wall, tube and social posts", it: "Manifesto e presentazione: muro, tubo e post social" }, true],
       ["al-wall.jpg", { zh: "橫式主視覺：牆面海報呈現", en: "Landscape key visual on a wall", it: "Visual orizzontale su un muro" }, true],
       ["02.jpg", { zh: "周邊：邀請函、香氛片、徽章、貼紙與識別證", en: "Merchandise: invitations, scent cards, pins, stickers and passes", it: "Gadget: inviti, cartoncini profumati, spille, adesivi e pass" }, true],
       ["al-booth.jpg", { zh: "展場：半透明 PVC 氣墊方塊組成的模組牆", en: "The booth: a modular wall of translucent PVC air cushions", it: "Lo stand: una parete modulare di cuscini d'aria in PVC traslucido" }, true],
-      ["@orbit", { zh: "展場 3D 模擬：拖曳或按左右鍵，繞著展位看一圈", en: "Booth in 3D: drag or use the arrow keys to walk around it", it: "Lo stand in 3D: trascina o usa le frecce per girarci intorno" }, true],
       ["al-posts.jpg", { zh: "社群：第三、第四次審查回顧貼文（Instagram @ntub_cdm_grad）", en: "Social: recap posts for the third and fourth reviews (Instagram @ntub_cdm_grad)", it: "Social: post di riepilogo della terza e quarta revisione (Instagram @ntub_cdm_grad)" }, true],
       ["al-docs.jpg", { zh: "總召組：審查規範與活動細流（模糊處理，保護同學個資）", en: "Chair team: review rules and run sheets (blurred for privacy)", it: "Gruppo di coordinamento: regole delle revisioni e scalette (sfocate per la privacy)" }, true]
     ],
@@ -1466,63 +1452,37 @@ function startWheel() {
   };
 }
 
-/* Booth orbit viewer: frames are renders taken around the booth, in walking order. */
-const ORBIT_UI = { zh: { hint: "← 拖曳環繞 →", prev: "上一個角度", next: "下一個角度" }, en: { hint: "← drag to orbit →", prev: "Previous angle", next: "Next angle" }, it: { hint: "← trascina per girare →", prev: "Angolo precedente", next: "Angolo successivo" } };
-function renderOrbit(p, im) {
-  const u = ORBIT_UI[lang], f = p.orbit;
-  return `<figure class="wide"><div class="orbit" tabindex="0" role="region" aria-roledescription="carousel" aria-label="${esc(im[1][lang])}">
-    ${f.map((fr, k) => `<img src="img/${fr[0]}" alt="${esc(fr[1][lang])}"${k ? ' loading="lazy"' : ""}${k ? "" : ' class="on"'}>`).join("")}
-    <span class="orbit-hint" aria-hidden="true">${u.hint}</span>
-    <div class="orbit-ui"><button type="button" class="o-prev" aria-label="${u.prev}">←</button><button type="button" class="o-next" aria-label="${u.next}">→</button>
-      <span class="orbit-dots" aria-hidden="true">${f.map((_, k) => `<i${k ? "" : ' class="on"'}></i>`).join("")}</span>
-      <span class="orbit-label" aria-live="polite">1 / ${f.length}　${esc(f[0][1][lang])}</span></div>
-  </div><figcaption>${esc(im[1][lang])}</figcaption></figure>`;
+/* 3D booth model (booth3d.js), placed after a named image in a project's gallery. */
+const MODEL_UI = { zh: "← 拖曳旋轉 →", en: "← drag to turn →", it: "← trascina per ruotare →" };
+function renderModel(p) {
+  const m = p.model;
+  return `<figure class="wide"><div class="booth3d" role="img" aria-label="${esc(m.cap[lang])}">
+    <img class="b3d-poster" src="img/${m.poster}" alt="" loading="lazy"><span class="b3d-hint" aria-hidden="true">${MODEL_UI[lang]}</span>
+  </div><figcaption>${esc(m.cap[lang])}</figcaption></figure>`;
 }
-let stopOrbit = () => {};
-function initOrbit(p) {
-  stopOrbit();
-  const box = view.querySelector(".orbit"); if (!box) return;
-  const imgs = [...box.querySelectorAll("img")], dots = [...box.querySelectorAll(".orbit-dots i")], label = box.querySelector(".orbit-label");
-  const n = imgs.length, reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let at = 0, timer = 0, hold = false;
-  /* Fly-through: the current view rushes past the camera while the next one flies in from the distance. */
-  const fly = (from, to, dir) => {
-    if (reduce || from === to) return;
-    [from, to].forEach(im => im.getAnimations().forEach(a => a.cancel()));
-    from.animate([{ opacity: 1, transform: "none", filter: "blur(0)" }, { opacity: 0, transform: `translateX(${-dir * 14}%) scale(1.45)`, filter: "blur(8px)" }], { duration: 420, easing: "cubic-bezier(.55,0,.8,.2)" });
-    to.animate([{ opacity: 0, transform: `translateX(${dir * 16}%) scale(.72)`, filter: "blur(8px)" }, { opacity: 1, transform: "none", filter: "blur(0)" }], { duration: 460, easing: "cubic-bezier(.15,.8,.25,1)" });
-  };
-  const show = (k, dir = 1) => {
-    const prev = imgs[at];
-    at = (k + n) % n;
-    fly(prev, imgs[at], dir);
-    imgs.forEach((im, i) => im.classList.toggle("on", i === at));
-    dots.forEach((d, i) => d.classList.toggle("on", i === at));
-    label.textContent = `${at + 1} / ${n}　${p.orbit[at][1][lang]}`;
-  };
-  const touch = () => box.classList.add("used");
-  const step = d => { touch(); show(at + d, d); };
-  /* Slow autoplay while nobody is using it; never with reduced motion. */
-  const tick = () => { clearTimeout(timer); if (!reduce && !hold) timer = setTimeout(() => { show(at + 1, 1); tick(); }, 1400); };
-  box.querySelector(".o-prev").addEventListener("click", () => step(-1));
-  box.querySelector(".o-next").addEventListener("click", () => step(1));
-  box.addEventListener("keydown", e => { if (e.key === "ArrowLeft") { step(-1); e.preventDefault(); } if (e.key === "ArrowRight") { step(1); e.preventDefault(); } });
-  /* Dragging sideways turns the booth: every 30px is one angle, so a short drag flips through several. */
-  let x0 = null, moved = 0;
-  box.addEventListener("pointerdown", e => { if (e.target.closest("button")) return; x0 = e.clientX; moved = 0; hold = true; clearTimeout(timer); box.setPointerCapture(e.pointerId); });
-  box.addEventListener("pointermove", e => { if (x0 === null) return; const dx = e.clientX - x0; if (Math.abs(dx) >= 30) { step(dx < 0 ? 1 : -1); x0 = e.clientX; moved++; } });
-  const up = () => { if (x0 === null) return; x0 = null; hold = box.matches(":hover"); tick(); };
-  box.addEventListener("pointerup", up); box.addEventListener("pointercancel", up);
-  box.addEventListener("pointerenter", () => { hold = true; clearTimeout(timer); });
-  box.addEventListener("pointerleave", () => { if (x0 === null) { hold = false; tick(); } });
-  box.addEventListener("focusin", () => { hold = true; clearTimeout(timer); });
-  box.addEventListener("focusout", () => { hold = false; tick(); });
-  /* Only play while on screen. */
-  const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) tick(); else clearTimeout(timer); }));
+let stopModel = () => {};
+function initModel() {
+  stopModel(); stopModel = () => {};
+  const box = view.querySelector(".booth3d"); if (!box) return;
+  let dispose = null, dead = false;
+  const io = new IntersectionObserver(es => {
+    if (!es.some(e => e.isIntersecting)) return;
+    io.disconnect();
+    import("./booth3d.js").then(mod => {
+      if (dead) return;
+      dispose = mod.init(box, { onUse: () => box.classList.add("used") });
+      requestAnimationFrame(() => box.classList.add("ready"));
+    }).catch(() => {});   /* no WebGL or offline: the poster render stays */
+  }, { rootMargin: "300px" });
   io.observe(box);
-  stopOrbit = () => { clearTimeout(timer); io.disconnect(); };
+  stopModel = () => { dead = true; io.disconnect(); dispose && dispose(); };
 }
 
+function stripItems(p) {
+  const out = [];
+  p.imgs.forEach(im => { out.push([im[0], im[1][lang]]); if (p.model && p.model.after === im[0]) out.push([p.model.poster, p.model.cap[lang]]); });
+  return out;
+}
 function renderProject(p) {
   const u = UI[lang], t = p[lang], i = P.indexOf(p), nx = P[(i + 1) % P.length];
   const q = lang === "zh" ? `「${esc(t.quote)}」` : `“${esc(t.quote)}”`;
@@ -1533,7 +1493,7 @@ function renderProject(p) {
       <p class="p-sub">${esc(sub(p))}</p>
       ${p.hand ? `<div class="hn hn-scroll" aria-hidden="true"><span class="hn-dot">:</span>(Scroll for more)<svg class="hn-arrow" viewBox="0 0 40 70" aria-hidden="true"><path d="M21 3 C 18 18, 23 33, 19 60"/><path d="M9 47 C 13 52, 16 56, 19 61 C 22 55, 26 50, 31 46"/></svg></div>` : ""}
     </div>
-    ${p.imgs.length > 1 ? `<ul class="p-strip" aria-label="${esc(p.name[lang])}">${p.imgs.map((im, k) => `<li><button type="button" data-k="${k}" aria-label="${esc(im[1][lang])}"><img src="img/${im[0] === "@orbit" ? p.orbit[0][0] : im[0]}" alt="" loading="lazy"></button></li>`).join("")}</ul>` : ""}
+    ${p.imgs.length > 1 ? `<ul class="p-strip" aria-label="${esc(p.name[lang])}">${stripItems(p).map((it, k) => `<li><button type="button" data-k="${k}" aria-label="${esc(it[1])}"><img src="img/${it[0]}" alt="" loading="lazy"></button></li>`).join("")}</ul>` : ""}
     <div class="p-grid">
       ${p.hand ? `<div>${`<p class="hn hn-label" aria-hidden="true">(Details)</p>`}${renderFacts(p)}</div>` : renderFacts(p)}
       <div class="body">
@@ -1543,7 +1503,7 @@ function renderProject(p) {
     </div>
     ${p.hand && p.hand.gallery ? `<div class="hn hn-gallery" aria-hidden="true">${p.hand.gallery}<svg class="hn-curve" viewBox="0 0 110 70" aria-hidden="true"><path d="M104 6 C 80 2, 40 8, 22 40 C 18 48, 16 55, 15 63"/><path d="M5 51 C 9 55, 12 60, 15 64 C 19 59, 23 55, 28 52"/></svg></div>` : ""}
     <div class="gallery">
-      ${p.imgs.length ? p.imgs.map(im => im[0] === "@orbit" ? renderOrbit(p, im) : `<figure class="${im[2] ? "wide" : ""}"><img src="img/${im[0]}" alt="${esc(p.name[lang])} — ${esc(im[1][lang])}" loading="lazy"><figcaption>${esc(im[1][lang])}</figcaption></figure>`).join("")
+      ${p.imgs.length ? p.imgs.map(im => `<figure class="${im[2] ? "wide" : ""}"><img src="img/${im[0]}" alt="${esc(p.name[lang])} — ${esc(im[1][lang])}" loading="lazy"><figcaption>${esc(im[1][lang])}</figcaption></figure>` + (p.model && p.model.after === im[0] ? renderModel(p) : "")).join("")
         : `<figure class="wide"><div class="notile" style="aspect-ratio:16/6">${u.soon}</div></figure>`}
     </div>
     <div class="next"><span>${u.next}</span><a href="#${nx.id}">${esc(nx.name[lang])} →</a></div>`;
@@ -1552,7 +1512,7 @@ function renderProject(p) {
     const f = figs[+b.dataset.k]; if (!f) return;
     f.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
   }));
-  initOrbit(p);
+  initModel();
 }
 
 /* Photos shown when hovering an experience row (row field 5 names the set). */
