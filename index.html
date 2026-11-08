@@ -173,6 +173,9 @@
 
   /* Project page */
   .back { display: inline-block; margin-top: 28px; font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
+  /* Animated arrows (PulsoIcon, self-hosted in vendor/pulsoicon): the text arrow shows until the SVG replaces it. */
+  .pi { display: inline-flex; align-items: center; justify-content: center; line-height: 1; vertical-align: -0.12em; }
+  .pi svg { width: 1em; height: 1em; overflow: visible; }
   .p-title { margin: 22px 0 6px; font-family: var(--display); font-weight: 700; font-size: clamp(40px, 7vw, 84px); line-height: .98; letter-spacing: -.05em; font-variation-settings: "opsz" 96; text-wrap: balance; }
   .p-sub { font-weight: 500; font-size: clamp(18px, 2.4vw, 26px); color: var(--muted); margin: 0 0 26px; }
   .p-grid { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 40px; border-top: 1px solid var(--line); padding-top: 18px; }
@@ -332,7 +335,7 @@
   }
   @media (prefers-reduced-motion: reduce) { .thumbs img { transition: none; } }
 </style>
-<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/","motion":"https://cdn.jsdelivr.net/npm/motion@12.29.3/+esm"}}</script>
 </head>
 <body>
 <div class="intro" id="intro" aria-hidden="true">
@@ -378,7 +381,7 @@
       </ul>
       <div class="tn-foot">
         <p class="tn-sign">國立臺北商業大學 商業設計管理系　柯承翰</p>
-        <button type="button" class="tn-go"><span>進入作品集</span><span aria-hidden="true">→</span></button>
+        <button type="button" class="tn-go"><span>進入作品集</span><span class="pi" data-pi="arrow-right" aria-hidden="true">→</span></button>
       </div>
     </div>
   </div>
@@ -1181,8 +1184,8 @@ function renderWork() {
   view.innerHTML = `
     <section class="wheel" id="wheel" aria-label="HanKO portfolio">
       <div class="ring"></div>
-      <button type="button" class="wheel-nav prev" aria-label="${WT[lang].prev}">←</button>
-      <button type="button" class="wheel-nav next" aria-label="${WT[lang].next}">→</button>
+      <button type="button" class="wheel-nav prev" aria-label="${WT[lang].prev}"><span class="pi" data-pi="arrow-left" aria-hidden="true">←</span></button>
+      <button type="button" class="wheel-nav next" aria-label="${WT[lang].next}"><span class="pi" data-pi="arrow-right" aria-hidden="true">→</span></button>
       <div class="wheel-cap"><span class="wheel-name" aria-live="polite"></span></div>
     </section>
     <section class="hero"><h1>${u.h1}</h1><p>${u.lead}</p></section>
@@ -1482,7 +1485,7 @@ function renderProject(p) {
   const u = UI[lang], t = p[lang], i = P.indexOf(p), nx = P[(i + 1) % P.length];
   const q = lang === "zh" ? `「${esc(t.quote)}」` : `“${esc(t.quote)}”`;
   view.innerHTML = `
-    <a class="back" href="#">${u.back}</a>
+    <a class="back" href="#"><span class="pi" data-pi="arrow-left" aria-hidden="true">←</span> ${u.back.replace(/^← /, "")}</a>
     <div class="p-head">
       <h1 class="p-title">${esc(p.name[lang])}</h1>
       <p class="p-sub">${esc(sub(p))}</p>
@@ -1501,7 +1504,7 @@ function renderProject(p) {
       ${p.imgs.length ? p.imgs.map(im => `<figure class="${im[2] ? "wide" : ""}"><img src="img/${im[0]}" alt="${esc(p.name[lang])} — ${esc(im[1][lang])}" loading="lazy"><figcaption>${esc(im[1][lang])}</figcaption></figure>` + (p.model && p.model.after === im[0] ? renderModel(p) : "")).join("")
         : `<figure class="wide"><div class="notile" style="aspect-ratio:16/6">${u.soon}</div></figure>`}
     </div>
-    <div class="next"><span>${u.next}</span><a href="#${nx.id}">${esc(nx.name[lang])} →</a></div>`;
+    <div class="next"><span>${u.next}</span><a href="#${nx.id}">${esc(nx.name[lang])} <span class="pi" data-pi="arrow-right" aria-hidden="true">→</span></a></div>`;
   const figs = view.querySelectorAll(".gallery figure");
   view.querySelectorAll(".p-strip button").forEach(b => b.addEventListener("click", () => {
     const f = figs[+b.dataset.k]; if (!f) return;
@@ -1523,7 +1526,7 @@ function renderExperience() {
     <h1 class="page-h">${c.title}</h1>
     <div class="cv">
       ${c.sections.map((s, i) => `<section class="${i === 0 ? "full" : ""}"><h3>${esc(s[0])}</h3><ul>
-        ${s[1].map(r => { const pv = ROW_PV[r[5]] || []; return `<li${pv.length ? ` class="has-pv" data-pv="${r[5]}"` : ""}><span class="y">${esc(r[0])}</span><span>${r[3] ? `<img class="org" src="img/${r[3]}" alt="">` : ""}${r[4] ? `<a class="cv-link" href="${r[4]}" target="_blank" rel="noopener">${esc(r[1])} ↗</a>` : esc(r[1])}${r[2] ? `<span class="note">${esc(r[2])}</span>` : ""}${r[6] ? `<a class="cv-link news" href="${r[6]}" target="_blank" rel="noopener">${{ zh: "中央社新聞稿", en: "CNA press release", it: "Comunicato CNA" }[lang]} ↗</a>` : ""}${pv.length ? `<span class="pv-strip">${pv.map(f => `<img src="img/${f}" alt="" loading="lazy">`).join("")}</span>` : ""}</span></li>`; }).join("")}
+        ${s[1].map(r => { const pv = ROW_PV[r[5]] || []; return `<li${pv.length ? ` class="has-pv" data-pv="${r[5]}"` : ""}><span class="y">${esc(r[0])}</span><span>${r[3] ? `<img class="org" src="img/${r[3]}" alt="">` : ""}${r[4] ? `<a class="cv-link" href="${r[4]}" target="_blank" rel="noopener">${esc(r[1])} <span class="pi" data-pi="arrow-up-right" aria-hidden="true">↗</span></a>` : esc(r[1])}${r[2] ? `<span class="note">${esc(r[2])}</span>` : ""}${r[6] ? `<a class="cv-link news" href="${r[6]}" target="_blank" rel="noopener">${{ zh: "中央社新聞稿", en: "CNA press release", it: "Comunicato CNA" }[lang]} <span class="pi" data-pi="arrow-up-right" aria-hidden="true">↗</span></a>` : ""}${pv.length ? `<span class="pv-strip">${pv.map(f => `<img src="img/${f}" alt="" loading="lazy">`).join("")}</span>` : ""}</span></li>`; }).join("")}
       </ul></section>`).join("")}
     </div>
     <div class="hover-pv" aria-hidden="true"><img alt=""><span class="n"></span></div>`;
@@ -1583,8 +1586,8 @@ function renderInfo() {
         </div></section>
         <section><h3>${n.contact}</h3><ul>
           <li><span class="y">Email</span><span><a class="cv-link" href="mailto:hankko60405@gmail.com">hankko60405@gmail.com</a></span></li>
-          <li><span class="y">Instagram</span><span><a class="cv-link" href="https://www.instagram.com/ko_hankko/" target="_blank" rel="noopener">@ko_hankko ↗</a></span></li>
-          <li><span class="y">Behance</span><span><a class="cv-link" href="https://www.behance.net/hankko604043cd" target="_blank" rel="noopener">behance.net/hankko604043cd ↗</a></span></li>
+          <li><span class="y">Instagram</span><span><a class="cv-link" href="https://www.instagram.com/ko_hankko/" target="_blank" rel="noopener">@ko_hankko <span class="pi" data-pi="arrow-up-right" aria-hidden="true">↗</span></a></span></li>
+          <li><span class="y">Behance</span><span><a class="cv-link" href="https://www.behance.net/hankko604043cd" target="_blank" rel="noopener">behance.net/hankko604043cd <span class="pi" data-pi="arrow-up-right" aria-hidden="true">↗</span></a></span></li>
         </ul></section>
       </div>
     </section>`;
@@ -1843,6 +1846,27 @@ window.introDone = new Promise(done => {
   window.introDone.then(() => { if (seen) chip.hidden = false; else open(); });
 })();
 route(false);
+</script>
+<script type="module">
+/* PulsoIcon arrows: swap each .pi text arrow for its animated SVG; it plays on hover or focus of its link or button. */
+import { iconFrame } from "./vendor/pulsoicon/frame.js";
+import { playIcon } from "./vendor/pulsoicon/dom.js";
+import { ArrowLeft } from "./vendor/pulsoicon/icons/arrow-left.js";
+import { ArrowRight } from "./vendor/pulsoicon/icons/arrow-right.js";
+import { ArrowUpRight } from "./vendor/pulsoicon/icons/arrow-up-right.js";
+const ICONS = { "arrow-left": ArrowLeft, "arrow-right": ArrowRight, "arrow-up-right": ArrowUpRight };
+const NS = "http://www.w3.org/2000/svg";
+let uid = 0;
+const build = f => { const el = document.createElementNS(NS, f.tag); for (const [k, v] of Object.entries(f.attrs)) el.setAttribute(k, v); f.children.forEach(c => el.appendChild(build(c))); return el; };
+const hydrate = () => document.querySelectorAll(".pi[data-pi]:not([data-on])").forEach(span => {
+  const data = ICONS[span.dataset.pi]; if (!data) return;
+  const frame = iconFrame(data, { size: 24, strokeWidth: 1.75, maskId: `pi${uid++}` });
+  const svg = build(frame); svg.setAttribute("aria-hidden", "true");
+  span.textContent = ""; span.appendChild(svg); span.dataset.on = "1";
+  playIcon(svg, frame);
+});
+hydrate();
+new MutationObserver(hydrate).observe(document.body, { childList: true, subtree: true });
 </script>
 </body>
 </html>
