@@ -185,6 +185,9 @@
   .facts .team { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
   .facts .team li::before { content: "・"; color: var(--muted); }
   .facts .team li.me { font-weight: 600; }
+  .outcomes { margin: 0 0 8px; padding-left: 1.4em; font-size: 15px; line-height: 1.7; max-width: 38em; }
+  .outcomes li { margin: 0 0 4px; }
+  .outcomes li::marker { font-family: var(--mono); color: var(--muted); }
   .quote { font-weight: 700; font-size: clamp(19px, 2.2vw, 24px); line-height: 1.5; margin: 0 0 22px; text-wrap: balance; }
   .body h3 { font-family: var(--mono); font-weight: 400; font-size: 12px; color: var(--muted); margin: 24px 0 6px; letter-spacing: .04em; }
   .body p { font-size: 15px; line-height: 1.85; margin: 0 0 12px; max-width: 38em; }
@@ -450,33 +453,45 @@ const P = [
                  "Il gruppo di coordinamento gestiva le quattro revisioni dei progetti: calendario, regole (percorso, ordine, tempi e penalità), fogli firme e di valutazione, conferma dei giurati e, dopo, il calcolo dei punteggi. Cheng-Han Ko faceva anche parte del gruppo identità, lavorando su visual e allestimento, così le informazioni circolavano bene tra le due classi. Dopo la mostra il gruppo ha raccolto i metodi dell'anno in un documento di passaggio di consegne per il comitato successivo.", "La mostra si è tenuta nel campus di Taoyuan dal 6 al 10 maggio 2026, con inaugurazione e revisioni dei progetti, e poi allo Young Designers' Exhibition di Taipei Nangang, stand E-11, dal 22 al 25 maggio. Come referente del comitato, Ko ha anche scritto e presentato una richiesta di contributo all'Ufficio per i giovani di Taoyuan, affiancando alla mostra tre incontri su design, impresa e carriera. L'Ufficio compare tra gli enti promotori della mostra."]],
                  ["Decisione chiave", ["La scelta più importante è stata bilanciare il percorso della mostra e il budget: decidere, con fondi limitati, dove investire e cosa ridurre, e pianificare il percorso dei visitatori dall'ingresso al visual fino a ogni progetto, perché tutti i 16 progetti fossero visti davvero."]]] } },
   { id: "apple", cat: "Identity",
-    hand: { side: { 1: "← melody in type", 2: "← see-through invites" }, gallery: "(Key visual)" },
+    hand: { side: { 1: "← melody in type", 3: "← see-through invites" }, gallery: "(Key visual → in hand)" },
     name: { zh: "青澀秋禾", en: "Green Autumn Harvest", it: "Raccolto d'autunno" },
-    cover: ["ap-kv.jpg", "ap-logo.jpg", "05.jpg"],
+    cover: ["ap-kv.jpg", "ap-ph-invite.jpg", "ap-logo.jpg"],
     imgs: [
       ["ap-kv.jpg", { zh: "主視覺：像素點陣的青蘋果", en: "Key visual: a green apple in pixel dithering", it: "Visual principale: una mela verde in retinatura a pixel" }, true],
-      ["ap-logo.jpg", { zh: "標準字：姚體「青澀秋禾」＋五線譜", en: "Logotype: the title in Yao type plus a music staff", it: "Logotipo: il titolo in carattere Yao più il pentagramma" }, true],
-      ["04.jpg", { zh: "主視覺應用", en: "Key visual in use", it: "Il visual applicato" }],
-      ["05.jpg", { zh: "票券與邀請函", en: "Tickets and invitations", it: "Biglietti e inviti" }]
+      ["ap-apple.jpg", { zh: "靈感來源：蘋果一層層轉化，搭配當晚的曲目", en: "Source: the apple transformed step by step, beside the night's programme", it: "Spunto: la mela trasformata passo dopo passo, accanto al programma della serata" }, true],
+      ["ap-logo.jpg", { zh: "標準字：姚體＋譜線＝青澀秋禾", en: "Logotype: Yao type + staff lines = the title", it: "Logotipo: carattere Yao + righe del pentagramma = il titolo" }, true],
+      ["ap-colour.jpg", { zh: "色彩計畫：亮黃 #F7ED4A、蘋果綠 #A9D267、深綠 #2D6152", en: "Colour plan: yellow #F7ED4A, apple green #A9D267, deep green #2D6152", it: "Palette: giallo #F7ED4A, verde mela #A9D267, verde scuro #2D6152" }, true],
+      ["ap-dots.jpg", { zh: "輔助圖形：像素點陣與白色雜訊帶", en: "Supporting graphics: pixel dots and a white noise band", it: "Grafica di supporto: punti a pixel e una fascia di rumore bianco" }, true],
+      ["ap-overview.jpg", { zh: "應用總覽：海報、DM、票券與邀請函", en: "Applications: poster, flyer, tickets and invitations", it: "Applicazioni: manifesto, volantino, biglietti e inviti" }, true],
+      ["ap-ph-tube.jpg", { zh: "實物：海報收進捲筒，金色標準字", en: "In hand: the poster rolled in a tube, gold logotype", it: "Dal vero: il manifesto arrotolato nel tubo, logotipo dorato" }],
+      ["ap-ph-tickets.jpg", { zh: "實物：票券", en: "In hand: tickets", it: "Dal vero: biglietti" }],
+      ["ap-ph-dm.jpg", { zh: "實物：DM", en: "In hand: flyers", it: "Dal vero: volantini" }, true],
+      ["ap-ph-invite.jpg", { zh: "實物：透明邀請函疊在 DM 上，蘋果透出層次", en: "In hand: the transparent invitation over the flyer, the apple showing through", it: "Dal vero: l'invito trasparente sopra il volantino, con la mela in trasparenza" }, true]
     ],
     zh: { meta: "音樂會主視覺，2025", short: "為致理科技大學管樂社第 57 屆期末音樂會設計的一系列視覺宣傳品，包含海報、DM 與邀請函，靈感來自青蘋果樂團的意象，透過蘋果的轉化傳達清純、初熟、充滿生機的青春感受。", quote: "青蘋果的意象，清純、初熟、充滿生機的青春感受。",
+      outcomes: ["標準字以姚體結合五線譜的譜線，字讀起來就像一段旋律", "像素點陣的青蘋果延伸成整套底紋，串起海報、DM、票券與邀請函", "邀請函用透明材質印製，疊在 DM 上時蘋果會透出層次"],
       sections: [
-        ["理念", ["以「青蘋果」為靈感，把蘋果轉化成青春的象徵：清純、初熟、充滿生機。主視覺用像素點陣的手法，傳達數位時代的新鮮感；複雜的像素結構，也象徵音樂的無限可能與層次。"]],
-        ["標準字", ["「青澀秋禾」以姚體為基礎，結合五線譜的譜線與音符，讓文字本身讀起來就像一段旋律。輔助圖形則是點陣處理的青蘋果，重複排列成整套視覺的底紋。"]],
-        ["執行", ["深綠色主調搭配金黃字體，在沉穩中保留青春感。資訊排版刻意簡潔，在生動活潑的主視覺與清晰的演出資訊之間取得平衡。邀請函採用透明材質，讓光線穿透，形成特殊的層次效果。", "音樂會於 2025 年 11 月 27 日晚上舉行，作品也發表在 Behance：behance.net/gallery/239665787"]],
+        ["理念", ["以「青蘋果」為靈感，把蘋果轉化成青春的象徵：清純、初熟、充滿生機，主視覺用像素點陣的手法，傳達數位時代的新鮮感；複雜的像素結構，也象徵音樂的無限可能與層次。"]],
+        ["標準字", ["「青澀秋禾」以姚體為基礎，結合五線譜的譜線與音符，讓文字本身讀起來就像一段旋律，輔助圖形則是點陣處理的青蘋果，重複排列成整套視覺的底紋。"]],
+        ["色彩", ["深綠 #2D6152 是主色，鋪滿海報、票券與邀請函的底，亮黃 #F7ED4A 用在標準字，蘋果綠 #A9D267 點綴在細節上，三個顏色都標了 CMYK 數值，方便印刷"]],
+        ["執行", ["深綠色主調搭配金黃字體，在沉穩中保留青春感，資訊排版刻意簡潔，在生動活潑的主視覺與清晰的演出資訊之間取得平衡，邀請函採用透明材質，讓光線穿透，形成特殊的層次效果。", "音樂會於 2025 年 11 月 27 日晚上舉行，作品也發表在 Behance：behance.net/gallery/239665787"]],
         ["工具", ["Photoshop、Illustrator、Lightroom"]]
       ] },
     en: { meta: "Concert visual identity, 2025", short: "A series of promotional pieces for the Chihlee University Wind Band's 57th end-of-year concert — posters, flyers and invitations — inspired by the imagery of the Green Apple band, transforming the apple to convey a fresh, just-ripening, lively sense of youth.", quote: "The green apple: fresh, just ripening, full of life.",
+      outcomes: ["The logotype joins Yao type with the lines of a music staff, so the title reads like a melody", "A pixel-dithered green apple becomes the pattern that ties the poster, flyer, tickets and invitations together", "The invitation is printed on transparent stock, so the apple shows through in layers over the flyer"],
       sections: [
         ["Concept", ["The green apple becomes a symbol of youth: pure, just ripening, full of life. The key visual uses pixel dithering for a sense of digital freshness, and its complex pixel structure stands for the endless possibilities and layers of music."]],
         ["Logotype", ["The title is set in Yao type and merged with the lines and notes of a music staff, so the words themselves read like a melody. A dithered green apple, repeated as a pattern, is the supporting graphic."]],
+        ["Colour", ["Deep green #2D6152 leads, filling the poster, tickets and invitations; yellow #F7ED4A carries the logotype, and apple green #A9D267 picks out the details. All three are given with CMYK values for print."]],
         ["Execution", ["Deep green with golden type keeps the tone calm but young. The information layout stays simple to balance the lively key visual with clear concert details. Invitations are printed on transparent stock, so light passes through in layers.", "The concert took place on the evening of 27 November 2025. The project is also on Behance: behance.net/gallery/239665787"]],
         ["Tools", ["Photoshop, Illustrator, Lightroom"]]
       ] },
     it: { meta: "Identità visiva per un concerto, 2025", short: "Una serie di materiali promozionali per il 57° concerto di fine anno della banda della Chihlee University — manifesti, volantini e inviti — ispirata all'immaginario della band Green Apple, che trasforma la mela per raccontare una giovinezza fresca, appena matura e piena di vita.", quote: "La mela verde: fresca, appena matura, piena di vita.",
+      outcomes: ["Il logotipo unisce il carattere Yao alle righe del pentagramma, così il titolo si legge come una melodia", "Una mela verde retinata a pixel diventa il motivo che lega manifesto, volantino, biglietti e inviti", "L'invito è stampato su supporto trasparente, così la mela appare a strati sopra il volantino"],
       sections: [
         ["Concetto", ["La mela verde diventa simbolo della giovinezza: pura, appena matura, piena di vita. Il visual usa la retinatura a pixel per dare un senso di freschezza digitale, e la sua struttura complessa rappresenta le infinite possibilità e gli strati della musica."]],
         ["Logotipo", ["Il titolo è composto in carattere Yao e fuso con le linee e le note di un pentagramma, così le parole si leggono come una melodia. Una mela verde retinata, ripetuta come motivo, fa da elemento grafico di supporto."]],
+        ["Colore", ["Il verde scuro #2D6152 guida e riempie manifesto, biglietti e inviti; il giallo #F7ED4A porta il logotipo e il verde mela #A9D267 i dettagli. Tutti e tre sono indicati anche in CMYK, per la stampa."]],
         ["Realizzazione", ["Verde scuro e caratteri dorati danno un tono calmo ma giovane. L'impaginazione delle informazioni è semplice, per bilanciare il visual vivace con dati chiari sul concerto. Gli inviti sono stampati su supporto trasparente, attraversato dalla luce.", "Il concerto si è tenuto la sera del 27 novembre 2025. Il progetto è anche su Behance: behance.net/gallery/239665787"]],
         ["Strumenti", ["Photoshop, Illustrator, Lightroom"]]
       ] } },
@@ -1497,6 +1512,7 @@ function renderProject(p) {
       ${p.hand ? `<div>${`<p class="hn hn-label" aria-hidden="true">(Details)</p>`}${renderFacts(p)}</div>` : renderFacts(p)}
       <div class="body">
         <p class="quote">${q}</p>
+        ${t.outcomes ? `<h3>${{ zh: "成果", en: "Outcomes", it: "Risultati" }[lang]}</h3><ol class="outcomes">${t.outcomes.map(o => `<li>${esc(o)}</li>`).join("")}</ol>` : ""}
         ${t.sections.map((s, k) => `<h3>${esc(s[0])}${p.hand && p.hand.side[k] ? `<span class="hn hn-side" aria-hidden="true">${p.hand.side[k]}</span>` : ""}</h3>${s[1].map(x => `<p>${esc(x)}</p>`).join("")}`).join("")}
       </div>
     </div>
