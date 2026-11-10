@@ -1589,7 +1589,7 @@ function renderInfo() {
       <div>
         <p class="big">${esc(n.big)}</p>
         ${n.paras.map(x => `<p>${esc(x)}</p>`).join("")}
-        <img class="sea" src="img/me.jpg" alt="${esc(n.cap)}">
+        <img class="sea" src="img/me-1200.jpg" srcset="img/me-800.jpg 800w, img/me-1200.jpg 1200w" sizes="(max-width: 720px) 100vw, 640px" width="1200" height="799" fetchpriority="high" decoding="async" alt="${esc(n.cap)}">
         <div class="sea-cap">${esc(n.cap)}</div>
       </div>
       <div class="cv" style="grid-template-columns:minmax(0,1fr)">
