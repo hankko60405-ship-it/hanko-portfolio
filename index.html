@@ -17,7 +17,7 @@
 <title>HanKO 作品集</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Noto+Sans+TC:wght@400;500;700;900&family=Nanum+Pen+Script&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Noto+Sans+TC:wght@400;700&family=Nanum+Pen+Script&display=swap">
 <style>
   /* Layout: list-style portfolio after haoweitu.info. Logo left, three pages centre, language switch right. Projects are full-width rows (text left, images right); inner pages are hash views with a fact column, long text and an image stack. */
   :root {
@@ -131,6 +131,12 @@
   .tn-chip { position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px)); z-index: 40; border: 1px solid #444; border-radius: 999px; padding: 8px 14px; background: #161616; color: #f2f0ea; font: 700 13px var(--text); cursor: pointer; box-shadow: 0 6px 20px rgba(0, 0, 0, .25); }
   .tn-chip:hover, .tn-chip:focus-visible { border-color: #f2f0ea; outline: none; }
   .tn-chip[hidden] { display: none; }
+  .tn-chip .tn-long { display: none; }
+  .tn-chip.is-new { padding: 12px 18px; border-color: #f2f0ea; font-size: 14px; max-width: calc(100vw - 32px); text-align: left; line-height: 1.4; animation: tn-in .5s cubic-bezier(.2, .7, .2, 1) both; }
+  .tn-chip.is-new .tn-short { display: none; }
+  .tn-chip.is-new .tn-long { display: inline; }
+  .tn-chip.is-new:hover, .tn-chip.is-new:focus-visible { background: #f2f0ea; color: #161616; }
+  @media (prefers-reduced-motion: reduce) { .tn-chip.is-new { animation: none; } }
   .pv figure { margin: 0; display: grid; gap: 14px; justify-items: center; min-width: 0; }
   .pv img { max-width: 100%; max-height: 72vh; object-fit: contain; box-shadow: 0 20px 60px rgba(0, 0, 0, .5); }
   .pv figcaption { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; justify-content: center; color: #f2f0ea; text-align: center; }
@@ -385,7 +391,7 @@
       </div>
     </div>
   </div>
-  <button type="button" class="tn-chip" hidden>致設研院・申請說明</button>
+  <button type="button" class="tn-chip" aria-haspopup="dialog" hidden><span class="tn-short">致設研院・申請說明</span><span class="tn-long">致台灣設計研究院：2027 寒假實習申請說明 →</span></button>
   <div class="pv" id="pv" role="dialog" aria-modal="true" aria-label="Preview" hidden>
     <button type="button" class="pv-close">✕</button>
     <button type="button" class="pv-prev">←</button>
@@ -1020,6 +1026,9 @@ const HTML_LANG = { zh: "zh-Hant", en: "en", it: "it" };
 let lang = "zh", filter = "All";
 try { const s = localStorage.getItem("hanko-lang"); if (UI[s]) lang = s; } catch (e) {}
 const view = document.getElementById("view");
+/* Pixel size of each image, so the browser reserves its space before it loads (no layout shift). */
+const IMG_SIZE = {"dx-p18.jpg":[1600,900],"me.jpg":[1800,1199],"box-s3.jpg":[1480,590],"award-artcity.jpg":[1000,1414],"pain-badge.jpg":[1600,900],"bt-overview.jpg":[1800,1273],"flower-board.jpg":[1030,1438],"pain-four.jpg":[1600,900],"cert-ryla.jpg":[1400,994],"cert-bmc.jpg":[1000,1346],"pain-ya.jpg":[1600,900],"al-pass.jpg":[1600,1000],"box-s2.jpg":[1480,524],"sn-intro.jpg":[1600,1144],"flower-show.jpg":[1600,1067],"kk-cream38.jpg":[1135,1600],"bt-hand.jpg":[1400,788],"sn-tools.jpg":[1600,1144],"logo-ntub.png":[357,360],"ty-0093.jpg":[933,1400],"rrt-8.jpg":[1400,933],"pain-ticket.jpg":[1600,900],"pain-poster.jpg":[1600,900],"box-s1.jpg":[1480,636],"al-shape.jpg":[1600,1000],"bt-beach.jpg":[1600,1131],"og-hanko.jpg":[1200,630],"ty-pass.jpg":[1800,1212],"kk-logo-spin.webp":[560,306],"pain-colour.jpg":[1600,900],"ty-0490.jpg":[1400,787],"award-ai.jpg":[932,1400],"award-mindmap.jpg":[977,1400],"lang-poster.jpg":[1129,1600],"ty-0081.jpg":[1400,933],"wish-conductor.jpg":[1069,1500],"00.jpg":[900,586],"wish-kv.jpg":[1600,904],"ty-logo.png":[1500,1000],"ag-p12.jpg":[1600,900],"kk-cream1.jpg":[1135,1600],"grad-4.jpg":[1400,933],"bt-polished.jpg":[1200,1200],"wish-cover.jpg":[1069,1500],"al-docs.jpg":[1600,1000],"grad-5.jpg":[1400,933],"ag-p13.jpg":[1600,900],"bt-cover-v.jpg":[1800,1273],"al-wall.jpg":[1600,1000],"exch-1.jpg":[1400,990],"logo-rrt.png":[400,400],"01.jpg":[900,554],"03.jpg":[900,636],"exch-3.jpg":[1400,990],"sn-map.jpg":[1600,1144],"grad-6.jpg":[1400,933],"kk-cream3.jpg":[1135,1600],"pain-cover.jpg":[1600,900],"ag-p10.jpg":[1600,900],"al-colour.jpg":[1600,1000],"exch-2.jpg":[1400,990],"ag-p9.jpg":[1600,900],"02.jpg":[900,613],"12.jpg":[900,637],"06.jpg":[900,490],"pain-cards.jpg":[1600,900],"bt-audience.jpg":[1600,1131],"dx-p8.jpg":[1600,900],"ty-front.jpg":[1190,1800],"grad-2.jpg":[1400,813],"box-apple-2.jpg":[1600,1067],"box-apple-3.jpg":[1600,1067],"kk-cream6.jpg":[1135,1600],"grad-3.jpg":[1400,933],"lang-texture.jpg":[640,590],"13.jpg":[900,629],"flower-piece.jpg":[1600,903],"05.jpg":[900,636],"11.jpg":[900,432],"pain-wen.jpg":[1600,900],"grad-1.jpg":[1400,674],"kk-group.jpg":[1800,1200],"box-apple-1.jpg":[1600,1067],"10.jpg":[900,636],"04.jpg":[900,636],"09.jpg":[880,564],"ag-p2.jpg":[1600,900],"koko-book1.jpg":[887,1399],"wish-arles.jpg":[1069,1500],"sn-colour.jpg":[1600,1000],"dx-p7.jpg":[1600,900],"logo-cdm.png":[425,77],"kk-cream9.jpg":[1135,1600],"dx-p6.jpg":[1600,900],"bt-cover-h.jpg":[1800,1272],"wish-ghibli.jpg":[1069,1500],"pain-tong.jpg":[1600,900],"cert-elite.jpg":[966,1400],"ty-0173.jpg":[1400,933],"dx-p4.jpg":[1600,900],"b3d-logo.png":[533,120],"kk-poster1.jpg":[1600,1099],"cert-italian.jpg":[1400,987],"ty-0370.jpg":[933,1400],"koko-book3.jpg":[887,1399],"b3d-blob.png":[313,324],"cert-illustrator.jpg":[1600,1131],"cert-youth.jpg":[990,1400],"ag-p4.jpg":[1600,900],"bt-rpet.jpg":[1600,1131],"kk-letter1.jpg":[1600,1131],"award-egret.jpg":[990,660],"al-kv.jpg":[1600,1000],"dx-p1.jpg":[1600,900],"booth-1.jpg":[1600,900],"box-hero.jpg":[1520,878],"al-booth.jpg":[1600,1131],"al-posts.jpg":[1600,1323],"kk-cream40.jpg":[1135,1600],"sn-logo.jpg":[1600,1000],"dx-p3.jpg":[1600,900],"ag-p6.jpg":[1600,900],"wish-carmen.jpg":[1069,1500],"rrt-3.jpg":[1400,788],"ap-kv.jpg":[1800,1314],"kk-cream26.jpg":[1135,1600],"award-spots.jpg":[990,1400],"kk-type.jpg":[1600,1025],"ty-0072.jpg":[1400,933],"vgw-1.jpg":[989,1400],"rrt-2.jpg":[1400,933],"sn-flow.jpg":[1600,1000],"ty-0448.jpg":[1400,933],"ty-tent.jpg":[908,1800],"sn-gold.jpg":[1600,1144],"al-type.jpg":[1600,1000],"sn-cover.jpg":[1600,1000],"rrt-1.jpg":[1400,933],"vgw-2.jpg":[989,1400],"ty-card.jpg":[1400,1282],"dx-p13.jpg":[1600,900],"dx-p17.jpg":[1600,900],"rrt-5.jpg":[1400,788],"sn-parts.jpg":[1600,1000],"pain-chong.jpg":[1600,900],"sn-temple.jpg":[1600,1144],"tisdc-2.jpg":[990,1400],"pain-hun.jpg":[1600,900],"lang-type.jpg":[1000,730],"ap-logo.jpg":[1800,1314],"rrt-4.jpg":[1400,933],"dx-p16.jpg":[1600,900],"dx-p14.jpg":[1600,900],"koko-sign.jpg":[1131,1600],"bt-entwined.jpg":[800,1200],"box-hand.jpg":[1520,928],"rrt-6.jpg":[1400,933],"tisdc-1.jpg":[990,1400],"wish-credits.jpg":[1069,1500],"rrt-7.jpg":[1400,788],"ty-9899.jpg":[1400,933],"award-waterfront.jpg":[914,1400],"more/lang.jpg":[1129,1600],"more/flower-2.jpg":[1026,1466],"more/wish.jpg":[1600,904],"more/flower-1.jpg":[1600,903],"more/peanut.jpg":[1600,931],"more/apple-3.jpg":[1600,1067],"more/calendar.jpg":[1396,932],"more/tee-front.jpg":[1200,1600],"more/apple-2.jpg":[1600,1067],"more/tee-back.jpg":[1200,1600],"more/apple-1.jpg":[1600,1067],"more/chime.jpg":[1132,1600],"more/pain.jpg":[1600,901]};
+const wh = f => { const d = IMG_SIZE[f]; return d ? ` width="${d[0]}" height="${d[1]}"` : ""; };
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const sub = p => { const other = lang === "zh" ? p.name.en : p.name.zh; return p.name[lang].includes(other) ? "" : other; };
 /* List rows show my own role and the other people/partners, taken from the FX credits. */
@@ -1491,7 +1500,7 @@ function renderProject(p) {
       <p class="p-sub">${esc(sub(p))}</p>
       ${p.hand ? `<div class="hn hn-scroll" aria-hidden="true"><span class="hn-dot">:</span>(Scroll for more)<svg class="hn-arrow" viewBox="0 0 40 70" aria-hidden="true"><path d="M21 3 C 18 18, 23 33, 19 60"/><path d="M9 47 C 13 52, 16 56, 19 61 C 22 55, 26 50, 31 46"/></svg></div>` : ""}
     </div>
-    ${p.imgs.length > 1 ? `<ul class="p-strip" aria-label="${esc(p.name[lang])}">${stripItems(p).map((it, k) => `<li><button type="button" data-k="${k}" aria-label="${esc(it[1])}"><img src="img/${it[0]}" alt="" loading="lazy"></button></li>`).join("")}</ul>` : ""}
+    ${p.imgs.length > 1 ? `<ul class="p-strip" aria-label="${esc(p.name[lang])}">${stripItems(p).map((it, k) => `<li><button type="button" data-k="${k}" aria-label="${esc(it[1])}"><img src="img/${it[0]}"${wh(it[0])} alt="" loading="lazy"></button></li>`).join("")}</ul>` : ""}
     <div class="p-grid">
       ${p.hand ? `<div>${`<p class="hn hn-label" aria-hidden="true">(Details)</p>`}${renderFacts(p)}</div>` : renderFacts(p)}
       <div class="body">
@@ -1501,7 +1510,7 @@ function renderProject(p) {
     </div>
     ${p.hand && p.hand.gallery ? `<div class="hn hn-gallery" aria-hidden="true">${p.hand.gallery}<svg class="hn-curve" viewBox="0 0 110 70" aria-hidden="true"><path d="M104 6 C 80 2, 40 8, 22 40 C 18 48, 16 55, 15 63"/><path d="M5 51 C 9 55, 12 60, 15 64 C 19 59, 23 55, 28 52"/></svg></div>` : ""}
     <div class="gallery">
-      ${p.imgs.length ? p.imgs.map(im => `<figure class="${im[2] ? "wide" : ""}"><img src="img/${im[0]}" alt="${esc(p.name[lang])} — ${esc(im[1][lang])}" loading="lazy"><figcaption>${esc(im[1][lang])}</figcaption></figure>` + (p.model && p.model.after === im[0] ? renderModel(p) : "")).join("")
+      ${p.imgs.length ? p.imgs.map(im => `<figure class="${im[2] ? "wide" : ""}"><img src="img/${im[0]}"${wh(im[0])} alt="${esc(p.name[lang])} — ${esc(im[1][lang])}" loading="lazy"><figcaption>${esc(im[1][lang])}</figcaption></figure>` + (p.model && p.model.after === im[0] ? renderModel(p) : "")).join("")
         : `<figure class="wide"><div class="notile" style="aspect-ratio:16/6">${u.soon}</div></figure>`}
     </div>
     <div class="next"><span>${u.next}</span><a href="#${nx.id}">${esc(nx.name[lang])} <span class="pi" data-pi="arrow-right" aria-hidden="true">→</span></a></div>`;
@@ -1526,7 +1535,7 @@ function renderExperience() {
     <h1 class="page-h">${c.title}</h1>
     <div class="cv">
       ${c.sections.map((s, i) => `<section class="${i === 0 ? "full" : ""}"><h3>${esc(s[0])}</h3><ul>
-        ${s[1].map(r => { const pv = ROW_PV[r[5]] || []; return `<li${pv.length ? ` class="has-pv" data-pv="${r[5]}"` : ""}><span class="y">${esc(r[0])}</span><span>${r[3] ? `<img class="org" src="img/${r[3]}" alt="">` : ""}${r[4] ? `<a class="cv-link" href="${r[4]}" target="_blank" rel="noopener">${esc(r[1])} <span class="pi" data-pi="arrow-up-right" aria-hidden="true">↗</span></a>` : esc(r[1])}${r[2] ? `<span class="note">${esc(r[2])}</span>` : ""}${r[6] ? `<a class="cv-link news" href="${r[6]}" target="_blank" rel="noopener">${{ zh: "中央社新聞稿", en: "CNA press release", it: "Comunicato CNA" }[lang]} <span class="pi" data-pi="arrow-up-right" aria-hidden="true">↗</span></a>` : ""}${pv.length ? `<span class="pv-strip">${pv.map(f => `<img src="img/${f}" alt="" loading="lazy">`).join("")}</span>` : ""}</span></li>`; }).join("")}
+        ${s[1].map(r => { const pv = ROW_PV[r[5]] || []; return `<li${pv.length ? ` class="has-pv" data-pv="${r[5]}"` : ""}><span class="y">${esc(r[0])}</span><span>${r[3] ? `<img class="org" src="img/${r[3]}"${wh(r[3])} alt="">` : ""}${r[4] ? `<a class="cv-link" href="${r[4]}" target="_blank" rel="noopener">${esc(r[1])} <span class="pi" data-pi="arrow-up-right" aria-hidden="true">↗</span></a>` : esc(r[1])}${r[2] ? `<span class="note">${esc(r[2])}</span>` : ""}${r[6] ? `<a class="cv-link news" href="${r[6]}" target="_blank" rel="noopener">${{ zh: "中央社新聞稿", en: "CNA press release", it: "Comunicato CNA" }[lang]} <span class="pi" data-pi="arrow-up-right" aria-hidden="true">↗</span></a>` : ""}${pv.length ? `<span class="pv-strip">${pv.map(f => `<img src="img/${f}" alt="" loading="lazy">`).join("")}</span>` : ""}</span></li>`; }).join("")}
       </ul></section>`).join("")}
     </div>
     <div class="hover-pv" aria-hidden="true"><img alt=""><span class="n"></span></div>`;
@@ -1778,7 +1787,7 @@ function openMore(i, from) {
   box.className = "mw"; box.setAttribute("role", "dialog"); box.setAttribute("aria-modal", "true"); box.setAttribute("aria-label", m.name[lang]);
   box.innerHTML = `<button type="button" class="mw-x" aria-label="${t.close}">✕</button>
     <div class="mw-in"><p class="mw-t"><b>${esc(m.name[lang])}</b><span>${esc(m.cat[lang])}</span></p>
-    ${m.imgs.map(f => `<img src="img/more/${f}" alt="${esc(m.name[lang])}">`).join("")}</div>`;
+    ${m.imgs.map(f => `<img src="img/more/${f}"${wh("more/" + f)} alt="${esc(m.name[lang])}">`).join("")}</div>`;
   const close = () => { box.remove(); document.body.style.overflow = ""; removeEventListener("keydown", key); from && from.focus(); };
   const key = e => { if (e.key === "Escape") close(); };
   box.addEventListener("click", e => { if (e.target === box || e.target.closest(".mw-x")) close(); });
@@ -1839,11 +1848,22 @@ window.introDone = new Promise(done => {
     if (back && back.focus) back.focus();
   };
   tn.addEventListener("click", e => { if (e.target === tn || e.target.closest(".tn-x, .tn-go")) close(); });
-  addEventListener("keydown", e => { if (!tn.hidden && e.key === "Escape") close(); });
+  addEventListener("keydown", e => {
+    if (tn.hidden) return;
+    if (e.key === "Escape") return close();
+    if (e.key !== "Tab") return;
+    /* keep focus inside the letter while it is open */
+    const f = [...tn.querySelectorAll("button, a[href]")], first = f[0], last = f[f.length - 1];
+    if (!tn.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+    else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
   chip.addEventListener("click", open);
   let seen = false;
   try { seen = sessionStorage.getItem("hanko-tdri-seen") === "1"; } catch (e) {}
-  window.introDone.then(() => { if (seen) chip.hidden = false; else open(); });
+  /* The letter no longer covers the site on arrival: first visits get a larger pill that opens it. */
+  chip.addEventListener("click", () => chip.classList.remove("is-new"));
+  window.introDone.then(() => { if (!seen) chip.classList.add("is-new"); chip.hidden = false; });
 })();
 route(false);
 </script>
