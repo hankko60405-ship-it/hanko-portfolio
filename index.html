@@ -65,18 +65,12 @@
   .lang button[aria-pressed="true"] { color: var(--fg); }
 
   /* Banner: 3D tilt wheel. Tiles ride a ring that spins on its own, tilts with the pointer, and spreads apart on scroll. */
-  .wheel { position: relative; height: clamp(340px, 64vh, 640px); margin-top: 6px; background: #0a0a0b; border-radius: 6px; overflow: hidden; perspective: 900px; perspective-origin: 50% 45%; touch-action: pan-y; }
+  .wheel { position: relative; height: clamp(340px, 64vh, 640px); margin-top: 6px; overflow: hidden; perspective: 900px; perspective-origin: 50% 45%; touch-action: pan-y; }
   .ring { position: absolute; left: 50%; top: 47%; transform-style: preserve-3d; }
   .wheel { cursor: grab; user-select: none; -webkit-user-select: none; }
   .wheel.grabbing { cursor: grabbing; }
   .tile { position: absolute; left: 0; top: 0; display: block; padding: 0; border: 0; background: none; cursor: pointer; width: calc(var(--w) * var(--k, 1) * 1px); will-change: transform, opacity; }
   .wheel.grabbing .tile { cursor: grabbing; }
-  .wheel-nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2; width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(242, 240, 234, .35); background: rgba(10, 10, 11, .55); color: #f2f0ea; font-size: 18px; cursor: pointer; transition: border-color .2s, background .2s; }
-  .wheel-nav:hover, .wheel-nav:focus-visible { border-color: #f2f0ea; background: rgba(10, 10, 11, .8); outline: none; }
-  .wheel-nav { touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
-  .wheel-nav.holding { border-color: #f2f0ea; background: rgba(242, 240, 234, .18); }
-  .wheel-nav.prev { left: 14px; }
-  .wheel-nav.next { right: 14px; }
   .wheel-name { color: #f2f0ea; font-family: var(--display); font-size: 15px; font-weight: 500; min-height: 1em; }
 
   /* Preview overlay */
@@ -1193,8 +1187,6 @@ function renderWork() {
   view.innerHTML = `
     <section class="wheel" id="wheel" aria-label="HanKO portfolio">
       <div class="ring"></div>
-      <button type="button" class="wheel-nav prev" aria-label="${WT[lang].prev}"><span class="pi" data-pi="arrow-left" aria-hidden="true">←</span></button>
-      <button type="button" class="wheel-nav next" aria-label="${WT[lang].next}"><span class="pi" data-pi="arrow-right" aria-hidden="true">→</span></button>
       <div class="wheel-cap"><span class="wheel-name" aria-live="polite"></span></div>
     </section>
     <section class="hero"><h1>${u.h1}</h1><p>${u.lead}</p></section>
