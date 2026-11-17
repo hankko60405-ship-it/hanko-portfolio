@@ -350,17 +350,6 @@
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/","motion":"https://cdn.jsdelivr.net/npm/motion@12.29.3/+esm"}}</script>
 </head>
 <body>
-<div class="intro" id="intro" aria-hidden="true">
-  <span class="intro-load">HanKO</span>
-  <div class="intro-w"><span class="intro-hi">Welcome</span><span class="intro-sub">HanKO 柯承翰 — Portfolio</span></div>
-  <span class="intro-skip">Skip ↵</span>
-</div>
-<script>
-/* Skip the opening when it has already played in this tab, or when the visitor prefers less motion. */
-(() => { let seen = false; try { seen = sessionStorage.getItem("hanko-intro") === "1"; } catch (e) {}
-  if (seen || matchMedia("(prefers-reduced-motion: reduce)").matches) document.getElementById("intro").remove();
-  else document.documentElement.style.overflow = "hidden"; })();
-</script>
 <div class="wrap">
   <button type="button" class="skip">跳至內容</button>
   <header class="head">
